@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Osman Efe Hamdioğlu</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: #000;
+            color: #fff;
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        .intro {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            animation: fadeOut 0.8s ease-out 2.2s forwards;
+        }
+        
+        .intro-text {
+            font-size: 4em;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: -2px;
+        }
+        
+        .typewriter {
+            display: inline-block;
+            overflow: hidden;
+            border-right: 3px solid #fff;
+            white-space: nowrap;
+            animation: typing 1.5s steps(30) 0.3s forwards, blink 0.75s step-end infinite;
+            max-width: 0;
+        }
+        
+        @keyframes typing {
+            from { max-width: 0; }
+            to { max-width: 100%; }
+        }
+        
+        @keyframes blink {
+            50% { border-color: transparent; }
+        }
+        
+        @keyframes fadeOut {
+            to {
+                opacity: 0;
+                pointer-events: none;
+            }
+        }
+        
+        .main-content {
+            opacity: 0;
+            animation: fadeIn 1s ease-in 2.2s forwards;
+        }
+        
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 60px 40px;
+        }
+        
+        header {
+            border-bottom: 3px solid #fff;
+            padding-bottom: 40px;
+            margin-bottom: 60px;
+        }
+        
+        h1 {
+            font-size: 3.5em;
+            font-weight: 900;
+            letter-spacing: -2px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+        
+        .contact {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            font-size: 0.95em;
+            margin-top: 15px;
+        }
+        
+        .contact a {
+            color: #fff;
+            text-decoration: none;
+            border-bottom: 2px solid transparent;
+            transition: border-color 0.3s;
+        }
+        
+        .contact a:hover {
+            border-bottom: 2px solid #fff;
+        }
+        
+        .section-btn {
+            background: transparent;
+            color: #fff;
+            border: 3px solid #fff;
+            padding: 18px 35px;
+            font-size: 1.8em;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            margin: 15px 0;
+            width: 100%;
+            text-align: left;
+            transition: all 0.3s;
+            position: relative;
+        }
+        
+        .section-btn:hover {
+            background: #fff;
+            color: #000;
+        }
+        
+        .section-btn:after {
+            content: "▼";
+            position: absolute;
+            right: 25px;
+            transition: transform 0.3s;
+        }
+        
+        .section-btn.active:after {
+            transform: rotate(180deg);
+        }
+        
+        .section-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out;
+            padding: 0 20px;
+        }
+        
+        .section-content.active {
+            max-height: 3000px;
+            padding: 30px 20px;
+            transition: max-height 0.5s ease-in;
+        }
+        
+        h3 {
+            font-size: 1.4em;
+            font-weight: 800;
+            margin-top: 30px;
+            margin-bottom: 8px;
+        }
+        
+        .job-title {
+            font-size: 1.1em;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .company {
+            font-weight: 600;
+            opacity: 0.8;
+            margin-bottom: 10px;
+        }
+        
+        .objective {
+            font-size: 1.05em;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            font-weight: 300;
+        }
+        
+        ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        ul li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+        
+        ul li:before {
+            content: "■";
+            position: absolute;
+            left: 0;
+            font-weight: 900;
+        }
+        
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .skill-category {
+            padding: 20px;
+            border: 2px solid #fff;
+            background: #111;
+        }
+        
+        .skill-category h4 {
+            font-weight: 800;
+            margin-bottom: 12px;
+            font-size: 1.1em;
+        }
+        
+        .interests {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .interest-tag {
+            padding: 12px 24px;
+            border: 2px solid #fff;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.85em;
+            letter-spacing: 1px;
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5em;
+            }
+            
+            .container {
+                padding: 40px 20px;
+            }
+            
+            .contact {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .section-btn {
+                font-size: 1.4em;
+                padding: 15px 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="intro">
+        <div class="intro-text">
+            <span class="typewriter">OSMAN EFE HAMDİOĞLU</span>
+        </div>
+    </div>
+    
+    <div class="main-content">
+    <div class="container">
+        <header>
+            <h1>Osman Efe<br>Hamdioğlu</h1>
+            <div class="contact">
+                <span>📍 Ankara, Türkiye</span>
+                <a href="mailto:220206023@ostimteknik.edu.tr">220206023@ostimteknik.edu.tr</a>
+                <span>+90 507 489 25 89</span>
+                <a href="https://www.linkedin.com/in/efehamd" target="_blank">LinkedIn</a>
+                <a href="https://github.com/efehamd" target="_blank">GitHub</a>
+            </div>
+        </header>
+        
+        <button class="section-btn" onclick="toggleSection('objective')">Career Objective</button>
+        <div id="objective" class="section-content">
+            <p class="objective">
+                4th-year Computer Engineering student at Ostim Technical University with deep interest in software technologies, cybersecurity, and network security. I adapt academic knowledge to professional environments through internship experiences. As an engineer candidate with analytical thinking and problem-solving skills, I am team-oriented and results-driven. Post-graduation, I aim to specialize in cybersecurity while pursuing a master's degree to continue my academic development.
+            </p>
+        </div>
+        
+        <button class="section-btn" onclick="toggleSection('education')">Education</button>
+        <div id="education" class="section-content">
+            <h3>Ostim Technical University</h3>
+            <div class="company">Computer Engineering (Bachelor's) | 2022 – Present | 4th Year Student</div>
+        </div>
+        
+        <button class="section-btn" onclick="toggleSection('experience')">Experience</button>
+        <div id="experience" class="section-content">
+            <div>
+                <div class="job-title">Cyber Security Intern</div>
+                <div class="company">Akgün Yazılım A.Ş. | March 2025 – April 2025, Ankara</div>
+                <ul>
+                    <li>Supported cybersecurity processes, worked on security testing and system analysis</li>
+                </ul>
+            </div>
+            
+            <div>
+                <div class="job-title">Network Security Engineer Intern</div>
+                <div class="company">Forte Bilgi İletişim Teknolojileri ve Savunma Sanayi A.Ş. | January 2025 – February 2025, Ankara</div>
+                <ul>
+                    <li>Worked on Network Security and switch management</li>
+                </ul>
+            </div>
+            
+            <div>
+                <div class="job-title">Network Security Intern</div>
+                <div class="company">Forte Bilgi İletişim Teknolojileri ve Savunma Sanayi A.Ş. | August 2024, Ankara</div>
+                <ul>
+                    <li>Handled fundamental tasks in IP networks and network security</li>
+                </ul>
+            </div>
+            
+            <div>
+                <div class="job-title">Software Engineer Intern</div>
+                <div class="company">Forte Bilgi İletişim Teknolojileri ve Savunma Sanayi A.Ş. | January 2024, Ankara</div>
+                <ul>
+                    <li>Gained software development experience using ASP.NET MVC and Microsoft SQL Server</li>
+                </ul>
+            </div>
+            
+            <div>
+                <div class="job-title">Test Automation Intern</div>
+                <div class="company">İnnova Bilişim | September 2023, Ankara</div>
+                <ul>
+                    <li>Supported test automation processes, gained practical experience with software testing tools</li>
+                </ul>
+            </div>
+        </div>
+        
+        <button class="section-btn" onclick="toggleSection('skills')">Technical Skills</button>
+        <div id="skills" class="section-content">
+            <div class="skills-grid">
+                <div class="skill-category">
+                    <h4>Programming</h4>
+                    <p>Python, C/C++, JavaScript, HTML/CSS</p>
+                </div>
+                <div class="skill-category">
+                    <h4>Tools & Tech</h4>
+                    <p>Git, Linux, Wireshark, VirtualBox</p>
+                </div>
+                <div class="skill-category">
+                    <h4>Expertise</h4>
+                    <p>Network Security, Cybersecurity, Algorithms, Data Structures</p>
+                </div>
+                <div class="skill-category">
+                    <h4>Languages</h4>
+                    <p>English: Advanced (CEFR C | YDS: 76.25)</p>
+                </div>
+            </div>
+        </div>
+        
+        <button class="section-btn" onclick="toggleSection('interests')">Interests</button>
+        <div id="interests" class="section-content">
+            <div class="interests">
+                <div class="interest-tag">Cybersecurity</div>
+                <div class="interest-tag">Network Security</div>
+                <div class="interest-tag">Software Dev</div>
+                <div class="interest-tag">Open Source</div>
+                <div class="interest-tag">AI</div>
+                <div class="interest-tag">Tech Trends</div>
+            </div>
+        </div>
+        
+        <button class="section-btn" onclick="toggleSection('hobbies')">Hobbies</button>
+        <div id="hobbies" class="section-content">
+            <div class="interests">
+                <div class="interest-tag">Music Production</div>
+                <div class="interest-tag">Software Developing</div>
+                <div class="interest-tag">Coding</div>
+            </div>
+        </div>
+    </div>
+    </div>
+    
+    <script>
+        function toggleSection(id) {
+            const content = document.getElementById(id);
+            const btn = content.previousElementSibling;
+            
+            // Close all other sections
+            document.querySelectorAll('.section-content').forEach(section => {
+                if (section.id !== id) {
+                    section.classList.remove('active');
+                    section.previousElementSibling.classList.remove('active');
+                }
+            });
+            
+            // Toggle clicked section
+            content.classList.toggle('active');
+            btn.classList.toggle('active');
+        }
+    </script>
+</body>
+</html>
