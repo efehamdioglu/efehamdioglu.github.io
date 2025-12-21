@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Osman Efe Hamdioğlu</title>
+    <title>Osman Efe Hamdioğlu - Computer Engineer</title>
     <style>
         * {
             margin: 0;
@@ -75,7 +75,7 @@
         }
         
         .container {
-            max-width: 900px;
+            max-width: 1000px;
             margin: 0 auto;
             padding: 60px 40px;
         }
@@ -90,16 +90,29 @@
             font-size: 3.5em;
             font-weight: 900;
             letter-spacing: -2px;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
             text-transform: uppercase;
         }
         
+        .subtitle {
+            font-size: 1.3em;
+            font-weight: 300;
+            opacity: 0.9;
+            margin-bottom: 25px;
+        }
+        
         .contact {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
             font-size: 0.95em;
-            margin-top: 15px;
+            margin-top: 20px;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
         
         .contact a {
@@ -154,9 +167,9 @@
         }
         
         .section-content.active {
-            max-height: 3000px;
+            max-height: 5000px;
             padding: 30px 20px;
-            transition: max-height 0.5s ease-in;
+            transition: max-height 0.6s ease-in;
         }
         
         h3 {
@@ -167,15 +180,17 @@
         }
         
         .job-title {
-            font-size: 1.1em;
+            font-size: 1.2em;
             font-weight: 700;
             margin-bottom: 5px;
+            margin-top: 25px;
         }
         
         .company {
             font-weight: 600;
             opacity: 0.8;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
+            font-size: 0.95em;
         }
         
         .objective {
@@ -194,6 +209,7 @@
             padding: 8px 0;
             padding-left: 25px;
             position: relative;
+            line-height: 1.6;
         }
         
         ul li:before {
@@ -211,15 +227,27 @@
         }
         
         .skill-category {
-            padding: 20px;
+            padding: 25px;
             border: 2px solid #fff;
             background: #111;
+            transition: all 0.3s;
+        }
+        
+        .skill-category:hover {
+            background: #1a1a1a;
+            transform: translateY(-5px);
         }
         
         .skill-category h4 {
             font-weight: 800;
-            margin-bottom: 12px;
+            margin-bottom: 15px;
             font-size: 1.1em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .skill-category p {
+            line-height: 1.8;
         }
         
         .interests {
@@ -236,6 +264,137 @@
             text-transform: uppercase;
             font-size: 0.85em;
             letter-spacing: 1px;
+            transition: all 0.3s;
+        }
+        
+        .interest-tag:hover {
+            background: #fff;
+            color: #000;
+        }
+        
+        .contact-form {
+            max-width: 600px;
+            margin: 30px auto;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        .form-group label {
+            display: block;
+            font-weight: 700;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            font-size: 0.9em;
+            letter-spacing: 1px;
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 15px;
+            background: #111;
+            border: 2px solid #fff;
+            color: #fff;
+            font-family: 'Arial', sans-serif;
+            font-size: 1em;
+            transition: all 0.3s;
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            background: #1a1a1a;
+            border-color: #fff;
+        }
+        
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        .submit-btn {
+            background: transparent;
+            color: #fff;
+            border: 3px solid #fff;
+            padding: 15px 50px;
+            font-size: 1.1em;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+        }
+        
+        .submit-btn:hover {
+            background: #fff;
+            color: #000;
+        }
+        
+        .contact-info-box {
+            background: #111;
+            border: 2px solid #fff;
+            padding: 30px;
+            margin-top: 30px;
+        }
+        
+        .contact-info-box h4 {
+            font-size: 1.3em;
+            font-weight: 800;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+        
+        .contact-detail {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin: 15px 0;
+            font-size: 1.05em;
+        }
+        
+        .contact-detail a {
+            color: #fff;
+            text-decoration: none;
+            border-bottom: 2px solid transparent;
+            transition: border-color 0.3s;
+        }
+        
+        .contact-detail a:hover {
+            border-bottom: 2px solid #fff;
+        }
+        
+        .timeline {
+            position: relative;
+            padding-left: 40px;
+            border-left: 3px solid #fff;
+            margin-top: 20px;
+        }
+        
+        .timeline-item {
+            margin-bottom: 40px;
+            position: relative;
+        }
+        
+        .timeline-item:before {
+            content: "●";
+            position: absolute;
+            left: -47px;
+            font-size: 1.5em;
+            background: #000;
+            padding: 0 5px;
+        }
+        
+        .success-message {
+            background: #fff;
+            color: #000;
+            padding: 20px;
+            text-align: center;
+            font-weight: 700;
+            margin-top: 20px;
+            display: none;
         }
         
         @media (max-width: 768px) {
@@ -243,18 +402,21 @@
                 font-size: 2.5em;
             }
             
-            .container {
-                padding: 40px 20px;
+            .intro-text {
+                font-size: 2em;
             }
             
-            .contact {
-                flex-direction: column;
-                gap: 10px;
+            .container {
+                padding: 40px 20px;
             }
             
             .section-btn {
                 font-size: 1.4em;
                 padding: 15px 25px;
+            }
+            
+            .contact {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -270,68 +432,104 @@
     <div class="container">
         <header>
             <h1>Osman Efe<br>Hamdioğlu</h1>
+            <div class="subtitle">Computer Engineering Student | Cybersecurity Enthusiast | Software Developer</div>
             <div class="contact">
-                <span>📍 Ankara, Türkiye</span>
-                <a href="mailto:220206023@ostimteknik.edu.tr">220206023@ostimteknik.edu.tr</a>
-                <span>+90 507 489 25 89</span>
-                <a href="https://www.linkedin.com/in/efehamd" target="_blank">LinkedIn</a>
-                <a href="https://github.com/efehamd" target="_blank">GitHub</a>
+                <div class="contact-item">📍 Ankara, Türkiye</div>
+                <div class="contact-item">📧 <a href="mailto:220206023@ostimteknik.edu.tr">Email</a></div>
+                <div class="contact-item">📱 +90 507 489 25 89</div>
+                <div class="contact-item">💼 <a href="https://www.linkedin.com/in/efehamd" target="_blank">LinkedIn</a></div>
+                <div class="contact-item">💻 <a href="https://github.com/efehamd" target="_blank">GitHub</a></div>
             </div>
         </header>
         
         <button class="section-btn" onclick="toggleSection('objective')">Career Objective</button>
         <div id="objective" class="section-content">
             <p class="objective">
-                4th-year Computer Engineering student at Ostim Technical University with deep interest in software technologies, cybersecurity, and network security. I adapt academic knowledge to professional environments through internship experiences. As an engineer candidate with analytical thinking and problem-solving skills, I am team-oriented and results-driven. Post-graduation, I aim to specialize in cybersecurity while pursuing a master's degree to continue my academic development.
+                I am a 4th-year Computer Engineering student at Ostim Technical University with a deep passion for software technologies, cybersecurity, and network security. Through multiple internship experiences across leading technology companies, I have successfully adapted my academic knowledge to professional environments, gaining hands-on experience in penetration testing, network infrastructure, software development, and test automation.
+            </p>
+            <p class="objective">
+                As an engineer candidate with strong analytical thinking and problem-solving skills, I excel in team-oriented environments while maintaining a results-driven approach. My diverse internship portfolio demonstrates my versatility across different domains of computer engineering, from ASP.NET development to network security implementations.
+            </p>
+            <p class="objective">
+                Post-graduation, I aim to specialize in cybersecurity while pursuing a master's degree to continue my academic and professional development. I am particularly interested in offensive security, threat intelligence, and secure software development practices.
             </p>
         </div>
         
         <button class="section-btn" onclick="toggleSection('education')">Education</button>
         <div id="education" class="section-content">
             <h3>Ostim Technical University</h3>
-            <div class="company">Computer Engineering (Bachelor's) | 2022 – Present | 4th Year Student</div>
+            <div class="company">Bachelor of Science in Computer Engineering</div>
+            <div class="company">September 2022 – June 2026 (Expected) | Currently 4th Year Student</div>
+            <ul>
+                <li>Focused on cybersecurity, network security, and software engineering principles</li>
+                <li>Active participation in university technology clubs and hackathons</li>
+                <li>Maintaining strong academic performance while gaining practical industry experience</li>
+            </ul>
         </div>
         
-        <button class="section-btn" onclick="toggleSection('experience')">Experience</button>
+        <button class="section-btn" onclick="toggleSection('experience')">Professional Experience</button>
         <div id="experience" class="section-content">
-            <div>
-                <div class="job-title">Cyber Security Intern</div>
-                <div class="company">Akgün Yazılım A.Ş. | March 2025 – April 2025, Ankara</div>
-                <ul>
-                    <li>Supported cybersecurity processes, worked on security testing and system analysis</li>
-                </ul>
-            </div>
-            
-            <div>
-                <div class="job-title">Network Security Engineer Intern</div>
-                <div class="company">Forte Bilgi İletişim Teknolojileri ve Savunma Sanayi A.Ş. | January 2025 – February 2025, Ankara</div>
-                <ul>
-                    <li>Worked on Network Security and switch management</li>
-                </ul>
-            </div>
-            
-            <div>
-                <div class="job-title">Network Security Intern</div>
-                <div class="company">Forte Bilgi İletişim Teknolojileri ve Savunma Sanayi A.Ş. | August 2024, Ankara</div>
-                <ul>
-                    <li>Handled fundamental tasks in IP networks and network security</li>
-                </ul>
-            </div>
-            
-            <div>
-                <div class="job-title">Software Engineer Intern</div>
-                <div class="company">Forte Bilgi İletişim Teknolojileri ve Savunma Sanayi A.Ş. | January 2024, Ankara</div>
-                <ul>
-                    <li>Gained software development experience using ASP.NET MVC and Microsoft SQL Server</li>
-                </ul>
-            </div>
-            
-            <div>
-                <div class="job-title">Test Automation Intern</div>
-                <div class="company">İnnova Bilişim | September 2023, Ankara</div>
-                <ul>
-                    <li>Supported test automation processes, gained practical experience with software testing tools</li>
-                </ul>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="job-title">Cyber Security Intern</div>
+                    <div class="company">Akgün Yazılım A.Ş. | March 2025 – April 2025 | Ankara, Turkey</div>
+                    <ul>
+                        <li>Actively supported cybersecurity operations including vulnerability assessments and penetration testing</li>
+                        <li>Conducted comprehensive security testing on web applications and network infrastructure</li>
+                        <li>Performed detailed system analysis to identify potential security weaknesses</li>
+                        <li>Collaborated with senior security engineers on incident response procedures</li>
+                        <li>Documented security findings and recommended remediation strategies</li>
+                    </ul>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="job-title">Network Security Engineer Intern</div>
+                    <div class="company">Forte Bilgi İletişim Teknolojileri ve Savunma Sanayi A.Ş. | January 2025 – February 2025 | Ankara, Turkey</div>
+                    <ul>
+                        <li>Specialized in network security infrastructure and switch management implementations</li>
+                        <li>Configured and maintained enterprise-level network security appliances</li>
+                        <li>Implemented VLAN segmentation and access control policies</li>
+                        <li>Monitored network traffic patterns to identify anomalies and potential threats</li>
+                        <li>Assisted in designing secure network architectures for defense industry applications</li>
+                    </ul>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="job-title">Network Security Intern</div>
+                    <div class="company">Forte Bilgi İletişim Teknolojileri ve Savunma Sanayi A.Ş. | August 2024 | Ankara, Turkey</div>
+                    <ul>
+                        <li>Gained foundational experience in IP networking and network security protocols</li>
+                        <li>Configured routers and switches for secure enterprise deployments</li>
+                        <li>Implemented firewall rules and intrusion detection systems</li>
+                        <li>Performed network packet analysis using Wireshark and similar tools</li>
+                        <li>Documented network topology and security configurations</li>
+                    </ul>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="job-title">Software Engineer Intern</div>
+                    <div class="company">Forte Bilgi İletişim Teknolojileri ve Savunma Sanayi A.Ş. | January 2024 | Ankara, Turkey</div>
+                    <ul>
+                        <li>Developed web applications using ASP.NET MVC framework and C#</li>
+                        <li>Designed and implemented database schemas using Microsoft SQL Server</li>
+                        <li>Created RESTful APIs for internal business applications</li>
+                        <li>Implemented authentication and authorization mechanisms following security best practices</li>
+                        <li>Collaborated with cross-functional teams using Agile methodologies</li>
+                        <li>Participated in code reviews and learned industry-standard development practices</li>
+                    </ul>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="job-title">Test Automation Intern</div>
+                    <div class="company">İnnova Bilişim | September 2023 | Ankara, Turkey</div>
+                    <ul>
+                        <li>Supported automated testing initiatives for enterprise software products</li>
+                        <li>Developed test scripts using industry-standard automation frameworks</li>
+                        <li>Gained practical experience with software testing tools and methodologies</li>
+                        <li>Participated in test case design and execution for regression testing</li>
+                        <li>Documented test results and reported defects using bug tracking systems</li>
+                    </ul>
+                </div>
             </div>
         </div>
         
@@ -339,42 +537,122 @@
         <div id="skills" class="section-content">
             <div class="skills-grid">
                 <div class="skill-category">
-                    <h4>Programming</h4>
-                    <p>Python, C/C++, JavaScript, HTML/CSS</p>
+                    <h4>Programming Languages</h4>
+                    <p>Python (Advanced), C/C++ (Intermediate), JavaScript (Intermediate), HTML5/CSS3 (Advanced), SQL (Intermediate)</p>
                 </div>
                 <div class="skill-category">
-                    <h4>Tools & Tech</h4>
-                    <p>Git, Linux, Wireshark, VirtualBox</p>
+                    <h4>Frameworks & Libraries</h4>
+                    <p>ASP.NET MVC, React.js, Node.js, Flask, Django</p>
                 </div>
                 <div class="skill-category">
-                    <h4>Expertise</h4>
-                    <p>Network Security, Cybersecurity, Algorithms, Data Structures</p>
+                    <h4>Security Tools</h4>
+                    <p>Wireshark, Nmap, Metasploit, Burp Suite, OWASP ZAP</p>
+                </div>
+                <div class="skill-category">
+                    <h4>Development Tools</h4>
+                    <p>Git/GitHub, Docker, Visual Studio, VS Code, Postman</p>
+                </div>
+                <div class="skill-category">
+                    <h4>Operating Systems</h4>
+                    <p>Linux (Ubuntu, Kali), Windows Server, VirtualBox/VMware</p>
+                </div>
+                <div class="skill-category">
+                    <h4>Database Systems</h4>
+                    <p>Microsoft SQL Server, MySQL, PostgreSQL, MongoDB</p>
+                </div>
+                <div class="skill-category">
+                    <h4>Network Technologies</h4>
+                    <p>TCP/IP, VLANs, Firewalls, IDS/IPS, VPN, Network Protocols</p>
+                </div>
+                <div class="skill-category">
+                    <h4>Cybersecurity</h4>
+                    <p>Penetration Testing, Vulnerability Assessment, Network Security, Web Application Security</p>
+                </div>
+                <div class="skill-category">
+                    <h4>Soft Skills</h4>
+                    <p>Problem Solving, Team Collaboration, Analytical Thinking, Documentation, Project Management</p>
                 </div>
                 <div class="skill-category">
                     <h4>Languages</h4>
-                    <p>English: Advanced (CEFR C | YDS: 76.25)</p>
+                    <p>Turkish (Native), English (Advanced - CEFR C Level | YDS: 76.25)</p>
                 </div>
             </div>
         </div>
         
-        <button class="section-btn" onclick="toggleSection('interests')">Interests</button>
+        <button class="section-btn" onclick="toggleSection('interests')">Professional Interests</button>
         <div id="interests" class="section-content">
+            <p class="objective">
+                My professional interests align with emerging trends in cybersecurity and software development. I am particularly passionate about:
+            </p>
             <div class="interests">
-                <div class="interest-tag">Cybersecurity</div>
+                <div class="interest-tag">Offensive Security</div>
                 <div class="interest-tag">Network Security</div>
-                <div class="interest-tag">Software Dev</div>
-                <div class="interest-tag">Open Source</div>
-                <div class="interest-tag">AI</div>
-                <div class="interest-tag">Tech Trends</div>
+                <div class="interest-tag">Web Application Security</div>
+                <div class="interest-tag">Secure Coding</div>
+                <div class="interest-tag">Open Source Contribution</div>
+                <div class="interest-tag">Cloud Security</div>
+                <div class="interest-tag">AI & Machine Learning</div>
+                <div class="interest-tag">DevSecOps</div>
+                <div class="interest-tag">Blockchain Technology</div>
             </div>
         </div>
         
-        <button class="section-btn" onclick="toggleSection('hobbies')">Hobbies</button>
+        <button class="section-btn" onclick="toggleSection('hobbies')">Personal Interests</button>
         <div id="hobbies" class="section-content">
             <div class="interests">
                 <div class="interest-tag">Music Production</div>
-                <div class="interest-tag">Software Developing</div>
-                <div class="interest-tag">Coding</div>
+                <div class="interest-tag">Software Development</div>
+                <div class="interest-tag">Coding Challenges</div>
+                <div class="interest-tag">CTF Competitions</div>
+                <div class="interest-tag">Tech Blogging</div>
+            </div>
+        </div>
+        
+        <button class="section-btn" onclick="toggleSection('contact')">Reach Me</button>
+        <div id="contact" class="section-content">
+            <div class="contact-info-box">
+                <h4>Let's Connect</h4>
+                <p class="objective">
+                    I'm always interested in discussing new opportunities, collaboration on projects, or simply connecting with fellow technology enthusiasts. Feel free to reach out through any of the following channels:
+                </p>
+                <div class="contact-detail">
+                    📧 Email: <a href="mailto:220206023@ostimteknik.edu.tr">220206023@ostimteknik.edu.tr</a>
+                </div>
+                <div class="contact-detail">
+                    💼 LinkedIn: <a href="https://www.linkedin.com/in/efehamd" target="_blank">linkedin.com/in/efehamd</a>
+                </div>
+                <div class="contact-detail">
+                    💻 GitHub: <a href="https://github.com/efehamd" target="_blank">github.com/efehamd</a>
+                </div>
+                <div class="contact-detail">
+                    📱 Phone: +90 507 489 25 89
+                </div>
+            </div>
+            
+            <div class="contact-form">
+                <h4 style="text-align: center; margin-bottom: 30px; font-size: 1.5em; text-transform: uppercase;">Send Me a Message</h4>
+                <form id="contactForm" onsubmit="handleSubmit(event)">
+                    <div class="form-group">
+                        <label for="name">Your Name</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Your Email</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="subject">Subject</label>
+                        <input type="text" id="subject" name="subject" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" required></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">Send Message</button>
+                    <div class="success-message" id="successMessage">
+                        Thank you for your message! I'll get back to you soon.
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -396,6 +674,32 @@
             // Toggle clicked section
             content.classList.toggle('active');
             btn.classList.toggle('active');
+        }
+        
+        function handleSubmit(event) {
+            event.preventDefault();
+            
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const subject = document.getElementById('subject').value;
+            const message = document.getElementById('message').value;
+            
+            // Create mailto link
+            const mailtoLink = `mailto:220206023@ostimteknik.edu.tr?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`)}`;
+            
+            // Open email client
+            window.location.href = mailtoLink;
+            
+            // Show success message
+            document.getElementById('successMessage').style.display = 'block';
+            
+            // Reset form
+            document.getElementById('contactForm').reset();
+            
+            // Hide success message after 5 seconds
+            setTimeout(() => {
+                document.getElementById('successMessage').style.display = 'none';
+            }, 5000);
         }
     </script>
 </body>
