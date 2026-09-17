@@ -444,7 +444,7 @@ footer { margin-top:clamp(46px,8vw,78px); padding:26px 0 44px; border-top:1px so
 
   <div class="metrics">
     <div class="metric"><div class="metric-n">6</div><div class="metric-l" data-i18n="m-intern">Staj</div></div>
-    <div class="metric"><div class="metric-n">30+</div><div class="metric-l" data-i18n="m-repo">Depo</div></div>
+    <div class="metric"><div class="metric-n">30+</div><div class="metric-l" data-i18n="m-repo">Repo</div></div>
     <div class="metric"><div class="metric-n">4</div><div class="metric-l" data-i18n="m-years">Yıl kod yazıyorum</div></div>
     <div class="metric"><div class="metric-n">2026</div><div class="metric-l" data-i18n="m-grad">Mezuniyet</div></div>
   </div>
@@ -704,7 +704,7 @@ const CATS = {
 
 const STATE = {
   live:    { tr:'Yayında',  en:'Live' },
-  private: { tr:'Özel depo',en:'Private' },
+  private: { tr:'Özel repo',en:'Private' },
   oss:     { tr:'Açık kaynak', en:'Open source' },
   wip:     { tr:'Geliştirmede', en:'In progress' }
 };
@@ -838,9 +838,9 @@ const EXPERIENCE = [
 const SKILLS = [
   { k:{ tr:'Diller', en:'Languages' },
     v:['C#','TypeScript','JavaScript','Python','Java','C / C++','SQL','HTML / CSS'] },
-  { k:{ tr:'Çerçeveler', en:'Frameworks' },
+  { k:{ tr:"Framework'ler", en:'Frameworks' },
     v:['ASP.NET Core','ASP.NET MVC','Next.js','React','Spring Boot','React Native','Expo','Streamlit'] },
-  { k:{ tr:'Veri', en:'Data' },
+  { k:{ tr:'Veritabanları', en:'Data' },
     v:['PostgreSQL','SQL Server','Supabase','Prisma','EF Core','Redis','SQLite','ChromaDB'] },
   { k:{ tr:'Yapay Zekâ', en:'AI' },
     v:['Çoklu ajan mimarisi','Tool calling','RAG','Ollama','Claude','Gemini'],
@@ -851,7 +851,7 @@ const SKILLS = [
   { k:{ tr:'Ağ', en:'Networking' },
     v:['TCP/IP','VLAN','Güvenlik duvarı','VPN','DoH / DPI'],
     vEn:['TCP/IP','VLAN','Firewalls','VPN','DoH / DPI'] },
-  { k:{ tr:'Altyapı', en:'Infrastructure' },
+  { k:{ tr:'Altyapı & DevOps', en:'Infrastructure' },
     v:['Docker','Vercel','Hetzner','Caddy','Git / GitHub','Linux','VMware'] },
   { k:{ tr:'Diğer', en:'Other' },
     v:['SaaS ürün geliştirme','UI / UX tasarımı','JUCE / VST3','Agile'],
@@ -910,7 +910,7 @@ function renderProjects() {
       (lang === 'tr' ? 'Siteyi aç' : 'Visit site') + ' ↗</a>');
     if (p.links.repo) links.push('<a href="' + p.links.repo + '" target="_blank" rel="noopener">GitHub ↗</a>');
     if (!links.length) links.push('<span class="none">' +
-      (lang === 'tr' ? 'depo özel' : 'private repo') + '</span>');
+      (lang === 'tr' ? 'özel repo' : 'private repo') + '</span>');
 
     return '<article class="proj">' +
       '<div class="proj-top">' +
@@ -948,7 +948,7 @@ function renderArchive() {
   document.getElementById('archive').innerHTML = ARCHIVE.map(a => {
     const link = a.url  ? '<a href="' + a.url + '" target="_blank" rel="noopener">' + (lang === 'tr' ? 'aç ↗' : 'open ↗') + '</a>'
                : a.repo ? '<a href="' + a.repo + '" target="_blank" rel="noopener">github ↗</a>'
-               : '<span class="none">' + (lang === 'tr' ? 'depo özel' : 'private repo') + '</span>';
+               : '<span class="none">' + (lang === 'tr' ? 'özel repo' : 'private repo') + '</span>';
     return '<div class="arc-row">' +
       '<span class="arc-name">' + esc(a.name) + '</span>' +
       '<span class="arc-desc">' + esc(L(a.desc)) + '</span>' +
