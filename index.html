@@ -1,1469 +1,1121 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr" class="no-js">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Osman Efe Hamdioğlu</title>
-    <style>
-        :root {
-            --bg: #111827;
-            --bg2: #1a2236;
-            --surface: rgba(255,255,255,0.07);
-            --surface-hover: rgba(255,255,255,0.11);
-            --border: rgba(255,255,255,0.12);
-            --border-hover: rgba(255,255,255,0.24);
-            --text: #f0f2f8;
-            --text-muted: rgba(240,242,248,0.65);
-            --text-dim: rgba(240,242,248,0.40);
-            --accent: #6c8cff;
-            --accent2: #a78bfa;
-            --glow: rgba(108,140,255,0.15);
-            --hero-name-gradient: linear-gradient(135deg, #fff 40%, rgba(255,255,255,0.6));
-            --stat-gradient: linear-gradient(135deg, #fff 30%, rgba(255,255,255,0.4));
-            --card-sheen: linear-gradient(135deg, rgba(255,255,255,0.04) 0%, transparent 50%);
-            --pdf-btn-bg: rgba(30,42,90,0.75);
-            --pdf-btn-bg-hover: rgba(40,58,120,0.85);
-            --pdf-btn-color: #a0b4ff;
-            --pdf-btn-color-hover: #c4d0ff;
-            --pdf-btn-border: rgba(108,140,255,0.25);
-            --pdf-btn-border-hover: rgba(108,140,255,0.5);
-        }
-
-        [data-theme="light"] {
-            --bg: #f0f4ff;
-            --bg2: #e4e9f8;
-            --surface: rgba(0,0,0,0.04);
-            --surface-hover: rgba(0,0,0,0.07);
-            --border: rgba(0,0,0,0.09);
-            --border-hover: rgba(0,0,0,0.22);
-            --text: #0d1220;
-            --text-muted: rgba(13,18,32,0.6);
-            --text-dim: rgba(13,18,32,0.38);
-            --accent: #3d63f7;
-            --accent2: #7c3aed;
-            --glow: rgba(61,99,247,0.12);
-            --hero-name-gradient: linear-gradient(135deg, #0d1220 40%, rgba(13,18,32,0.6));
-            --stat-gradient: linear-gradient(135deg, #0d1220 30%, rgba(13,18,32,0.5));
-            --card-sheen: linear-gradient(135deg, rgba(255,255,255,0.6) 0%, transparent 50%);
-            --pdf-btn-bg: rgba(240,244,255,0.85);
-            --pdf-btn-bg-hover: rgba(224,232,255,0.95);
-            --pdf-btn-color: #3d63f7;
-            --pdf-btn-color-hover: #1e3fc2;
-            --pdf-btn-border: rgba(61,99,247,0.3);
-            --pdf-btn-border-hover: rgba(61,99,247,0.6);
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
-        html { scroll-behavior: smooth; }
-
-        body {
-            background: var(--bg);
-            color: var(--text);
-            font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', sans-serif;
-            line-height: 1.6;
-            min-height: 100vh;
-            overflow-x: hidden;
-            transition: background 0.3s, color 0.3s;
-        }
-
-        /* Ambient background gradient */
-        body::before {
-            content: '';
-            position: fixed;
-            top: -30%;
-            left: -10%;
-            width: 60%;
-            height: 60%;
-            background: radial-gradient(ellipse, rgba(108,140,255,0.06) 0%, transparent 70%);
-            pointer-events: none;
-            z-index: 0;
-        }
-        body::after {
-            content: '';
-            position: fixed;
-            bottom: -20%;
-            right: -10%;
-            width: 50%;
-            height: 50%;
-            background: radial-gradient(ellipse, rgba(167,139,250,0.05) 0%, transparent 70%);
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        .page {
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 48px 32px 80px;
-            position: relative;
-            z-index: 1;
-        }
-
-        /* ── BENTO GRID ── */
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(12, 1fr);
-            gap: 14px;
-        }
-
-        /* ── CARD BASE ── */
-        .card {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 18px;
-            padding: 28px;
-            position: relative;
-            overflow: hidden;
-            transition: border-color 0.3s, box-shadow 0.3s, background 0.3s;
-            cursor: default;
-            /* 3d perspective base */
-            transform-style: preserve-3d;
-            will-change: transform;
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-        }
-
-        /* Cursor light layer */
-        .card::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            border-radius: inherit;
-            background: radial-gradient(circle 220px at var(--mx, 50%) var(--my, 50%),
-                rgba(108,140,255,0.13) 0%,
-                transparent 70%);
-            opacity: 0;
-            transition: opacity 0.4s;
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        .card:hover::before { opacity: 1; }
-        .card:hover {
-            border-color: var(--border-hover);
-            box-shadow: 0 8px 40px rgba(0,0,0,0.4), 0 0 0 1px rgba(108,140,255,0.08);
-        }
-
-        .card > * { position: relative; z-index: 1; }
-
-        /* Sheen edge glow on hover */
-        .card::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            border-radius: inherit;
-            background: var(--card-sheen);
-            opacity: 0;
-            transition: opacity 0.3s;
-            pointer-events: none;
-            z-index: 0;
-        }
-        .card:hover::after { opacity: 1; }
-
-        .card.tilt-leaving {
-            transition: border-color 0.3s, transform 0.35s ease-out, box-shadow 0.3s, background 0.3s;
-        }
-
-        /* ── GRID SPANS ── */
-        .col-12 { grid-column: span 12; }
-        .col-8  { grid-column: span 8; }
-        .col-7  { grid-column: span 7; }
-        .col-6  { grid-column: span 6; }
-        .col-5  { grid-column: span 5; }
-        .col-4  { grid-column: span 4; }
-        .col-3  { grid-column: span 3; }
-
-        /* ── HERO CARD ── */
-        .hero-card {
-            padding: 40px 44px;
-            background: linear-gradient(135deg, rgba(108,140,255,0.07) 0%, rgba(167,139,250,0.04) 100%);
-        }
-
-        .hero-card .name {
-            font-size: clamp(2em, 4vw, 3em);
-            font-weight: 800;
-            letter-spacing: -1.5px;
-            line-height: 1.2;
-            padding-bottom: 4px;
-            margin-bottom: 8px;
-            background: var(--hero-name-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .hero-card .role {
-            font-size: 0.95em;
-            color: var(--text-muted);
-            font-weight: 400;
-            letter-spacing: 0.3px;
-            margin-bottom: 28px;
-        }
-
-        .hero-card .role span {
-            color: var(--accent);
-            font-weight: 500;
-        }
-
-        .contact-links {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        .chip {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 7px 14px;
-            border-radius: 999px;
-            border: 1px solid var(--border);
-            font-size: 0.8em;
-            font-weight: 500;
-            color: var(--text-muted);
-            text-decoration: none;
-            background: rgba(255,255,255,0.03);
-            transition: all 0.2s;
-            backdrop-filter: blur(8px);
-        }
-        .chip:hover {
-            border-color: var(--accent);
-            color: var(--accent);
-            background: rgba(108,140,255,0.08);
-        }
-
-        /* ── SECTION LABEL ── */
-        .label {
-            font-size: 0.68em;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            color: var(--text-dim);
-            margin-bottom: 18px;
-        }
-
-        /* ── EXPERIENCE ── */
-        .exp-item { margin-bottom: 26px; }
-        .exp-item:last-child { margin-bottom: 0; }
-
-        .exp-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: baseline;
-            flex-wrap: wrap;
-            gap: 4px;
-            margin-bottom: 2px;
-        }
-
-        .exp-title {
-            font-size: 0.95em;
-            font-weight: 700;
-            color: var(--text);
-        }
-
-        .exp-date {
-            font-size: 0.75em;
-            color: var(--text-dim);
-            white-space: nowrap;
-        }
-
-        .exp-company {
-            font-size: 0.8em;
-            color: var(--accent);
-            font-weight: 500;
-            margin-bottom: 8px;
-        }
-
-        .exp-item ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        .exp-item ul li {
-            font-size: 0.82em;
-            color: var(--text-muted);
-            padding: 3px 0 3px 14px;
-            position: relative;
-            line-height: 1.5;
-        }
-
-        .exp-item ul li::before {
-            content: '·';
-            position: absolute;
-            left: 2px;
-            color: var(--text-dim);
-            font-size: 1.2em;
-            line-height: 1.2;
-        }
-
-        /* ── SKILLS ── */
-        .skill-row { margin-bottom: 14px; }
-        .skill-row:last-child { margin-bottom: 0; }
-
-        .skill-name {
-            font-size: 0.72em;
-            font-weight: 600;
-            color: var(--text-dim);
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            margin-bottom: 6px;
-        }
-
-        .skill-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-        }
-
-        .skill-tag {
-            padding: 4px 11px;
-            border-radius: 8px;
-            border: 1px solid var(--border);
-            font-size: 0.78em;
-            color: var(--text-muted);
-            background: rgba(255,255,255,0.03);
-            font-weight: 500;
-            transition: all 0.2s;
-        }
-        .skill-tag:hover {
-            border-color: var(--border-hover);
-            color: var(--text);
-            background: var(--surface-hover);
-        }
-
-        /* ── PROJECTS ── */
-        .project-name {
-            font-size: 1em;
-            font-weight: 700;
-            margin-bottom: 4px;
-        }
-
-        .project-stack {
-            font-size: 0.72em;
-            color: var(--accent2);
-            font-weight: 600;
-            letter-spacing: 0.5px;
-            margin-bottom: 10px;
-        }
-
-        .project-desc {
-            font-size: 0.82em;
-            color: var(--text-muted);
-            line-height: 1.6;
-        }
-
-        .project-link {
-            display: inline-block;
-            margin-top: 14px;
-            font-size: 0.78em;
-            font-weight: 600;
-            color: var(--accent);
-            text-decoration: none;
-            border-bottom: 1px solid rgba(108,140,255,0.3);
-            transition: border-color 0.2s;
-        }
-        .project-link:hover { border-bottom-color: var(--accent); }
-
-        /* ── EDUCATION CARD ── */
-        .edu-uni {
-            font-size: 1em;
-            font-weight: 700;
-            margin-bottom: 4px;
-        }
-
-        .edu-degree {
-            font-size: 0.82em;
-            color: var(--text-muted);
-            margin-bottom: 4px;
-        }
-
-        .edu-date {
-            font-size: 0.75em;
-            color: var(--text-dim);
-        }
-
-        /* ── STAT CARD ── */
-        .stat-card {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            min-height: 130px;
-        }
-
-        .stat-number {
-            font-size: 2.8em;
-            font-weight: 800;
-            letter-spacing: -2px;
-            background: var(--stat-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            line-height: 1;
-        }
-
-        .stat-label {
-            font-size: 0.78em;
-            color: var(--text-muted);
-            font-weight: 500;
-        }
-
-        /* ── LANGUAGE CARD ── */
-        .lang-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 0;
-            border-bottom: 1px solid var(--border);
-        }
-        .lang-item:last-child { border-bottom: none; padding-bottom: 0; }
-        .lang-item:first-child { padding-top: 0; }
-
-        .lang-name { font-size: 0.9em; font-weight: 600; }
-        .lang-level {
-            font-size: 0.75em;
-            color: var(--text-dim);
-            font-weight: 500;
-        }
-
-        /* ── INTEREST TAGS ── */
-        .int-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-
-        .int-tag {
-            padding: 7px 14px;
-            border-radius: 10px;
-            border: 1px solid var(--border);
-            font-size: 0.8em;
-            font-weight: 500;
-            color: var(--text-muted);
-            background: rgba(255,255,255,0.02);
-            transition: all 0.2s;
-        }
-        .int-tag:hover {
-            border-color: var(--accent2);
-            color: var(--accent2);
-            background: rgba(167,139,250,0.08);
-        }
-
-        /* ── CONTACT CTA ── */
-        .contact-cta {
-            display: inline-flex;
-            align-items: center;
-            gap: 9px;
-            padding: 13px 28px;
-            border-radius: 12px;
-            background: rgba(108,140,255,0.1);
-            border: 1px solid rgba(108,140,255,0.25);
-            color: var(--accent);
-            font-size: 0.88em;
-            font-weight: 600;
-            text-decoration: none;
-            transition: all 0.2s;
-            letter-spacing: 0.2px;
-        }
-        .contact-cta:hover {
-            background: rgba(108,140,255,0.18);
-            border-color: rgba(108,140,255,0.5);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 24px rgba(108,140,255,0.15);
-        }
-
-        /* ── OBJECTIVE CARD ── */
-        .objective-text {
-            font-size: 0.9em;
-            color: var(--text-muted);
-            line-height: 1.75;
-        }
-
-        /* ── AVAILABLE BADGE ── */
-        .badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 6px 12px;
-            border-radius: 999px;
-            background: rgba(74,222,128,0.1);
-            border: 1px solid rgba(74,222,128,0.2);
-            font-size: 0.75em;
-            font-weight: 600;
-            color: #4ade80;
-            margin-bottom: 20px;
-        }
-
-        .badge-dot {
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background: #4ade80;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.5; transform: scale(0.8); }
-        }
-
-        /* ── DIVIDER ── */
-        hr.divider {
-            border: none;
-            border-top: 1px solid var(--border);
-            margin: 18px 0;
-        }
-
-        /* ── RESPONSIVE ── */
-        @media (max-width: 900px) {
-            .col-8 { grid-column: span 12; }
-            .col-7 { grid-column: span 12; }
-            .col-5 { grid-column: span 12; }
-            .col-4 { grid-column: span 6; }
-            .col-3 { grid-column: span 6; }
-        }
-
-        @media (max-width: 600px) {
-            .page { padding: 24px 16px 60px; }
-            .grid { gap: 10px; }
-            .col-4, .col-3, .col-6 { grid-column: span 12; }
-            .hero-card { padding: 28px 24px; }
-        }
-
-        /* ── PDF BUTTON ── */
-        .pdf-btn {
-            position: fixed;
-            bottom: 32px;
-            right: 32px;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 11px 20px;
-            border-radius: 12px;
-            font-size: 0.8em;
-            font-weight: 600;
-            border: 1px solid var(--pdf-btn-border);
-            cursor: pointer;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-            transition: all 0.2s;
-            z-index: 100;
-            letter-spacing: 0.4px;
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            background: var(--pdf-btn-bg);
-            color: var(--pdf-btn-color);
-        }
-        .pdf-btn:hover {
-            background: var(--pdf-btn-bg-hover);
-            border-color: var(--pdf-btn-border-hover);
-            color: var(--pdf-btn-color-hover);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 28px rgba(0,0,0,0.3);
-        }
-
-        /* ── CUSTOM CURSOR ── */
-        @media (hover: hover) and (pointer: fine) {
-            * { cursor: none !important; }
-        }
-        #cursor-dot {
-            position: fixed;
-            pointer-events: none;
-            z-index: 99999;
-            top: 0; left: 0;
-            width: 6px; height: 6px;
-            background: var(--accent);
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            will-change: transform;
-            opacity: 0;
-            transition: opacity 0.15s, background 0.3s, width 0.2s, height 0.2s;
-        }
-        #cursor-ring {
-            position: fixed;
-            pointer-events: none;
-            z-index: 99998;
-            top: 0; left: 0;
-            width: 30px; height: 30px;
-            border: 1.5px solid var(--accent);
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            will-change: transform;
-            opacity: 0;
-            transition: opacity 0.2s, width 0.25s ease, height 0.25s ease, border-color 0.3s;
-        }
-
-        /* ── LANG BUTTON ── */
-        .lang-btn {
-            position: fixed;
-            top: 72px;
-            left: 32px;
-            width: 36px;
-            text-align: center;
-            cursor: pointer;
-            z-index: 100;
-            background: none;
-            border: none;
-            padding: 0;
-            font-size: 0.72em;
-            font-weight: 700;
-            letter-spacing: 1.5px;
-            color: var(--text-dim);
-            transition: color 0.2s, transform 0.2s;
-        }
-        .lang-btn:hover {
-            color: var(--accent);
-            transform: scale(1.1);
-        }
-
-        /* ── THEME ICON ── */
-        .theme-icon {
-            position: fixed;
-            top: 28px;
-            left: 32px;
-            width: 36px;
-            height: 36px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            z-index: 100;
-            color: var(--text-dim);
-            transition: color 0.2s, transform 0.3s;
-            background: none;
-            border: none;
-            padding: 0;
-        }
-        .theme-icon:hover {
-            color: var(--accent);
-            transform: rotate(20deg) scale(1.15);
-        }
-        .theme-icon svg {
-            display: block;
-            transition: opacity 0.2s, transform 0.3s;
-        }
-
-        @media (max-width: 600px) {
-            .pdf-btn { right: 16px; bottom: 16px; padding: 9px 14px; }
-            .theme-icon {
-                top: auto;
-                left: 16px;
-                bottom: 16px;
-                width: 40px;
-                height: 40px;
-                background: var(--pdf-btn-bg);
-                border: 1px solid var(--pdf-btn-border);
-                border-radius: 10px;
-                backdrop-filter: blur(12px);
-                -webkit-backdrop-filter: blur(12px);
-                box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-            }
-            .theme-icon:hover { transform: none; }
-            .lang-btn { top: auto; left: 16px; bottom: 64px; }
-        }
-
-        /* ── PRINT CV (hidden on screen) ── */
-        #print-cv { display: none; }
-
-        @media print {
-            @page { size: A4; margin: 18mm 20mm; }
-
-            * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-
-            body { background: #fff !important; }
-            body::before, body::after { display: none; }
-
-            .page, footer, .pdf-btn, .theme-icon { display: none !important; }
-
-            #print-cv {
-                display: block;
-                font-family: 'Times New Roman', Times, serif;
-                font-size: 11pt;
-                color: #000;
-                line-height: 1.5;
-            }
-
-            #print-cv .cv-header {
-                text-align: center;
-                border-bottom: 2px solid #000;
-                padding-bottom: 10pt;
-                margin-bottom: 12pt;
-            }
-
-            #print-cv .cv-header h1 {
-                font-size: 18pt;
-                font-weight: bold;
-                letter-spacing: 1px;
-                margin-bottom: 4pt;
-            }
-
-            #print-cv .cv-header .cv-contact {
-                font-size: 9.5pt;
-                color: #222;
-            }
-
-            #print-cv .cv-header .cv-contact span {
-                margin: 0 6pt;
-            }
-
-            #print-cv .cv-section {
-                margin-bottom: 12pt;
-                break-inside: avoid;
-            }
-
-            #print-cv .cv-section-title {
-                font-size: 11pt;
-                font-weight: bold;
-                text-transform: uppercase;
-                letter-spacing: 1.5px;
-                border-bottom: 1px solid #000;
-                padding-bottom: 2pt;
-                margin-bottom: 7pt;
-            }
-
-            #print-cv .cv-row {
-                display: flex;
-                justify-content: space-between;
-                align-items: baseline;
-                margin-bottom: 1pt;
-            }
-
-            #print-cv .cv-row-title {
-                font-weight: bold;
-                font-size: 10.5pt;
-            }
-
-            #print-cv .cv-row-date {
-                font-size: 9.5pt;
-                white-space: nowrap;
-            }
-
-            #print-cv .cv-row-sub {
-                font-size: 10pt;
-                font-style: italic;
-                margin-bottom: 3pt;
-                color: #222;
-            }
-
-            #print-cv .cv-bullets {
-                margin: 3pt 0 8pt 14pt;
-                padding: 0;
-                list-style: disc;
-            }
-
-            #print-cv .cv-bullets li {
-                font-size: 10pt;
-                margin-bottom: 2pt;
-            }
-
-            #print-cv .cv-about {
-                font-size: 10pt;
-                text-align: justify;
-            }
-
-            #print-cv .cv-skills-grid {
-                display: grid;
-                grid-template-columns: 1fr 1fr;
-                gap: 4pt 20pt;
-            }
-
-            #print-cv .cv-skill-row {
-                font-size: 10pt;
-            }
-
-            #print-cv .cv-skill-row b {
-                font-weight: bold;
-            }
-
-            #print-cv .cv-lang-row {
-                display: flex;
-                justify-content: space-between;
-                font-size: 10pt;
-                border-bottom: 0.5px solid #ccc;
-                padding: 3pt 0;
-            }
-
-            #print-cv .cv-lang-row:last-child { border-bottom: none; }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Osman Efe Hamdioğlu — Bilgisayar Mühendisi & Yazılım Geliştirici</title>
+<meta name="description" content="Osman Efe Hamdioğlu — Ankara merkezli bilgisayar mühendisi. Klinik yönetim SaaS, beat pazarı, otonom yapay zekâ ajanları ve siber güvenlik araçları geliştiriyorum.">
+<meta name="author" content="Osman Efe Hamdioğlu">
+<link rel="canonical" href="https://efehamdioglu.com/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://efehamdioglu.com/">
+<meta property="og:title" content="Osman Efe Hamdioğlu — Bilgisayar Mühendisi & Yazılım Geliştirici">
+<meta property="og:description" content="Klinik yönetim SaaS, beat pazarı, otonom yapay zekâ ajanları ve siber güvenlik araçları geliştiriyorum.">
+<meta name="twitter:card" content="summary">
+<script>document.documentElement.classList.remove('no-js');document.documentElement.classList.add('js');</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════════════════════════
+   GRAPHITE MONO — saf nötr ramp (chroma = 0).
+   Anchor değerler 21st.dev / @serafimcloud "Graphite Mono"
+   temasından alındı; ara tonlar aynı ölçek üzerinde tamamlandı.
+   ═══════════════════════════════════════════════════════════════ */
+:root {
+  --bg:        #ffffff;
+  --fg:        #0a0a0a;
+  --card:      #ffffff;
+  --primary:   #171717;
+  --secondary: #d4d4d4;
+  --muted:     #efefef;
+  --muted-fg:  #737373;
+  --border:    #e5e5e5;
+  --border-st: #d4d4d4;
+  --ring:      #a3a3a3;
+
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+
+  --max: 1180px;
+  --pad: clamp(20px, 5vw, 56px);
+  --r: 2px;
+}
+@supports (color: oklch(1 0 0)) {
+  :root {
+    --bg:        oklch(1 0 0);
+    --fg:        oklch(0.145 0 0);
+    --card:      oklch(1 0 0);
+    --primary:   oklch(0.205 0 0);
+    --secondary: oklch(0.87 0 0);
+    --muted:     oklch(0.95 0 0);
+    --muted-fg:  oklch(0.556 0 0);
+    --border:    oklch(0.922 0 0);
+    --border-st: oklch(0.87 0 0);
+    --ring:      oklch(0.708 0 0);
+  }
+}
+
+/* Koyu tema — sistem tercihi (açıkça "light" seçilmedikçe) */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg:#0a0a0a; --fg:#fafafa; --card:#171717;
+    --primary:#fafafa; --secondary:#262626; --muted:#262626;
+    --muted-fg:#a3a3a3; --border:#262626; --border-st:#333333; --ring:#525252;
+  }
+}
+@supports (color: oklch(1 0 0)) {
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg:oklch(0.145 0 0); --fg:oklch(0.985 0 0); --card:oklch(0.205 0 0);
+      --primary:oklch(0.985 0 0); --secondary:oklch(0.269 0 0); --muted:oklch(0.269 0 0);
+      --muted-fg:oklch(0.708 0 0); --border:oklch(0.269 0 0);
+      --border-st:oklch(0.32 0 0); --ring:oklch(0.44 0 0);
+    }
+  }
+}
+/* Koyu tema — kullanıcı seçimi */
+:root[data-theme="dark"] {
+  --bg:#0a0a0a; --fg:#fafafa; --card:#171717;
+  --primary:#fafafa; --secondary:#262626; --muted:#262626;
+  --muted-fg:#a3a3a3; --border:#262626; --border-st:#333333; --ring:#525252;
+}
+@supports (color: oklch(1 0 0)) {
+  :root[data-theme="dark"] {
+    --bg:oklch(0.145 0 0); --fg:oklch(0.985 0 0); --card:oklch(0.205 0 0);
+    --primary:oklch(0.985 0 0); --secondary:oklch(0.269 0 0); --muted:oklch(0.269 0 0);
+    --muted-fg:oklch(0.708 0 0); --border:oklch(0.269 0 0);
+    --border-st:oklch(0.32 0 0); --ring:oklch(0.44 0 0);
+  }
+}
+
+* { box-sizing:border-box; margin:0; padding:0; }
+html { scroll-behavior:smooth; -webkit-text-size-adjust:100%; }
+body {
+  background:var(--bg); color:var(--fg);
+  font-family:var(--font-sans); font-size:16px; line-height:1.55;
+  -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+  transition:background .3s ease, color .3s ease;
+}
+::selection { background:var(--fg); color:var(--bg); }
+a { color:inherit; text-decoration:none; }
+button { font:inherit; color:inherit; background:none; border:none; cursor:pointer; }
+:focus-visible { outline:2px solid var(--ring); outline-offset:3px; }
+
+.wrap { max-width:var(--max); margin:0 auto; padding:0 var(--pad); }
+
+/* ─── NAV ──────────────────────────────────────────────────── */
+.nav {
+  position:sticky; top:0; z-index:60;
+  background:var(--bg);
+  background:color-mix(in srgb, var(--bg) 84%, transparent);
+  backdrop-filter:blur(14px) saturate(1.4);
+  -webkit-backdrop-filter:blur(14px) saturate(1.4);
+  border-bottom:1px solid var(--border);
+}
+.nav-in { max-width:var(--max); margin:0 auto; padding:0 var(--pad);
+  height:58px; display:flex; align-items:center; justify-content:space-between; gap:20px; }
+.brand { font-family:var(--font-mono); font-size:.78rem; font-weight:600;
+  letter-spacing:.04em; white-space:nowrap; }
+.brand i { font-style:normal; color:var(--muted-fg); }
+.nav-links { display:flex; gap:26px; }
+.nav-links a {
+  font-family:var(--font-mono); font-size:.69rem; letter-spacing:.09em;
+  text-transform:uppercase; color:var(--muted-fg); transition:color .2s;
+  position:relative; padding:4px 0;
+}
+.nav-links a::after { content:""; position:absolute; left:0; right:100%; bottom:0;
+  height:1px; background:var(--fg); transition:right .3s cubic-bezier(.2,.8,.2,1); }
+.nav-links a:hover { color:var(--fg); }
+.nav-links a:hover::after { right:0; }
+.nav-tools { display:flex; align-items:center; gap:6px; }
+.icon-btn {
+  height:32px; min-width:32px; padding:0 8px; display:inline-grid; place-items:center;
+  border:1px solid var(--border); border-radius:var(--r);
+  color:var(--muted-fg); transition:color .2s, border-color .2s;
+  font-family:var(--font-mono); font-size:.63rem; font-weight:600; letter-spacing:.06em;
+}
+.icon-btn:hover { color:var(--fg); border-color:var(--fg); }
+
+/* ─── HERO ─────────────────────────────────────────────────── */
+.hero { padding:clamp(52px,10vw,112px) 0 clamp(36px,6vw,64px); }
+.status {
+  display:inline-flex; align-items:center; gap:8px;
+  font-family:var(--font-mono); font-size:.65rem; letter-spacing:.13em;
+  text-transform:uppercase; color:var(--muted-fg); margin-bottom:26px;
+}
+.dot { width:6px; height:6px; border-radius:50%; background:var(--fg);
+  animation:pulse 2.4s ease-in-out infinite; }
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.3;transform:scale(.78)} }
+.hero h1 {
+  font-size:clamp(2.8rem, 10.5vw, 8rem); font-weight:800;
+  letter-spacing:-.055em; line-height:.87; margin-bottom:24px;
+}
+.hero h1 em { font-style:normal; font-weight:300; color:var(--muted-fg); }
+.hero-role {
+  font-family:var(--font-mono); font-size:clamp(.76rem,1.7vw,.92rem);
+  color:var(--muted-fg); padding-top:22px; border-top:1px solid var(--border); max-width:760px;
+}
+.hero-role b { color:var(--fg); font-weight:500; }
+.hero-lede { margin-top:22px; max-width:640px; font-size:1.02rem;
+  line-height:1.68; color:var(--muted-fg); }
+.hero-lede b { color:var(--fg); font-weight:600; }
+.chips { display:flex; flex-wrap:wrap; gap:8px; margin-top:32px; }
+.chip {
+  display:inline-flex; align-items:center; gap:7px;
+  padding:8px 13px; border:1px solid var(--border); border-radius:var(--r);
+  font-family:var(--font-mono); font-size:.69rem; color:var(--muted-fg);
+  transition:color .2s, background .2s, border-color .2s;
+}
+a.chip:hover { color:var(--bg); background:var(--fg); border-color:var(--fg); }
+.chip svg { flex-shrink:0; }
+
+.metrics {
+  display:grid; grid-template-columns:repeat(4,1fr);
+  gap:1px; background:var(--border); border:1px solid var(--border);
+  border-radius:var(--r); overflow:hidden; margin-top:52px;
+}
+.metric { background:var(--bg); padding:22px 20px; }
+.metric-n { font-size:clamp(1.6rem,4vw,2.3rem); font-weight:700; letter-spacing:-.04em; line-height:1; }
+.metric-l { font-family:var(--font-mono); font-size:.59rem; letter-spacing:.12em;
+  text-transform:uppercase; color:var(--muted-fg); margin-top:9px; }
+
+/* ─── BÖLÜM BAŞLIĞI ────────────────────────────────────────── */
+section { padding:clamp(46px,8vw,86px) 0 0; }
+.sec-head {
+  display:flex; align-items:baseline; gap:16px; flex-wrap:wrap;
+  padding-bottom:16px; border-bottom:1px solid var(--fg);
+  margin-bottom:clamp(24px,4vw,40px);
+}
+.sec-num { font-family:var(--font-mono); font-size:.65rem; letter-spacing:.14em; color:var(--muted-fg); }
+.sec-title { font-size:clamp(1.3rem,3.4vw,2rem); font-weight:700; letter-spacing:-.035em; }
+.sec-note { margin-left:auto; font-family:var(--font-mono); font-size:.65rem;
+  letter-spacing:.06em; color:var(--muted-fg); }
+
+/* ─── HAKKIMDA ─────────────────────────────────────────────── */
+.about { display:grid; grid-template-columns:1.25fr 1fr; gap:clamp(24px,5vw,56px); align-items:start; }
+.about p { font-size:1.01rem; line-height:1.72; color:var(--muted-fg); }
+.about p + p { margin-top:16px; }
+.about b { color:var(--fg); font-weight:600; }
+.about-side { display:flex; flex-direction:column; gap:1px; background:var(--border);
+  border:1px solid var(--border); border-radius:var(--r); }
+.fact { background:var(--bg); padding:14px 18px; display:flex;
+  justify-content:space-between; gap:16px; align-items:baseline; }
+.fact-k { font-family:var(--font-mono); font-size:.62rem; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--muted-fg); white-space:nowrap; }
+.fact-v { font-size:.85rem; font-weight:500; text-align:right; }
+
+/* ─── VİTRİN ───────────────────────────────────────────────── */
+.filters { display:flex; flex-wrap:wrap; gap:7px; margin-bottom:22px; }
+.filter {
+  padding:7px 13px; border:1px solid var(--border); border-radius:var(--r);
+  font-family:var(--font-mono); font-size:.65rem; letter-spacing:.08em;
+  text-transform:uppercase; color:var(--muted-fg);
+  transition:color .18s, background .18s, border-color .18s;
+}
+.filter:hover { color:var(--fg); border-color:var(--border-st); }
+.filter[aria-pressed="true"] { background:var(--fg); color:var(--bg); border-color:var(--fg); }
+
+.vitrin {
+  display:grid; grid-template-columns:repeat(auto-fill,minmax(330px,1fr));
+  gap:1px; background:var(--border); border:1px solid var(--border);
+  border-radius:var(--r); overflow:hidden;
+}
+.proj {
+  background:var(--card); padding:26px 24px 20px;
+  display:flex; flex-direction:column; gap:12px; min-height:270px;
+  transition:background .3s ease, color .3s ease;
+}
+.proj:hover { background:var(--fg); color:var(--bg); }
+.proj-top { display:flex; align-items:center; justify-content:space-between; gap:12px; }
+.proj-idx { font-family:var(--font-mono); font-size:.63rem; letter-spacing:.16em; opacity:.45; }
+.proj-state {
+  font-family:var(--font-mono); font-size:.57rem; letter-spacing:.12em; text-transform:uppercase;
+  border:1px solid currentColor; border-radius:var(--r); padding:3px 7px; opacity:.55;
+}
+.proj-state.on { opacity:1; }
+.proj h3 { font-size:1.26rem; font-weight:700; letter-spacing:-.028em; line-height:1.15; }
+.proj-sub { font-family:var(--font-mono); font-size:.62rem; letter-spacing:.1em;
+  text-transform:uppercase; opacity:.5; margin-top:-8px; }
+.proj-desc { font-size:.85rem; line-height:1.62; opacity:.7; flex:1; }
+.stack { display:flex; flex-wrap:wrap; gap:5px; }
+.stack span {
+  font-family:var(--font-mono); font-size:.59rem;
+  padding:3px 7px; border:1px solid currentColor; border-radius:var(--r); opacity:.45;
+}
+.proj-foot {
+  display:flex; align-items:center; justify-content:space-between; gap:12px;
+  padding-top:12px; border-top:1px solid currentColor;
+  border-top-color:color-mix(in srgb, currentColor 16%, transparent);
+  font-family:var(--font-mono); font-size:.62rem; letter-spacing:.06em;
+}
+.proj-foot .yr { opacity:.5; }
+.proj-links { display:flex; gap:14px; align-items:center; }
+.proj-links a { display:inline-flex; align-items:center; gap:5px; opacity:.75; transition:opacity .2s; }
+.proj-links a:hover { opacity:1; text-decoration:underline; text-underline-offset:3px; }
+.proj-links .none { opacity:.4; }
+
+/* ─── ARŞİV ────────────────────────────────────────────────── */
+.archive { border:1px solid var(--border); border-radius:var(--r); overflow:hidden; }
+.arc-row {
+  display:grid; grid-template-columns:minmax(140px,.85fr) 2fr minmax(86px,auto) 80px;
+  gap:16px; align-items:center; padding:13px 18px;
+  border-bottom:1px solid var(--border); transition:background .2s, color .2s;
+}
+.arc-row:last-child { border-bottom:none; }
+.arc-row:hover { background:var(--fg); color:var(--bg); }
+.arc-name { font-weight:600; font-size:.89rem; letter-spacing:-.01em; }
+.arc-desc { font-size:.81rem; opacity:.65; }
+.arc-tech { font-family:var(--font-mono); font-size:.61rem; opacity:.5; }
+.arc-link { font-family:var(--font-mono); font-size:.61rem; letter-spacing:.08em;
+  text-align:right; opacity:.7; }
+.arc-link a:hover { text-decoration:underline; text-underline-offset:3px; }
+
+/* ─── DENEYİM ──────────────────────────────────────────────── */
+.exp-item {
+  display:grid; grid-template-columns:186px 1fr; gap:clamp(14px,4vw,44px);
+  padding:24px 0; border-top:1px solid var(--border);
+}
+.exp-item:first-child { border-top:none; padding-top:0; }
+.exp-when { font-family:var(--font-mono); font-size:.67rem; color:var(--muted-fg); padding-top:5px; }
+.exp-when.now { color:var(--fg); font-weight:600; }
+.exp-role { font-size:1.05rem; font-weight:700; letter-spacing:-.02em; }
+.exp-org { font-family:var(--font-mono); font-size:.69rem; letter-spacing:.05em;
+  color:var(--muted-fg); margin-top:5px; }
+.exp-body { margin-top:11px; display:flex; flex-direction:column; gap:6px; }
+.exp-body li { list-style:none; position:relative; padding-left:16px;
+  font-size:.87rem; line-height:1.6; color:var(--muted-fg); }
+.exp-body li::before { content:""; position:absolute; left:0; top:.63em;
+  width:7px; height:1px; background:var(--border-st); }
+
+/* ─── YETENEKLER ───────────────────────────────────────────── */
+.skills { border-top:1px solid var(--border); }
+.skill-row { display:grid; grid-template-columns:186px 1fr; gap:clamp(14px,4vw,44px);
+  padding:16px 0; border-bottom:1px solid var(--border); align-items:baseline; }
+.skill-k { font-family:var(--font-mono); font-size:.65rem; letter-spacing:.12em;
+  text-transform:uppercase; color:var(--muted-fg); }
+.skill-v { display:flex; flex-wrap:wrap; gap:6px; }
+.skill-v span { font-size:.81rem; font-weight:500; padding:4px 10px;
+  border:1px solid var(--border); border-radius:var(--r); transition:border-color .18s; }
+.skill-v span:hover { border-color:var(--fg); }
+
+/* ─── ALT IZGARA ───────────────────────────────────────────── */
+.trio { display:grid; grid-template-columns:repeat(3,1fr); gap:1px;
+  background:var(--border); border:1px solid var(--border); border-radius:var(--r); overflow:hidden; }
+.tile { background:var(--bg); padding:24px 22px; }
+.tile h4 { font-family:var(--font-mono); font-size:.63rem; letter-spacing:.13em;
+  text-transform:uppercase; color:var(--muted-fg); margin-bottom:16px; }
+.edu-name { font-size:1rem; font-weight:700; letter-spacing:-.02em; }
+.edu-meta { font-size:.83rem; color:var(--muted-fg); margin-top:5px; }
+.edu-date { font-family:var(--font-mono); font-size:.64rem; color:var(--muted-fg); margin-top:9px; }
+.lang-row { display:flex; justify-content:space-between; gap:12px; align-items:baseline;
+  padding:9px 0; border-bottom:1px solid var(--border); }
+.lang-row:last-child { border-bottom:none; }
+.lang-row b { font-size:.89rem; font-weight:600; }
+.lang-row span { font-family:var(--font-mono); font-size:.63rem; color:var(--muted-fg); }
+.tagcloud { display:flex; flex-wrap:wrap; gap:6px; }
+.tagcloud span { font-family:var(--font-mono); font-size:.62rem;
+  padding:4px 9px; border:1px solid var(--border); border-radius:var(--r); color:var(--muted-fg); }
+
+/* ─── İLETİŞİM ─────────────────────────────────────────────── */
+.contact { margin-top:clamp(46px,8vw,86px); border:1px solid var(--fg);
+  border-radius:var(--r); padding:clamp(36px,7vw,72px) clamp(24px,5vw,56px); text-align:center; }
+.contact h2 { font-size:clamp(1.8rem,5.5vw,3.4rem); font-weight:800;
+  letter-spacing:-.05em; line-height:1; margin-bottom:16px; }
+.contact p { color:var(--muted-fg); font-size:.95rem; max-width:460px; margin:0 auto 32px; }
+.cta { display:inline-flex; align-items:center; gap:10px; padding:14px 26px;
+  background:var(--fg); color:var(--bg); border-radius:var(--r);
+  font-family:var(--font-mono); font-size:.77rem;
+  transition:transform .2s, opacity .2s; }
+.cta:hover { transform:translateY(-2px); opacity:.88; }
+.contact-alt { margin-top:22px; display:flex; flex-wrap:wrap; justify-content:center;
+  gap:18px; font-family:var(--font-mono); font-size:.67rem; color:var(--muted-fg); }
+.contact-alt a:hover { color:var(--fg); text-decoration:underline; text-underline-offset:4px; }
+
+footer { margin-top:clamp(46px,8vw,78px); padding:26px 0 44px; border-top:1px solid var(--border); }
+.foot-in { max-width:var(--max); margin:0 auto; padding:0 var(--pad);
+  display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap;
+  font-family:var(--font-mono); font-size:.63rem; letter-spacing:.06em; color:var(--muted-fg); }
+
+/* ─── YÜZEN KONTROLLER ─────────────────────────────────────── */
+.float { position:fixed; right:18px; bottom:18px; z-index:70; display:flex; gap:8px; }
+.float button {
+  display:inline-flex; align-items:center; gap:7px; padding:10px 14px;
+  background:var(--fg); color:var(--bg); border-radius:var(--r);
+  font-family:var(--font-mono); font-size:.66rem;
+  box-shadow:0 4px 18px rgb(0 0 0 / .16); transition:transform .2s, opacity .2s;
+}
+.float button:hover { transform:translateY(-2px); opacity:.9; }
+
+.js .reveal { opacity:0; transform:translateY(14px); }
+.js .reveal.in { opacity:1; transform:none;
+  transition:opacity .6s ease, transform .6s cubic-bezier(.2,.8,.2,1); }
+
+/* ─── RESPONSIVE ───────────────────────────────────────────── */
+@media (max-width:920px) {
+  .about { grid-template-columns:1fr; }
+  .trio { grid-template-columns:1fr; }
+  .exp-item, .skill-row { grid-template-columns:1fr; gap:10px; }
+  .exp-when { padding-top:0; }
+  .arc-row { grid-template-columns:1fr auto; gap:5px 14px; }
+  .arc-desc { grid-column:1 / -1; order:3; }
+  .arc-tech { grid-column:1 / -1; order:4; }
+  .nav-links { display:none; }
+}
+@media (max-width:560px) {
+  .vitrin { grid-template-columns:1fr; }
+  .metrics { grid-template-columns:1fr 1fr; }
+}
+@media (prefers-reduced-motion:reduce) {
+  *, *::before, *::after { animation:none !important; transition:none !important; }
+  html { scroll-behavior:auto; }
+  .js .reveal { opacity:1; transform:none; }
+}
+
+/* ─── YAZDIRMA / CV ────────────────────────────────────────── */
+#print-cv { display:none; }
+@media print {
+  @page { size:A4; margin:13mm 14mm; }
+  body { background:#fff !important; color:#000 !important; }
+  .nav, .hero, section, .contact, footer, .float { display:none !important; }
+  #print-cv { display:block !important; color:#000; }
+  .cv-h1 { font-size:19pt; font-weight:800; letter-spacing:-.02em; }
+  .cv-contact { font-size:8.5pt; color:#333; margin-top:4pt; line-height:1.5; }
+  .cv-sec { margin-top:11pt; }
+  .cv-sec-t { font-size:8.5pt; font-weight:700; letter-spacing:.14em; text-transform:uppercase;
+    border-bottom:.6pt solid #000; padding-bottom:2.5pt; margin-bottom:6pt; }
+  .cv-p { font-size:9pt; line-height:1.5; text-align:justify; }
+  .cv-row { display:flex; justify-content:space-between; gap:10pt; margin-top:7pt; }
+  .cv-row-t { font-size:10pt; font-weight:700; }
+  .cv-row-d { font-size:8.5pt; color:#333; white-space:nowrap; }
+  .cv-row-s { font-size:8.5pt; color:#333; font-style:italic; margin-top:1pt; }
+  .cv-ul { margin:3pt 0 0 13pt; }
+  .cv-ul li { font-size:9pt; line-height:1.45; margin-bottom:1.5pt; }
+  .cv-grid { display:grid; grid-template-columns:1fr 1fr; gap:1pt 18pt; }
+  .cv-line { font-size:9pt; line-height:1.55; }
+  .cv-lang { display:flex; justify-content:space-between; font-size:9pt; padding:1.5pt 0; }
+}
+</style>
 </head>
 <body>
-<div class="page">
-    <div class="grid">
 
-        <!-- ── HERO ── -->
-        <div class="card hero-card col-8">
-            <div class="badge">
-                <div class="badge-dot"></div>
-                <span data-i18n="badge">Open to opportunities</span>
-            </div>
-            <div class="name">Osman Efe<br>Hamdioğlu</div>
-            <div class="role" data-i18n="hero-role">
-                Computer Engineer &nbsp;·&nbsp;
-                <span>Software Developer</span>
-            </div>
-            <div class="contact-links">
-                <a class="chip" href="mailto:efehamdbusiness@gmail.com">
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
-                    <span data-i18n="chip-email">Email</span>
-                </a>
-                <a class="chip" href="https://linkedin.com/in/efehamd" target="_blank">
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
-                    LinkedIn
-                </a>
-                <a class="chip" href="https://github.com/efehamdioglu" target="_blank">
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
-                    GitHub
-                </a>
-                <span class="chip" data-i18n="chip-location">📍 Ankara, Turkey</span>
-            </div>
-        </div>
-
-        <!-- ── STATS ── -->
-        <div class="card col-4" style="display:grid; grid-template-columns:1fr 1fr; gap:0;">
-            <div class="stat-card" style="padding: 24px 20px; border-right: 1px solid var(--border);">
-                <div class="stat-number">6</div>
-                <div class="stat-label" data-i18n="stat-internships">Internships</div>
-            </div>
-            <div class="stat-card" style="padding: 24px 20px;">
-                <div class="stat-number">3+</div>
-                <div class="stat-label" data-i18n="stat-years">Years coding</div>
-            </div>
-        </div>
-
-        <!-- ── OBJECTIVE ── -->
-        <div class="card col-12">
-            <div class="label" data-i18n="label-about">About</div>
-            <p class="objective-text" data-i18n="about-text">
-                Computer Engineering student at Ostim Technical University, graduating in 2026. Through six internships across cybersecurity, network engineering, and software development, I've had the chance to work on real problems at real companies. I genuinely enjoy building things, care about the details, and always want what I make to feel as good as it works.
-            </p>
-        </div>
-
-        <!-- ── EXPERIENCE ── -->
-        <div class="card col-7">
-            <div class="label" data-i18n="label-experience">Experience</div>
-
-            <div class="exp-item">
-                <div class="exp-header">
-                    <div class="exp-title" data-i18n="exp0-title">Software Developer</div>
-                    <div class="exp-date" data-i18n="exp0-date">Jun 2026 – Present</div>
-                </div>
-                <div class="exp-company">BZB İletişim</div>
-                <ul>
-                    <li data-i18n="exp0-li1">Building and delivering ERP solutions for client companies</li>
-                </ul>
-            </div>
-
-            <hr class="divider">
-
-            <div class="exp-item">
-                <div class="exp-header">
-                    <div class="exp-title" data-i18n="exp1-title">ERP Developer Intern</div>
-                    <div class="exp-date" data-i18n="exp1-date">Feb 2026 – Jun 2026</div>
-                </div>
-                <div class="exp-company">BZB İletişim</div>
-                <ul>
-                    <li data-i18n="exp1-li1">Building ERP modules for TTT World's internal systems</li>
-                    <li data-i18n="exp1-li2">Involved from design to deployment</li>
-                </ul>
-            </div>
-
-            <hr class="divider">
-
-            <div class="exp-item">
-                <div class="exp-header">
-                    <div class="exp-title" data-i18n="exp2-title">Cyber Security Intern</div>
-                    <div class="exp-date" data-i18n="exp2-date">Mar – Apr 2025</div>
-                </div>
-                <div class="exp-company">Akgün Yazılım A.Ş.</div>
-                <ul>
-                    <li data-i18n="exp2-li1">Ran pentests and vulnerability assessments on web apps and internal systems</li>
-                    <li data-i18n="exp2-li2">Wrote remediation reports for each finding</li>
-                </ul>
-            </div>
-
-            <hr class="divider">
-
-            <div class="exp-item">
-                <div class="exp-header">
-                    <div class="exp-title" data-i18n="exp3-title">Network Security Engineer Intern</div>
-                    <div class="exp-date" data-i18n="exp3-date">Jan – Feb 2025</div>
-                </div>
-                <div class="exp-company">Forte Bilgi İletişim</div>
-                <ul>
-                    <li data-i18n="exp3-li1">Set up network gear and VLAN configs for enterprise environments</li>
-                    <li data-i18n="exp3-li2">Watched live traffic for threats in a defense-sector setting</li>
-                </ul>
-            </div>
-
-            <hr class="divider">
-
-            <div class="exp-item">
-                <div class="exp-header">
-                    <div class="exp-title" data-i18n="exp4-title">Network Security Intern</div>
-                    <div class="exp-date" data-i18n="exp4-date">Aug 2024</div>
-                </div>
-                <div class="exp-company">Forte Bilgi İletişim</div>
-                <ul>
-                    <li data-i18n="exp4-li1">Worked with firewalls, IDS/IPS, and packet capture tools</li>
-                </ul>
-            </div>
-
-            <hr class="divider">
-
-            <div class="exp-item">
-                <div class="exp-header">
-                    <div class="exp-title" data-i18n="exp5-title">Software Engineer Intern</div>
-                    <div class="exp-date" data-i18n="exp5-date">Jan 2024</div>
-                </div>
-                <div class="exp-company">Forte Bilgi İletişim</div>
-                <ul>
-                    <li data-i18n="exp5-li1">Built web features and APIs with ASP.NET MVC, C#, SQL Server</li>
-                    <li data-i18n="exp5-li2">Worked in agile sprints with a small team</li>
-                </ul>
-            </div>
-
-            <hr class="divider">
-
-            <div class="exp-item">
-                <div class="exp-header">
-                    <div class="exp-title" data-i18n="exp6-title">Test Automation Intern</div>
-                    <div class="exp-date" data-i18n="exp6-date">Sep 2023</div>
-                </div>
-                <div class="exp-company">İnnova Bilişim</div>
-                <ul>
-                    <li data-i18n="exp6-li1">Wrote automated tests for regression coverage on enterprise software</li>
-                </ul>
-            </div>
-        </div>
-
-        <!-- ── RIGHT COLUMN ── -->
-        <div class="col-5" style="display:flex; flex-direction:column; gap:14px;">
-
-            <!-- Education -->
-            <div class="card">
-                <div class="label" data-i18n="label-education">Education</div>
-                <div class="edu-uni">Ostim Technical University</div>
-                <div class="edu-degree" data-i18n="edu-degree">BSc Computer Engineering &nbsp;·&nbsp; Ankara</div>
-                <div class="edu-date" data-i18n="edu-date">Sep 2022 – Jun 2026 (Expected)</div>
-            </div>
-
-            <!-- Languages -->
-            <div class="card">
-                <div class="label" data-i18n="label-languages">Languages</div>
-                <div class="lang-item">
-                    <div class="lang-name" data-i18n="lang1-name">Turkish</div>
-                    <div class="lang-level" data-i18n="lang1-level">Native</div>
-                </div>
-                <div class="lang-item">
-                    <div class="lang-name" data-i18n="lang2-name">English</div>
-                    <div class="lang-level">C1 Advanced &nbsp;·&nbsp; YDS 76.25</div>
-                </div>
-            </div>
-
-            <!-- Interests -->
-            <div class="card">
-                <div class="label" data-i18n="label-interests">Interests</div>
-                <div class="int-tags">
-                    <div class="int-tag">AI &amp; LLMs</div>
-                    <div class="int-tag" data-i18n="int-saas">SaaS Development</div>
-                    <div class="int-tag" data-i18n="int-uiux">UI / UX Design</div>
-                    <div class="int-tag" data-i18n="int-early">Early Adopting</div>
-                    <div class="int-tag" data-i18n="int-offsec">Offensive Security</div>
-                    <div class="int-tag" data-i18n="int-ctf">CTF Competitions</div>
-                    <div class="int-tag" data-i18n="int-cloud">Cloud Security</div>
-                    <div class="int-tag">Blockchain</div>
-                </div>
-            </div>
-
-        </div>
-
-        <!-- ── SKILLS ── -->
-        <div class="card col-12">
-            <div class="label" data-i18n="label-skills">Technical Skills</div>
-            <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;">
-                <div>
-                    <div class="skill-row">
-                        <div class="skill-name" data-i18n="skill-lang">Languages</div>
-                        <div class="skill-tags">
-                            <span class="skill-tag">Python</span>
-                            <span class="skill-tag">C / C++</span>
-                            <span class="skill-tag">C#</span>
-                            <span class="skill-tag">JavaScript</span>
-                            <span class="skill-tag">HTML / CSS</span>
-                        </div>
-                    </div>
-                    <div class="skill-row">
-                        <div class="skill-name" data-i18n="skill-fw">Frameworks</div>
-                        <div class="skill-tags">
-                            <span class="skill-tag">ASP.NET MVC</span>
-                        </div>
-                    </div>
-                    <div class="skill-row">
-                        <div class="skill-name" data-i18n="skill-cap">Capabilities</div>
-                        <div class="skill-tags">
-                            <span class="skill-tag" data-i18n="int-saas">SaaS Development</span>
-                        </div>
-                    </div>
-                </div>
-                <div>
-                    <div class="skill-row">
-                        <div class="skill-name" data-i18n="skill-sec">Security Tools</div>
-                        <div class="skill-tags">
-                            <span class="skill-tag">Wireshark</span>
-                            <span class="skill-tag">Nmap</span>
-                            <span class="skill-tag">Metasploit</span>
-                        </div>
-                    </div>
-                    <div class="skill-row">
-                        <div class="skill-name" data-i18n="skill-net">Networking</div>
-                        <div class="skill-tags">
-                            <span class="skill-tag">TCP/IP</span>
-                            <span class="skill-tag">VLAN</span>
-                            <span class="skill-tag" data-i18n="skill-firewalls">Firewalls</span>
-                            <span class="skill-tag">VPN</span>
-                        </div>
-                    </div>
-                </div>
-                <div>
-                    <div class="skill-row">
-                        <div class="skill-name" data-i18n="skill-db">Databases</div>
-                        <div class="skill-tags">
-                            <span class="skill-tag">SQL Server</span>
-                            <span class="skill-tag">MS Access</span>
-                        </div>
-                    </div>
-                    <div class="skill-row">
-                        <div class="skill-name" data-i18n="skill-tools">Tools &amp; DevOps</div>
-                        <div class="skill-tags">
-                            <span class="skill-tag">Git / GitHub</span>
-                            <span class="skill-tag">Linux</span>
-                            <span class="skill-tag">VMware</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-<!-- ── CONTACT ── -->
-        <div class="card col-12" style="text-align:center; padding: 48px 40px;">
-            <div class="label" style="margin-bottom:12px;" data-i18n="label-contact">Contact</div>
-            <p style="font-size:1.05em; font-weight:700; margin-bottom:8px;" data-i18n="contact-title">Let's get in touch</p>
-            <p style="font-size:0.85em; color:var(--text-muted); margin-bottom:28px; max-width:480px; margin-left:auto; margin-right:auto; line-height:1.7;" data-i18n="contact-sub">
-                Have something in mind? Reach me out.
-            </p>
-            <a href="mailto:efehamdbusiness@gmail.com" class="contact-cta">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
-                efehamdbusiness@gmail.com
-            </a>
-        </div>
-
+<!-- ══ NAV ══ -->
+<nav class="nav">
+  <div class="nav-in">
+    <a href="#top" class="brand">OSMAN EFE HAMDİOĞLU <i>/ <span data-i18n="brand-role">bilgisayar mühendisi</span></i></a>
+    <div class="nav-links">
+      <a href="#hakkimda" data-i18n="nav-about">Hakkımda</a>
+      <a href="#vitrin" data-i18n="nav-work">Projeler</a>
+      <a href="#deneyim" data-i18n="nav-exp">Deneyim</a>
+      <a href="#yetenekler" data-i18n="nav-skills">Yetenekler</a>
+      <a href="#iletisim" data-i18n="nav-contact">İletişim</a>
     </div>
-</div>
+    <div class="nav-tools">
+      <button class="icon-btn" id="lang-toggle" onclick="toggleLang()" title="Language / Dil"><span id="lang-label">EN</span></button>
+      <button class="icon-btn" id="theme-toggle" onclick="toggleTheme()" title="Tema" aria-label="Tema değiştir">
+        <svg id="ic-moon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg id="ic-sun" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+      </button>
+    </div>
+  </div>
+</nav>
 
-<footer style="text-align:center; padding: 32px 0 48px; color: var(--text-dim); font-size: 0.8em; position: relative; z-index: 1;">
-    made by efehamdioglu with love ♥
+<!-- ══ HERO ══ -->
+<header class="hero wrap" id="top">
+  <div class="status"><span class="dot"></span><span data-i18n="status">Yeni fırsatlara açık</span></div>
+  <h1>Osman Efe<br><em>Hamdioğlu</em></h1>
+  <div class="hero-role">
+    <b data-i18n="role-1">Bilgisayar Mühendisi</b> &nbsp;/&nbsp;
+    <b data-i18n="role-2">Yazılım Geliştirici</b> &nbsp;/&nbsp;
+    <span data-i18n="role-3">Ankara, Türkiye</span>
+  </div>
+  <p class="hero-lede" data-i18n="lede">
+    Kliniklerin hastasını, prodüktörlerin beat'ini, satış ekiplerinin teklifini yöneten
+    <b>gerçek ürünler</b> kuruyorum. Altı stajım siber güvenlikten kurumsal yazılıma uzandı;
+    bugün ağırlıkla <b>SaaS</b> ve <b>otonom yapay zekâ ajanları</b> üzerinde çalışıyorum.
+  </p>
+  <div class="chips">
+    <a class="chip" href="mailto:efehamdbusiness@gmail.com">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+      efehamdbusiness@gmail.com
+    </a>
+    <a class="chip" href="https://github.com/efehamdioglu" target="_blank" rel="noopener">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5A11.5 11.5 0 0 0 .5 12a11.5 11.5 0 0 0 7.86 10.92c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.34-1.29-1.7-1.29-1.7-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.2 1.77 1.2 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.56-.29-5.25-1.28-5.25-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.8 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.12 3.05.74.81 1.18 1.84 1.18 3.1 0 4.43-2.69 5.4-5.26 5.69.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 23.5 12 11.5 11.5 0 0 0 12 .5z"/></svg>
+      efehamdioglu
+    </a>
+    <a class="chip" href="https://linkedin.com/in/efehamd" target="_blank" rel="noopener">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+      in/efehamd
+    </a>
+    <span class="chip">+90 507 489 25 89</span>
+  </div>
+
+  <div class="metrics">
+    <div class="metric"><div class="metric-n">6</div><div class="metric-l" data-i18n="m-intern">Staj</div></div>
+    <div class="metric"><div class="metric-n">30+</div><div class="metric-l" data-i18n="m-repo">Depo</div></div>
+    <div class="metric"><div class="metric-n">4</div><div class="metric-l" data-i18n="m-years">Yıl kod yazıyorum</div></div>
+    <div class="metric"><div class="metric-n">2026</div><div class="metric-l" data-i18n="m-grad">Mezuniyet</div></div>
+  </div>
+</header>
+
+<!-- ══ HAKKIMDA ══ -->
+<section id="hakkimda" class="wrap reveal">
+  <div class="sec-head">
+    <span class="sec-num">01</span>
+    <h2 class="sec-title" data-i18n="s-about">Hakkımda</h2>
+  </div>
+  <div class="about">
+    <div>
+      <p data-i18n="about-1">
+        Ostim Teknik Üniversitesi Bilgisayar Mühendisliği son sınıf öğrencisiyim.
+        Yazılımı bir mühendislik disiplini olduğu kadar <b>zanaat</b> olarak da görüyorum:
+        temiz mimari, kullanıcı deneyimi ve tasarım kalitesi benim için aynı ağırlıkta.
+      </p>
+      <p data-i18n="about-2">
+        Altı stajda <b>siber güvenlik</b>, <b>ağ mühendisliği</b> ve <b>kurumsal yazılım</b>
+        taraflarında çalıştım; sızma testi de yazdım, VLAN da yapılandırdım, ASP.NET ERP modülü de.
+        Şimdi bunları kendi ürünlerimde birleştiriyorum.
+      </p>
+      <p data-i18n="about-3">
+        Boş vaktimde müzik üretiyorum — bu yüzden portföyümde bir beat pazarı ve
+        C++ ile yazılmış VST3 eklentileri var. Yüzüyorum, doğa yürüyüşü yapıyorum.
+      </p>
+    </div>
+    <div class="about-side">
+      <div class="fact"><span class="fact-k" data-i18n="f-loc">Konum</span><span class="fact-v" data-i18n="f-loc-v">Ankara, Türkiye</span></div>
+      <div class="fact"><span class="fact-k" data-i18n="f-role">Şu an</span><span class="fact-v" data-i18n="f-role-v">Yazılım Geliştirici · BZB İletişim</span></div>
+      <div class="fact"><span class="fact-k" data-i18n="f-edu">Eğitim</span><span class="fact-v" data-i18n="f-edu-v">Ostim Teknik Üni. · Bil. Müh.</span></div>
+      <div class="fact"><span class="fact-k" data-i18n="f-focus">Odak</span><span class="fact-v" data-i18n="f-focus-v">SaaS · Yapay zekâ ajanları · Güvenlik</span></div>
+      <div class="fact"><span class="fact-k" data-i18n="f-lang">Diller</span><span class="fact-v" data-i18n="f-lang-v">Türkçe (anadil) · İngilizce C1</span></div>
+      <div class="fact"><span class="fact-k" data-i18n="f-status">Durum</span><span class="fact-v" data-i18n="f-status-v">Yeni fırsatlara açık</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ VİTRİN ══ -->
+<section id="vitrin" class="wrap reveal">
+  <div class="sec-head">
+    <span class="sec-num">02</span>
+    <h2 class="sec-title" data-i18n="s-work">Seçilmiş İşler</h2>
+    <span class="sec-note" id="proj-count"></span>
+  </div>
+  <div class="filters" id="filters" role="group"></div>
+  <div class="vitrin" id="vitrin"></div>
+</section>
+
+<!-- ══ ARŞİV ══ -->
+<section id="arsiv" class="wrap reveal">
+  <div class="sec-head">
+    <span class="sec-num">03</span>
+    <h2 class="sec-title" data-i18n="s-archive">Arşiv</h2>
+    <span class="sec-note" data-i18n="s-archive-note">daha küçük işler ve denemeler</span>
+  </div>
+  <div class="archive" id="archive"></div>
+</section>
+
+<!-- ══ DENEYİM ══ -->
+<section id="deneyim" class="wrap reveal">
+  <div class="sec-head">
+    <span class="sec-num">04</span>
+    <h2 class="sec-title" data-i18n="s-exp">Deneyim</h2>
+    <span class="sec-note" data-i18n="s-exp-note">2023 — bugün</span>
+  </div>
+  <div class="exp" id="exp"></div>
+</section>
+
+<!-- ══ YETENEKLER ══ -->
+<section id="yetenekler" class="wrap reveal">
+  <div class="sec-head">
+    <span class="sec-num">05</span>
+    <h2 class="sec-title" data-i18n="s-skills">Teknik Yetenekler</h2>
+  </div>
+  <div class="skills" id="skills"></div>
+</section>
+
+<!-- ══ EĞİTİM / DİL / İLGİ ══ -->
+<section id="egitim" class="wrap reveal">
+  <div class="sec-head">
+    <span class="sec-num">06</span>
+    <h2 class="sec-title" data-i18n="s-edu">Eğitim & Diğer</h2>
+  </div>
+  <div class="trio">
+    <div class="tile">
+      <h4 data-i18n="t-edu">Eğitim</h4>
+      <div class="edu-name">Ostim Teknik Üniversitesi</div>
+      <div class="edu-meta" data-i18n="edu-degree">Bilgisayar Mühendisliği (Lisans) · Ankara</div>
+      <div class="edu-date" data-i18n="edu-date">Eylül 2022 — Haziran 2026 (beklenen)</div>
+    </div>
+    <div class="tile">
+      <h4 data-i18n="t-lang">Diller</h4>
+      <div class="lang-row"><b data-i18n="lang-tr">Türkçe</b><span data-i18n="lang-tr-v">Anadil</span></div>
+      <div class="lang-row"><b data-i18n="lang-en">İngilizce</b><span>C1 · YDS 76.25</span></div>
+    </div>
+    <div class="tile">
+      <h4 data-i18n="t-int">İlgi Alanları</h4>
+      <div class="tagcloud" id="interests"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ İLETİŞİM ══ -->
+<section id="iletisim" class="wrap">
+  <div class="contact reveal">
+    <h2 data-i18n="c-title">Bir şey inşa edelim.</h2>
+    <p data-i18n="c-sub">Bir fikriniz, bir pozisyonunuz ya da sadece bir sorunuz mu var? Yazın, hepsini okuyorum.</p>
+    <a class="cta" href="mailto:efehamdbusiness@gmail.com">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+      efehamdbusiness@gmail.com
+    </a>
+    <div class="contact-alt">
+      <a href="https://github.com/efehamdioglu" target="_blank" rel="noopener">github.com/efehamdioglu</a>
+      <a href="https://linkedin.com/in/efehamd" target="_blank" rel="noopener">linkedin.com/in/efehamd</a>
+      <a href="tel:+905074892589">+90 507 489 25 89</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="foot-in">
+    <span>© <span id="yr"></span> OSMAN EFE HAMDİOĞLU</span>
+    <span data-i18n="foot-note">Ankara'da tasarlandı ve kodlandı</span>
+  </div>
 </footer>
 
-<!-- ── FORMAL PRINT CV (hidden on screen, shown on print) ── -->
-<div id="print-cv">
-
-    <div class="cv-header">
-        <h1>OSMAN EFE HAMDİOĞLU</h1>
-        <div class="cv-contact">
-            <span>efehamdbusiness@gmail.com</span>·
-            <span>Ankara, Türkiye</span>·
-            <span>linkedin.com/in/efehamd</span>·
-            <span>github.com/efehamdioglu</span>
-        </div>
-    </div>
-
-    <div class="cv-section">
-        <div class="cv-section-title">Hakkımda</div>
-        <p class="cv-about">
-            Ostim Teknik Üniversitesi Bilgisayar Mühendisliği 4. sınıf öğrencisiyim. Yazılımı bir mühendislik disiplini olduğu kadar bir zanaat olarak da görüyorum; temiz mimari, kullanıcı deneyimi ve tasarım kalitesi benim için eşit derecede önemli. Altı staj sürecinde edindiğim deneyimle siber güvenlikten kurumsal yazılım geliştirmeye, ağ mühendisliğinden SaaS ürün geliştirmeye kadar geniş bir yelpazede çalıştım. Yapay zeka alanındaki gelişmeleri yakından takip ediyor, yeni teknolojileri erken benimsemeye özen gösteriyorum.
-        </p>
-    </div>
-
-    <div class="cv-section">
-        <div class="cv-section-title">İş Deneyimi</div>
-
-        <div class="cv-row">
-            <span class="cv-row-title">ERP Geliştirici Stajyeri</span>
-            <span class="cv-row-date">Şubat 2026 – Devam ediyor</span>
-        </div>
-        <div class="cv-row-sub">BZB İletişim &nbsp;·&nbsp; TTT World, SILA Group — Ankara</div>
-        <ul class="cv-bullets">
-            <li>TTT World'e ait ERP sistem modüllerinin geliştirilmesi ve bakımı</li>
-            <li>Kurumsal kaynak planlama özelliklerinin tam geliştirme yaşam döngüsünde çalışma</li>
-        </ul>
-
-        <div class="cv-row">
-            <span class="cv-row-title">Siber Güvenlik Stajyeri</span>
-            <span class="cv-row-date">Mart – Nisan 2025</span>
-        </div>
-        <div class="cv-row-sub">Akgün Yazılım A.Ş. — Ankara</div>
-        <ul class="cv-bullets">
-            <li>Web uygulamaları ve iç sistemlerde zafiyet analizi ve sızma testleri</li>
-            <li>Bulgular için aksiyon alınabilir raporlama ve çözüm önerileri hazırlanması</li>
-        </ul>
-
-        <div class="cv-row">
-            <span class="cv-row-title">Ağ Güvenliği Mühendisi Stajyeri</span>
-            <span class="cv-row-date">Ocak – Şubat 2025</span>
-        </div>
-        <div class="cv-row-sub">Forte Bilgi İletişim — Ankara</div>
-        <ul class="cv-bullets">
-            <li>Kurumsal ağ cihazlarının ve VLAN segmentasyonunun yapılandırılması</li>
-            <li>Savunma sanayi ortamlarında tehdit göstergelerine yönelik trafik izleme</li>
-        </ul>
-
-        <div class="cv-row">
-            <span class="cv-row-title">Ağ Güvenliği Stajyeri</span>
-            <span class="cv-row-date">Ağustos 2024</span>
-        </div>
-        <div class="cv-row-sub">Forte Bilgi İletişim — Ankara</div>
-        <ul class="cv-bullets">
-            <li>Güvenlik duvarı kuralları, IDS/IPS kurulumu, paket analizi (Wireshark, Nmap)</li>
-        </ul>
-
-        <div class="cv-row">
-            <span class="cv-row-title">Yazılım Mühendisi Stajyeri</span>
-            <span class="cv-row-date">Ocak 2024</span>
-        </div>
-        <div class="cv-row-sub">Forte Bilgi İletişim — Ankara</div>
-        <ul class="cv-bullets">
-            <li>ASP.NET MVC, C# ve SQL Server ile RESTful API ve web özellikleri geliştirilmesi</li>
-            <li>Çevik sprint süreçleri, kod incelemeleri ve işlevler arası ekip çalışması</li>
-        </ul>
-
-        <div class="cv-row">
-            <span class="cv-row-title">Test Otomasyon Stajyeri</span>
-            <span class="cv-row-date">Eylül 2023</span>
-        </div>
-        <div class="cv-row-sub">İnnova Bilişim — Ankara</div>
-        <ul class="cv-bullets">
-            <li>Kurumsal yazılım regresyon testleri için otomatik test süitleri geliştirilmesi</li>
-        </ul>
-    </div>
-
-    <div class="cv-section">
-        <div class="cv-section-title">Eğitim</div>
-        <div class="cv-row">
-            <span class="cv-row-title">Ostim Teknik Üniversitesi</span>
-            <span class="cv-row-date">Eylül 2022 – Haziran 2026 (Beklenen)</span>
-        </div>
-        <div class="cv-row-sub">Bilgisayar Mühendisliği Lisansı — Ankara</div>
-    </div>
-
-    <div class="cv-section">
-        <div class="cv-section-title">Teknik Yetkinlikler</div>
-        <div class="cv-skills-grid">
-            <div class="cv-skill-row"><b>Programlama Dilleri:</b> Python, C / C++, C#, JavaScript, HTML / CSS</div>
-            <div class="cv-skill-row"><b>Çerçeveler:</b> ASP.NET MVC</div>
-            <div class="cv-skill-row"><b>Güvenlik Araçları:</b> Wireshark, Nmap, Metasploit</div>
-            <div class="cv-skill-row"><b>Ağ Teknolojileri:</b> TCP/IP, VLAN, Güvenlik Duvarı, VPN</div>
-            <div class="cv-skill-row"><b>Veritabanları:</b> SQL Server, MS Access</div>
-            <div class="cv-skill-row"><b>Araçlar:</b> Git / GitHub, Linux, VMware</div>
-            <div class="cv-skill-row"><b>Yetkinlikler:</b> SaaS Geliştirme</div>
-        </div>
-    </div>
-
-    <div class="cv-section">
-        <div class="cv-section-title">Yabancı Dil</div>
-        <div class="cv-lang-row"><span>Türkçe</span><span>Anadil</span></div>
-        <div class="cv-lang-row"><span>İngilizce</span><span>C1 İleri Düzey &nbsp;·&nbsp; YDS 76.25</span></div>
-    </div>
-
-    <div class="cv-section">
-        <div class="cv-section-title">İlgi Alanları</div>
-        <p class="cv-about">Yapay Zeka ve Dil Modelleri, SaaS Geliştirme, UI/UX Tasarımı, Saldırgan Güvenlik, CTF Yarışmaları, Bulut Güvenliği, Blokzincir</p>
-    </div>
-
+<div class="float">
+  <button onclick="window.print()">
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+    <span data-i18n="btn-cv">CV indir</span>
+  </button>
 </div>
 
-<div id="cursor-dot"></div>
-<div id="cursor-ring"></div>
+<!-- ══ YAZDIRILABİLİR CV ══ -->
+<div id="print-cv">
+  <div class="cv-h1">OSMAN EFE HAMDİOĞLU</div>
+  <div class="cv-contact">
+    Bilgisayar Mühendisi / Yazılım Geliştirici<br>
+    efehamdbusiness@gmail.com · +90 507 489 25 89 · Ankara, Türkiye<br>
+    efehamdioglu.com · linkedin.com/in/efehamd · github.com/efehamdioglu
+  </div>
 
-<button class="lang-btn" id="lang-toggle" onclick="toggleLang()" title="Switch language">
-    <span id="lang-label">TUR</span>
-</button>
+  <div class="cv-sec">
+    <div class="cv-sec-t">Hakkımda</div>
+    <p class="cv-p">Ostim Teknik Üniversitesi Bilgisayar Mühendisliği son sınıf öğrencisiyim. Yazılımı bir mühendislik disiplini olduğu kadar bir zanaat olarak da görüyorum; temiz mimari, kullanıcı deneyimi ve tasarım kalitesi benim için eşit derecede önemli. Altı staj sürecinde siber güvenlikten kurumsal yazılım geliştirmeye, ağ mühendisliğinden SaaS ürün geliştirmeye kadar geniş bir yelpazede çalıştım. Bugün ağırlıklı olarak SaaS ürünleri ve otonom yapay zekâ ajanları geliştiriyorum.</p>
+  </div>
 
-<button class="theme-icon" id="theme-toggle" onclick="toggleTheme()" title="Toggle light/dark mode" aria-label="Toggle theme">
-    <svg id="theme-icon-moon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-    </svg>
-    <svg id="theme-icon-sun" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;">
-        <circle cx="12" cy="12" r="5"/>
-        <line x1="12" y1="1" x2="12" y2="3"/>
-        <line x1="12" y1="21" x2="12" y2="23"/>
-        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
-        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
-        <line x1="1" y1="12" x2="3" y2="12"/>
-        <line x1="21" y1="12" x2="23" y2="12"/>
-        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
-        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
-    </svg>
-</button>
+  <div class="cv-sec">
+    <div class="cv-sec-t">İş Deneyimi</div>
 
-<button class="pdf-btn" onclick="window.print()">
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-        <polyline points="7 10 12 15 17 10"/>
-        <line x1="12" y1="15" x2="12" y2="3"/>
-    </svg>
-    <span data-i18n="btn-pdf">Download CV</span>
-</button>
+    <div class="cv-row"><span class="cv-row-t">Yazılım Geliştirici</span><span class="cv-row-d">Haziran 2026 — Devam ediyor</span></div>
+    <div class="cv-row-s">BZB İletişim — Ankara</div>
+    <ul class="cv-ul">
+      <li>Müşteri şirketler için ERP çözümlerinin geliştirilmesi ve teslimi</li>
+      <li>Analizden dağıtıma kadar tam geliştirme yaşam döngüsünde sorumluluk</li>
+    </ul>
+
+    <div class="cv-row"><span class="cv-row-t">ERP Geliştirici Stajyeri</span><span class="cv-row-d">Şubat 2026 — Haziran 2026</span></div>
+    <div class="cv-row-s">BZB İletişim · TTT World, SILA Group — Ankara</div>
+    <ul class="cv-ul">
+      <li>TTT World'e ait ERP sistem modüllerinin geliştirilmesi ve bakımı</li>
+      <li>Legacy ASP.NET Web Forms sisteminin ASP.NET Core 8 + React'e taşınması</li>
+    </ul>
+
+    <div class="cv-row"><span class="cv-row-t">Siber Güvenlik Stajyeri</span><span class="cv-row-d">Mart — Nisan 2025</span></div>
+    <div class="cv-row-s">Akgün Yazılım A.Ş. — Ankara</div>
+    <ul class="cv-ul">
+      <li>Web uygulamaları ve iç sistemlerde zafiyet analizi ve sızma testleri</li>
+      <li>Bulgular için aksiyon alınabilir raporlama ve çözüm önerileri</li>
+    </ul>
+
+    <div class="cv-row"><span class="cv-row-t">Ağ Güvenliği Mühendisi Stajyeri</span><span class="cv-row-d">Ocak — Şubat 2025</span></div>
+    <div class="cv-row-s">Forte Bilgi İletişim Teknolojileri ve Savunma Sanayi A.Ş. — Ankara</div>
+    <ul class="cv-ul">
+      <li>Kurumsal ağ cihazlarının ve VLAN segmentasyonunun yapılandırılması</li>
+      <li>Savunma sanayi ortamlarında tehdit göstergelerine yönelik trafik izleme</li>
+    </ul>
+
+    <div class="cv-row"><span class="cv-row-t">Ağ Güvenliği Stajyeri</span><span class="cv-row-d">Ağustos 2024</span></div>
+    <div class="cv-row-s">Forte Bilgi İletişim — Ankara</div>
+    <ul class="cv-ul">
+      <li>Güvenlik duvarı kuralları, IDS/IPS kurulumu, paket analizi (Wireshark, Nmap)</li>
+    </ul>
+
+    <div class="cv-row"><span class="cv-row-t">Yazılım Mühendisi Stajyeri</span><span class="cv-row-d">Ocak 2024</span></div>
+    <div class="cv-row-s">Forte Bilgi İletişim — Ankara</div>
+    <ul class="cv-ul">
+      <li>ASP.NET MVC, C# ve SQL Server ile RESTful API ve web özellikleri geliştirilmesi</li>
+      <li>Çevik sprint süreçleri, kod incelemeleri ve işlevler arası ekip çalışması</li>
+    </ul>
+
+    <div class="cv-row"><span class="cv-row-t">Test Otomasyon Stajyeri</span><span class="cv-row-d">Eylül 2023</span></div>
+    <div class="cv-row-s">İnnova Bilişim — Ankara</div>
+    <ul class="cv-ul">
+      <li>Kurumsal yazılım regresyon testleri için otomatik test süitleri geliştirilmesi</li>
+    </ul>
+  </div>
+
+  <div class="cv-sec">
+    <div class="cv-sec-t">Seçilmiş Projeler</div>
+    <ul class="cv-ul">
+      <li><b>Kireido</b> — Estetik ve dermatoloji klinikleri için klinik yönetim SaaS'ı. Spring Boot + React, PostgreSQL, Docker. Hasta, randevu, tedavi teklifi, stok/lot ve KVKK uyumlu kayıt yönetimi.</li>
+      <li><b>WavLock</b> — Türk prodüktörler ve sanatçılar için beat pazarı: keşif, lisanslama, yarışma ve iş birliği. Next.js 16, React 19, Prisma, PostgreSQL, Redis.</li>
+      <li><b>AI Sales Orchestrator</b> — Üretici firmalarda serbest metin talebi ürüne, fiyata, PDF teklife ve takip görevine dönüştüren otonom satış ajanı. Next.js, PostgreSQL, arka plan worker.</li>
+      <li><b>MinBid</b> — Gerçek zamanlı online açık artırma platformu; açık artırma motoru doğrudan PostgreSQL üzerinde (pg_cron + RLS). Next.js, Supabase.</li>
+      <li><b>Robb-IT Security</b> — Windows için terminal tabanlı güvenlik aracı: sistem taraması, canlı trafik izleme, IP bloklama, DPI bypass. C#. Açık kaynak.</li>
+      <li><b>theWriter</b> — Tamamen çevrimdışı çalışan otonom kodlama ajanı; yerel LLM (Ollama), Docker sandbox, ChromaDB tabanlı kalıcı hafıza.</li>
+    </ul>
+  </div>
+
+  <div class="cv-sec">
+    <div class="cv-sec-t">Teknik Yetkinlikler</div>
+    <div class="cv-grid">
+      <div class="cv-line"><b>Diller:</b> C#, TypeScript / JavaScript, Python, Java, C / C++, SQL, HTML / CSS</div>
+      <div class="cv-line"><b>Çerçeveler:</b> ASP.NET Core &amp; MVC, Next.js, React, Spring Boot, React Native (Expo), Streamlit</div>
+      <div class="cv-line"><b>Veri:</b> PostgreSQL, SQL Server, Supabase, Prisma, EF Core, Redis, SQLite, ChromaDB</div>
+      <div class="cv-line"><b>Yapay Zekâ:</b> Çoklu ajan mimarileri, tool-calling, RAG, Ollama, Claude, Gemini</div>
+      <div class="cv-line"><b>Güvenlik:</b> Sızma testi, zafiyet analizi, Wireshark, Nmap, Metasploit, IDS/IPS</div>
+      <div class="cv-line"><b>Ağ:</b> TCP/IP, VLAN, güvenlik duvarı, VPN, DoH / DPI</div>
+      <div class="cv-line"><b>Altyapı:</b> Docker, Vercel, Hetzner, Caddy, Git / GitHub, Linux, VMware</div>
+      <div class="cv-line"><b>Diğer:</b> SaaS ürün geliştirme, UI/UX tasarımı, JUCE / VST3 ses eklentisi</div>
+    </div>
+  </div>
+
+  <div class="cv-sec">
+    <div class="cv-sec-t">Eğitim</div>
+    <div class="cv-row"><span class="cv-row-t">Ostim Teknik Üniversitesi</span><span class="cv-row-d">Eylül 2022 — Haziran 2026 (beklenen)</span></div>
+    <div class="cv-row-s">Bilgisayar Mühendisliği (Lisans) — Ankara</div>
+  </div>
+
+  <div class="cv-sec">
+    <div class="cv-sec-t">Yabancı Dil</div>
+    <div class="cv-lang"><span>Türkçe</span><span>Anadil</span></div>
+    <div class="cv-lang"><span>İngilizce</span><span>C1 İleri Düzey · YDS 76.25</span></div>
+  </div>
+
+  <div class="cv-sec">
+    <div class="cv-sec-t">İlgi Alanları</div>
+    <p class="cv-p">Yapay zekâ ve dil modelleri, SaaS geliştirme, UI/UX tasarımı, saldırgan güvenlik, CTF yarışmaları, bulut güvenliği, blokzincir, müzik prodüksiyonu.</p>
+  </div>
+</div>
 
 <script>
-    // ── TRANSLATIONS ──
-    const t = {
-        en: {
-            'badge': 'Open to opportunities',
-            'hero-role': 'Computer Engineer &nbsp;·&nbsp; <span>Software Developer</span>',
-            'chip-email': 'Email',
-            'chip-location': '📍 Ankara, Turkey',
-            'stat-internships': 'Internships',
-            'stat-years': 'Years coding',
-            'label-about': 'About',
-            'about-text': 'Computer Engineering student at Ostim Technical University, graduating in 2026. Through six internships across cybersecurity, network engineering, and software development, I\'ve had the chance to work on real problems at real companies. I genuinely enjoy building things, care about the details, and always want what I make to feel as good as it works.',
-            'label-experience': 'Experience',
-            'exp0-title': 'Software Developer',
-            'exp0-date': 'Jun 2026 – Present',
-            'exp0-li1': 'Building and delivering ERP solutions for client companies',
-            'exp1-title': 'ERP Developer Intern',
-            'exp1-date': 'Feb 2026 – Jun 2026',
-            'exp1-li1': 'Building ERP modules for client companies',
-            'exp1-li2': 'Involved from design to deployment',
-            'exp2-title': 'Cyber Security Intern',
-            'exp2-date': 'Mar – Apr 2025',
-            'exp2-li1': 'Ran pentests and vulnerability assessments on web apps and internal systems',
-            'exp2-li2': 'Wrote remediation reports for each finding',
-            'exp3-title': 'Network Security Engineer Intern',
-            'exp3-date': 'Jan – Feb 2025',
-            'exp3-li1': 'Set up network gear and VLAN configs for enterprise environments',
-            'exp3-li2': 'Watched live traffic for threats in a defense-sector setting',
-            'exp4-title': 'Network Security Intern',
-            'exp4-date': 'Aug 2024',
-            'exp4-li1': 'Worked with firewalls, IDS/IPS, and packet capture tools',
-            'exp5-title': 'Software Engineer Intern',
-            'exp5-date': 'Jan 2024',
-            'exp5-li1': 'Built web features and APIs with ASP.NET MVC, C#, SQL Server',
-            'exp5-li2': 'Worked in agile sprints with a small team',
-            'exp6-title': 'Test Automation Intern',
-            'exp6-date': 'Sep 2023',
-            'exp6-li1': 'Wrote automated tests for regression coverage on enterprise software',
-            'label-education': 'Education',
-            'edu-degree': 'BSc Computer Engineering &nbsp;·&nbsp; Ankara',
-            'edu-date': 'Sep 2022 – Jun 2026 (Expected)',
-            'label-languages': 'Languages',
-            'lang1-name': 'Turkish',
-            'lang1-level': 'Native',
-            'lang2-name': 'English',
-            'label-interests': 'Interests',
-            'int-saas': 'SaaS Development',
-            'int-uiux': 'UI / UX Design',
-            'int-early': 'Early Adopting',
-            'int-offsec': 'Offensive Security',
-            'int-ctf': 'CTF Competitions',
-            'int-cloud': 'Cloud Security',
-            'label-skills': 'Technical Skills',
-            'skill-lang': 'Languages',
-            'skill-fw': 'Frameworks',
-            'skill-cap': 'Capabilities',
-            'skill-sec': 'Security Tools',
-            'skill-net': 'Networking',
-            'skill-firewalls': 'Firewalls',
-            'skill-db': 'Databases',
-            'skill-tools': 'Tools & DevOps',
-            'label-contact': 'Contact',
-            'contact-title': 'Let\'s get in touch',
-            'contact-sub': 'Have something in mind? Reach me out.',
-            'btn-pdf': 'Download CV',
-        },
-        tr: {
-            'badge': 'Fırsatlara açığım',
-            'hero-role': 'Bilgisayar Mühendisi &nbsp;·&nbsp; <span>Yazılım Geliştirici</span>',
-            'chip-email': 'E-posta',
-            'chip-location': '📍 Ankara, Türkiye',
-            'stat-internships': 'Staj',
-            'stat-years': 'Yıl kodlama',
-            'label-about': 'Hakkımda',
-            'about-text': 'Ostim Teknik Üniversitesi Bilgisayar Mühendisliği öğrencisiyim, 2026\'da mezun oluyorum. Siber güvenlik, ağ mühendisliği ve yazılım geliştirme alanlarında altı staj yaparak gerçek şirketlerde gerçek problemler üzerinde çalışma fırsatı buldum. Bir şeyler inşa etmeyi gerçekten seviyorum, detaylara önem veriyorum ve yaptığım her şeyin işlevselliği kadar iyi hissettirmesini istiyorum.',
-            'label-experience': 'Deneyim',
-            'exp0-title': 'Yazılım Geliştirici',
-            'exp0-date': 'Haz 2026 – Devam ediyor',
-            'exp0-li1': 'Müşteri şirketler için ERP çözümleri geliştirip teslim ediyorum',
-            'exp1-title': 'ERP Geliştirici Stajyeri',
-            'exp1-date': 'Şub 2026 – Haz 2026',
-            'exp1-li1': 'Müşteri şirketler için ERP modülleri geliştirdim',
-            'exp1-li2': 'Tasarımdan dağıtıma kadar sürecin içindeyim',
-            'exp2-title': 'Siber Güvenlik Stajyeri',
-            'exp2-date': 'Mar – Nis 2025',
-            'exp2-li1': 'Web uygulamaları ve iç sistemlerde pentest ve zafiyet analizi yaptım',
-            'exp2-li2': 'Her bulgu için raporlama ve çözüm önerisi hazırladım',
-            'exp3-title': 'Ağ Güvenliği Mühendisi Stajyeri',
-            'exp3-date': 'Oca – Şub 2025',
-            'exp3-li1': 'Kurumsal ortamlar için ağ cihazlarını ve VLAN yapılandırmalarını kurdum',
-            'exp3-li2': 'Savunma sektöründe canlı trafiği tehditler için izledim',
-            'exp4-title': 'Ağ Güvenliği Stajyeri',
-            'exp4-date': 'Ağu 2024',
-            'exp4-li1': 'Güvenlik duvarları, IDS/IPS ve paket yakalama araçlarıyla çalıştım',
-            'exp5-title': 'Yazılım Mühendisi Stajyeri',
-            'exp5-date': 'Oca 2024',
-            'exp5-li1': 'ASP.NET MVC, C#, SQL Server ile web özellikleri ve API\'lar geliştirdim',
-            'exp5-li2': 'Küçük bir ekiple agile sprint\'lerde çalıştım',
-            'exp6-title': 'Test Otomasyon Stajyeri',
-            'exp6-date': 'Eyl 2023',
-            'exp6-li1': 'Kurumsal yazılım için regresyon kapsamlı otomatik testler yazdım',
-            'label-education': 'Eğitim',
-            'edu-degree': 'Bilgisayar Mühendisliği Lisansı &nbsp;·&nbsp; Ankara',
-            'edu-date': 'Eyl 2022 – Haz 2026 (Beklenen)',
-            'label-languages': 'Diller',
-            'lang1-name': 'Türkçe',
-            'lang1-level': 'Anadil',
-            'lang2-name': 'İngilizce',
-            'label-interests': 'İlgi Alanları',
-            'int-saas': 'SaaS Geliştirme',
-            'int-uiux': 'UI / UX Tasarımı',
-            'int-early': 'Yeni Teknoloji Takibi',
-            'int-offsec': 'Saldırgan Güvenlik',
-            'int-ctf': 'CTF Yarışmaları',
-            'int-cloud': 'Bulut Güvenliği',
-            'label-skills': 'Teknik Beceriler',
-            'skill-lang': 'Diller',
-            'skill-fw': 'Çerçeveler',
-            'skill-cap': 'Yetenekler',
-            'skill-sec': 'Güvenlik Araçları',
-            'skill-net': 'Ağ Teknolojileri',
-            'skill-firewalls': 'Güvenlik Duvarları',
-            'skill-db': 'Veritabanları',
-            'skill-tools': 'Araçlar & DevOps',
-            'label-contact': 'İletişim',
-            'contact-title': 'İletişime geçelim',
-            'contact-sub': 'Aklında bir şey mi var? Ulaş bana.',
-            'btn-pdf': 'CV İndir',
-        }
-    };
+/* ═══════════════ VERİ ═══════════════
+   Tüm proje bilgileri kendi GitHub depolarımdan doğrulanarak yazıldı. */
 
-    let currentLang = 'en';
+const CATS = {
+  all:     { tr:'Tümü',        en:'All' },
+  product: { tr:'Ürün / SaaS', en:'Product / SaaS' },
+  ai:      { tr:'Yapay Zekâ',  en:'AI' },
+  security:{ tr:'Güvenlik',    en:'Security' },
+  audio:   { tr:'Ses',         en:'Audio' },
+  mobile:  { tr:'Mobil',       en:'Mobile' },
+  web:     { tr:'Web',         en:'Web' }
+};
 
-    function applyLang(lang) {
-        currentLang = lang;
-        document.querySelectorAll('[data-i18n]').forEach(el => {
-            const key = el.dataset.i18n;
-            if (t[lang][key] !== undefined) el.innerHTML = t[lang][key];
-        });
-        document.getElementById('lang-label').textContent = lang === 'en' ? 'TUR' : 'ENG';
-        localStorage.setItem('lang', lang);
-    }
+const STATE = {
+  live:    { tr:'Yayında',  en:'Live' },
+  private: { tr:'Özel depo',en:'Private' },
+  oss:     { tr:'Açık kaynak', en:'Open source' },
+  wip:     { tr:'Geliştirmede', en:'In progress' }
+};
 
-    function toggleLang() {
-        applyLang(currentLang === 'en' ? 'tr' : 'en');
-    }
+const PROJECTS = [
+  {
+    name:'Kireido', cats:['product'], year:'2026', state:'wip',
+    sub:{ tr:'Klinik yönetim SaaS', en:'Clinic management SaaS' },
+    desc:{
+      tr:'Estetik ve dermatoloji klinikleri için uçtan uca yönetim paneli. Hasta → randevu → tedavi teklifi → onay → ödeme → uygulama akışı, anatomi haritası, lot bazlı stok, RBAC ve KVKK uyumlu saklama.',
+      en:'End-to-end management panel for aesthetic and dermatology clinics. Patient → appointment → treatment quote → approval → payment → application flow, anatomy map, lot-based stock, RBAC and GDPR-equivalent retention.'
+    },
+    stack:['Spring Boot','React','PostgreSQL','Docker','Caddy'],
+    links:{}
+  },
+  {
+    name:'WavLock', cats:['product','audio','web'], year:'2026', state:'wip',
+    sub:{ tr:'Beat pazarı', en:'Beat marketplace' },
+    desc:{
+      tr:'Türk prodüktörler ve sanatçılar için beat pazarı: type beat keşfi, lisanslama, "Trap Or Trash" kapışmaları ve iş birliği ilanları. Dalga formu oynatıcı, sepet, ödeme ve otomatik tanıtım videosu üretimi.',
+      en:'A beat marketplace for Turkish producers and artists: type beat discovery, licensing, "Trap Or Trash" battles and collaboration calls. Waveform player, cart, payments and automated promo video rendering.'
+    },
+    stack:['Next.js 16','React 19','Prisma','PostgreSQL','Redis','Remotion'],
+    links:{}
+  },
+  {
+    name:'AI Sales Orchestrator', cats:['ai','product'], year:'2026', state:'private',
+    sub:{ tr:'Otonom satış ajanı', en:'Autonomous sales agent' },
+    desc:{
+      tr:'Üretici firmalarda teklif sürecini uçtan uca yöneten yapay zekâ asistanı. Serbest metin talebi ürüne, fiyata, PDF teklife ve takip görevine çevirir; aday firma bulur, kampanya yürütür, gelen postayı yanıtlar. Fiyat ve vade her zaman insana sorulur.',
+      en:'An AI assistant that runs the whole quoting process for manufacturers. It turns a free-text request into a product, a price, a PDF quote and a follow-up task; finds leads, runs campaigns, answers inbound mail. Pricing and terms always escalate to a human.'
+    },
+    stack:['Next.js','PostgreSQL 17','Claude','IMAP/SMTP','Worker'],
+    links:{}
+  },
+  {
+    name:'MinBid', cats:['product','web'], year:'2026', state:'private',
+    sub:{ tr:'Gerçek zamanlı açık artırma', en:'Realtime auction platform' },
+    desc:{
+      tr:'Online açık artırma platformu. Ayrı bir realtime sunucusu ya da Redis yok: açık artırma motorunun kendisi PostgreSQL. Her geçerli teklif bitiş anını 45 saniye ileri iter, pg_cron her saniye lotları kapatıp sıradakini açar.',
+      en:'An online auction platform. No separate realtime server and no Redis: Postgres itself is the auction engine. Every valid bid pushes the deadline 45s forward, and pg_cron closes lots and opens the next one every second.'
+    },
+    stack:['Next.js 16','Supabase','pg_cron','RLS','Tailwind 4'],
+    links:{}
+  },
+  {
+    name:'TASKUDO Remastered', cats:['product'], year:'2026', state:'private',
+    sub:{ tr:'ERP modernizasyonu', en:'ERP modernisation' },
+    desc:{
+      tr:'Çalışan bir ASP.NET Web Forms ERP\'sini ve görev yönetimi modülünü yeni nesle taşıma projesi: Access → MSSQL şema göçü, ASP.NET Core 8 katmanlı Web API ve React SPA. Eski sistem ayakta kalırken kademeli geçiş.',
+      en:'Migrating a live ASP.NET Web Forms ERP and its task module to a new generation: Access → MSSQL schema migration, a layered ASP.NET Core 8 Web API and a React SPA — phased, with the legacy system still running.'
+    },
+    stack:['ASP.NET Core 8','EF Core','React','Vite','SQL Server'],
+    links:{}
+  },
+  {
+    name:'STUDIOBASE', cats:['ai','audio'], year:'2026', state:'oss',
+    sub:{ tr:'Çoklu ajan müzik motoru', en:'Multi-agent music engine' },
+    desc:{
+      tr:'Bir tema verip tam bir albüm konsepti alıyorsunuz. Kreatif Direktör parça listesini kurar, Söz Yazarı yazar, Eleştirmen hece ve kafiye üzerinden geri bildirim döndürür, döngü onaya kadar sürer; Görsel Ajan kapak promptunu üretir.',
+      en:'Give it a theme, get a full album concept. A Director builds the tracklist, a Lyricist writes, a Critic sends feedback on metre and rhyme until it approves, and a Visual agent produces the cover art prompt.'
+    },
+    stack:['Python','Streamlit','Gemini','Ollama','Claude'],
+    links:{ repo:'https://github.com/efehamdioglu/STUDIOBASE' }
+  },
+  {
+    name:'theWriter', cats:['ai'], year:'2026', state:'wip',
+    sub:{ tr:'Çevrimdışı kodlama ajanı', en:'Offline coding agent' },
+    desc:{
+      tr:'%100 çevrimdışı, token maliyeti olmayan otonom kodlama ajanı. Kodu yazar, Docker sandbox\'ta test eder, hatayı okur ve düzeltir. ChromaDB ile kalıcı hafıza tutar; hiçbir istek makinenin dışına çıkmaz.',
+      en:'A fully offline autonomous coding agent with no token cost. It writes code, tests it in a Docker sandbox, reads the failure and fixes it. Persistent memory via ChromaDB; no request ever leaves the machine.'
+    },
+    stack:['Python','Ollama','Docker','ChromaDB','RAG'],
+    links:{}
+  },
+  {
+    name:'İlacım Cepte', cats:['mobile','product'], year:'2026', state:'private',
+    sub:{ tr:'İlaç takip uygulaması', en:'Medication tracker' },
+    desc:{
+      tr:'İlaç ve doz takibi için mobil uygulama. Barkod ya da reçeteden ilaç ekleme, doz planı, hatırlatma bildirimleri, bakmakla yükümlü olunan kişiler için ayrı profiller. Tamamen çevrimdışı çalışır.',
+      en:'A mobile app for medication and dose tracking. Add drugs by barcode or prescription, build a dose plan, get reminders, and keep separate profiles for dependents. Works fully offline.'
+    },
+    stack:['React Native','Expo','SQLite','Notifications'],
+    links:{}
+  },
+  {
+    name:'Robb-IT Security', cats:['security'], year:'2026', state:'oss',
+    sub:{ tr:'Terminal güvenlik aracı', en:'Terminal security tool' },
+    desc:{
+      tr:'Windows için terminalden çalışan güvenlik aracı. Süreç, başlangıç, zamanlanmış görev, WMI ve hosts taraması; canlı bağlantı izleme ve tehdit uyarısı; güvenlik duvarından IP bloklama; şifreli DNS ve TLS parçalama ile DPI bypass.',
+      en:'A terminal-driven security tool for Windows. Scans processes, startup, scheduled tasks, WMI and the hosts file; live connection monitoring with threat alerts; IP blocking through the firewall; DPI bypass via encrypted DNS and TLS fragmentation.'
+    },
+    stack:['C#','.NET','Windows API','DoH'],
+    links:{ repo:'https://github.com/efehamdioglu/robb-it' }
+  },
+  {
+    name:'BZB ERP', cats:['product'], year:'2026', state:'private',
+    sub:{ tr:'Kurumsal ERP', en:'Enterprise ERP' },
+    desc:{
+      tr:'Müşteri şirketler için geliştirdiğim ERP sisteminin backend ve frontend tarafı. İthalat takibi, görev yönetimi, stok ve raporlama modülleri; iş yerinde üretimde kullanılıyor.',
+      en:'The backend and frontend of the ERP I build for client companies — import tracking, task management, stock and reporting modules. In production use at work.'
+    },
+    stack:['C#','ASP.NET Core','TypeScript','React','SQL Server'],
+    links:{}
+  },
+  {
+    name:'Lucii Opto', cats:['audio'], year:'2026', state:'private',
+    sub:{ tr:'VST3 optik kompresör', en:'VST3 optical compressor' },
+    desc:{
+      tr:'JUCE ve C++ ile sıfırdan yazılmış optik kompresör eklentisi. DSP zinciri ve arayüzü tamamen elle çizildi — tipografiden metre animasyonuna kadar.',
+      en:'An optical compressor plugin written from scratch in C++ with JUCE. Both the DSP chain and the interface are hand-built — from the typography down to the meter animation.'
+    },
+    stack:['C++','JUCE','DSP','CMake'],
+    links:{}
+  },
+  {
+    name:'Flanger VST3', cats:['audio'], year:'2026', state:'private',
+    sub:{ tr:'VST3 modülasyon efekti', en:'VST3 modulation effect' },
+    desc:{
+      tr:'Gecikme hattı modülasyonuna dayalı flanger eklentisi; JUCE üzerinde C++ ile yazıldı, özel çizilmiş bir arayüzü var. Ses üretimi tarafındaki merakımın kod tarafındaki karşılığı.',
+      en:'A flanger built on delay-line modulation, written in C++ on JUCE with a custom-drawn interface. The code-side counterpart to my interest in music production.'
+    },
+    stack:['C++','JUCE','DSP','CMake'],
+    links:{}
+  }
+];
 
-    // ── THEME TOGGLE ──
-    function toggleTheme() {
-        const isLight = document.documentElement.getAttribute('data-theme') === 'light';
-        const next = isLight ? 'dark' : 'light';
-        applyTheme(next);
-        localStorage.setItem('theme', next);
-    }
+const ARCHIVE = [
+  { name:'BZB Kurumsal Site', tech:'Next.js', year:'2026',
+    desc:{ tr:'BZB İletişim için kurumsal web sitesi; grup şirketlerinin tanıtımı.', en:'Corporate website for BZB İletişim and its group companies.' },
+    url:'https://bzb-bilisim.vercel.app' },
+  { name:'CV Warrior', tech:'React · Vite', year:'2026',
+    desc:{ tr:'Piksel sanat oyunu olarak gezilen interaktif portföy denemesi.', en:'An interactive portfolio you walk through as a pixel-art game.' },
+    url:'https://efe-portfolio-fawn.vercel.app' },
+  { name:'Swave Cult', tech:'ASP.NET Core', year:'2026',
+    desc:{ tr:'Nadir ithal ürünler için Razor Pages tabanlı vitrin ve drop sayfası.', en:'A Razor Pages storefront and drop page for rare imports.' },
+    repo:'https://github.com/efehamdioglu/swaveculture' },
+  { name:'TTT World Guide', tech:'HTML · CSS', year:'2026',
+    desc:{ tr:'İşyeri sağlık ve hijyen rehberi; tek sayfa, çok dilli içerik.', en:'A workplace health and hygiene guide — single page, multilingual content.' },
+    url:'https://tttworld-guide.vercel.app', repo:'https://github.com/efehamdioglu/tttworld_guide' },
+  { name:'Art Gallery', tech:'Vanilla JS', year:'2026',
+    desc:{ tr:'Rick Owens esintili minimal brutalist sanat galerisi arayüzü.', en:'A minimal brutalist art gallery interface, Rick Owens inspired.' } },
+  { name:'AnkaraWalk', tech:'Three.js', year:'2026',
+    desc:{ tr:'Three.js ile gerçek zamanlı yürüyüş sahnesi denemesi.', en:'A realtime walkable scene experiment built with Three.js.' } },
+  { name:'not-a-calculator', tech:'Capacitor', year:'2026',
+    desc:{ tr:'Hesap makinesi gibi görünen, öyle olmayan web + mobil deneme.', en:'A web + mobile experiment that looks like a calculator and is not one.' },
+    repo:'https://github.com/efehamdioglu/not-a-calculator' },
+  { name:'MySweetHome', tech:'C++', year:'2025',
+    desc:{ tr:'C++ ile yazılmış ev otomasyonu / envanter konsol uygulaması.', en:'A home automation / inventory console application written in C++.' } },
+  { name:'CRUD Project', tech:'ASP.NET MVC', year:'2024',
+    desc:{ tr:'ASP.NET MVC ile temel CRUD işlemleri — okul dönemi çalışması.', en:'Basic CRUD operations with ASP.NET MVC — coursework era.' },
+    repo:'https://github.com/efehamdioglu/Crud-Project' }
+];
 
-    function applyTheme(theme) {
-        if (theme === 'light') {
-            document.documentElement.setAttribute('data-theme', 'light');
-            document.getElementById('theme-icon-moon').style.display = 'none';
-            document.getElementById('theme-icon-sun').style.display = 'inline';
-        } else {
-            document.documentElement.removeAttribute('data-theme');
-            document.getElementById('theme-icon-moon').style.display = 'inline';
-            document.getElementById('theme-icon-sun').style.display = 'none';
-        }
-    }
+const EXPERIENCE = [
+  { when:{ tr:'Haziran 2026 — bugün', en:'Jun 2026 — Present' }, now:true,
+    role:{ tr:'Yazılım Geliştirici', en:'Software Developer' }, org:'BZB İletişim · Ankara',
+    bullets:{ tr:['Müşteri şirketler için ERP çözümleri geliştirip teslim ediyorum',
+                  'Analizden dağıtıma kadar tüm geliştirme döngüsünde sorumluluk alıyorum'],
+              en:['Building and delivering ERP solutions for client companies',
+                  'Owning the full development cycle, from analysis through deployment'] } },
+  { when:{ tr:'Şubat — Haziran 2026', en:'Feb — Jun 2026' },
+    role:{ tr:'ERP Geliştirici Stajyeri', en:'ERP Developer Intern' }, org:'BZB İletişim · TTT World, SILA Group',
+    bullets:{ tr:['TTT World ERP sisteminin modüllerini geliştirdim ve baktım',
+                  'Legacy ASP.NET Web Forms sistemini ASP.NET Core 8 + React\'e taşıma projesinde çalıştım'],
+              en:['Built and maintained modules of TTT World\'s ERP system',
+                  'Worked on migrating the legacy ASP.NET Web Forms system to ASP.NET Core 8 + React'] } },
+  { when:{ tr:'Mart — Nisan 2025', en:'Mar — Apr 2025' },
+    role:{ tr:'Siber Güvenlik Stajyeri', en:'Cyber Security Intern' }, org:'Akgün Yazılım A.Ş. · Ankara',
+    bullets:{ tr:['Web uygulamaları ve iç sistemlerde zafiyet analizi ve sızma testleri yürüttüm',
+                  'Her bulgu için aksiyon alınabilir raporlama ve çözüm önerisi hazırladım'],
+              en:['Ran vulnerability assessments and penetration tests on web apps and internal systems',
+                  'Wrote actionable reports and remediation advice for every finding'] } },
+  { when:{ tr:'Ocak — Şubat 2025', en:'Jan — Feb 2025' },
+    role:{ tr:'Ağ Güvenliği Mühendisi Stajyeri', en:'Network Security Engineer Intern' },
+    org:'Forte Bilgi İletişim ve Savunma Sanayi A.Ş.',
+    bullets:{ tr:['Kurumsal ağ cihazlarını ve VLAN segmentasyonunu yapılandırdım',
+                  'Savunma sanayi ortamında tehdit göstergelerine karşı canlı trafik izledim'],
+              en:['Configured enterprise network gear and VLAN segmentation',
+                  'Monitored live traffic for threat indicators in a defence-sector environment'] } },
+  { when:{ tr:'Ağustos 2024', en:'Aug 2024' },
+    role:{ tr:'Ağ Güvenliği Stajyeri', en:'Network Security Intern' }, org:'Forte Bilgi İletişim · Ankara',
+    bullets:{ tr:['Güvenlik duvarı kuralları, IDS/IPS kurulumu ve paket analizi üzerine çalıştım (Wireshark, Nmap)'],
+              en:['Worked on firewall rules, IDS/IPS setup and packet analysis (Wireshark, Nmap)'] } },
+  { when:{ tr:'Ocak 2024', en:'Jan 2024' },
+    role:{ tr:'Yazılım Mühendisi Stajyeri', en:'Software Engineer Intern' }, org:'Forte Bilgi İletişim · Ankara',
+    bullets:{ tr:['ASP.NET MVC, C# ve SQL Server ile RESTful API ve web özellikleri geliştirdim',
+                  'Çevik sprintlerde, kod incelemeleriyle, işlevler arası bir ekipte çalıştım'],
+              en:['Built RESTful APIs and web features with ASP.NET MVC, C# and SQL Server',
+                  'Worked in agile sprints with code reviews in a cross-functional team'] } },
+  { when:{ tr:'Eylül 2023', en:'Sep 2023' },
+    role:{ tr:'Test Otomasyon Stajyeri', en:'Test Automation Intern' }, org:'İnnova Bilişim · Ankara',
+    bullets:{ tr:['Kurumsal yazılımın regresyon kapsamı için otomatik test süitleri geliştirdim'],
+              en:['Developed automated test suites for regression coverage on enterprise software'] } }
+];
 
-    (function () {
-        const savedTheme = localStorage.getItem('theme');
-        if (savedTheme) applyTheme(savedTheme);
-        const savedLang = localStorage.getItem('lang');
-        if (savedLang) applyLang(savedLang);
-    })();
+const SKILLS = [
+  { k:{ tr:'Diller', en:'Languages' },
+    v:['C#','TypeScript','JavaScript','Python','Java','C / C++','SQL','HTML / CSS'] },
+  { k:{ tr:'Çerçeveler', en:'Frameworks' },
+    v:['ASP.NET Core','ASP.NET MVC','Next.js','React','Spring Boot','React Native','Expo','Streamlit'] },
+  { k:{ tr:'Veri', en:'Data' },
+    v:['PostgreSQL','SQL Server','Supabase','Prisma','EF Core','Redis','SQLite','ChromaDB'] },
+  { k:{ tr:'Yapay Zekâ', en:'AI' },
+    v:['Çoklu ajan mimarisi','Tool calling','RAG','Ollama','Claude','Gemini'],
+    vEn:['Multi-agent systems','Tool calling','RAG','Ollama','Claude','Gemini'] },
+  { k:{ tr:'Güvenlik', en:'Security' },
+    v:['Sızma testi','Zafiyet analizi','Wireshark','Nmap','Metasploit','IDS / IPS'],
+    vEn:['Penetration testing','Vulnerability assessment','Wireshark','Nmap','Metasploit','IDS / IPS'] },
+  { k:{ tr:'Ağ', en:'Networking' },
+    v:['TCP/IP','VLAN','Güvenlik duvarı','VPN','DoH / DPI'],
+    vEn:['TCP/IP','VLAN','Firewalls','VPN','DoH / DPI'] },
+  { k:{ tr:'Altyapı', en:'Infrastructure' },
+    v:['Docker','Vercel','Hetzner','Caddy','Git / GitHub','Linux','VMware'] },
+  { k:{ tr:'Diğer', en:'Other' },
+    v:['SaaS ürün geliştirme','UI / UX tasarımı','JUCE / VST3','Agile'],
+    vEn:['SaaS product development','UI / UX design','JUCE / VST3','Agile'] }
+];
 
-    // ── CUSTOM CURSOR ──
-    (function() {
-        if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
-        const dot  = document.getElementById('cursor-dot');
-        const ring = document.getElementById('cursor-ring');
-        let mx = -100, my = -100, rx = -100, ry = -100, visible = false;
+const INTERESTS = {
+  tr:['Yapay zekâ ve dil modelleri','SaaS geliştirme','UI/UX tasarımı','Saldırgan güvenlik','CTF yarışmaları','Bulut güvenliği','Blokzincir','Müzik prodüksiyonu'],
+  en:['AI & language models','SaaS development','UI/UX design','Offensive security','CTF competitions','Cloud security','Blockchain','Music production']
+};
 
-        document.addEventListener('mousemove', e => {
-            mx = e.clientX; my = e.clientY;
-            dot.style.transform = `translate(calc(${mx}px - 50%), calc(${my}px - 50%))`;
-            if (!visible) {
-                rx = mx; ry = my;
-                dot.style.opacity  = '1';
-                ring.style.opacity = '0.55';
-                visible = true;
-            }
-        });
-        document.addEventListener('mouseleave', () => {
-            dot.style.opacity = ring.style.opacity = '0';
-            visible = false;
-        });
+/* ═══════════════ ARAYÜZ METİNLERİ ═══════════════ */
+const T = {
+  tr: {}, /* HTML zaten Türkçe yazıldı; boş bırakmak varsayılanı korur */
+  en: {
+    'brand-role':'computer engineer',
+    'nav-about':'About','nav-work':'Work','nav-exp':'Experience','nav-skills':'Skills','nav-contact':'Contact',
+    'status':'Open to new opportunities',
+    'role-1':'Computer Engineer','role-2':'Software Developer','role-3':'Ankara, Türkiye',
+    'lede':'I build <b>real products</b> — the ones that run a clinic\'s patients, a producer\'s beats, a sales team\'s quotes. Six internships took me from cybersecurity to enterprise software; today I mostly work on <b>SaaS</b> and <b>autonomous AI agents</b>.',
+    'm-intern':'Internships','m-repo':'Repositories','m-years':'Years writing code','m-grad':'Graduating',
+    's-about':'About','s-work':'Selected Work','s-archive':'Archive','s-archive-note':'smaller work and experiments',
+    's-exp':'Experience','s-exp-note':'2023 — today','s-skills':'Technical Skills','s-edu':'Education & More',
+    'about-1':'I\'m a final-year Computer Engineering student at Ostim Technical University. I see software as much as a <b>craft</b> as an engineering discipline: clean architecture, user experience and design quality carry equal weight for me.',
+    'about-2':'Across six internships I worked in <b>cybersecurity</b>, <b>network engineering</b> and <b>enterprise software</b> — I have written pentest reports, configured VLANs and shipped ASP.NET ERP modules. Now I combine all of it in my own products.',
+    'about-3':'I produce music in my spare time — which is why my portfolio holds a beat marketplace and VST3 plugins written in C++. I swim and hike.',
+    'f-loc':'Location','f-loc-v':'Ankara, Türkiye',
+    'f-role':'Currently','f-role-v':'Software Developer · BZB İletişim',
+    'f-edu':'Education','f-edu-v':'Ostim Technical Univ. · CE',
+    'f-focus':'Focus','f-focus-v':'SaaS · AI agents · Security',
+    'f-lang':'Languages','f-lang-v':'Turkish (native) · English C1',
+    'f-status':'Status','f-status-v':'Open to opportunities',
+    't-edu':'Education','t-lang':'Languages','t-int':'Interests',
+    'edu-degree':'BSc Computer Engineering · Ankara','edu-date':'Sep 2022 — Jun 2026 (expected)',
+    'lang-tr':'Turkish','lang-tr-v':'Native','lang-en':'English',
+    'c-title':'Let\'s build something.','c-sub':'An idea, a role, or just a question — write to me. I read all of it.',
+    'foot-note':'Designed and coded in Ankara',
+    'btn-cv':'Download CV'
+  }
+};
 
-        document.querySelectorAll('a, button, .card').forEach(el => {
-            el.addEventListener('mouseenter', () => {
-                ring.style.width = ring.style.height = '50px';
-                ring.style.opacity = '0.3';
-                dot.style.width = dot.style.height = '8px';
-            });
-            el.addEventListener('mouseleave', () => {
-                ring.style.width = ring.style.height = '30px';
-                ring.style.opacity = visible ? '0.55' : '0';
-                dot.style.width = dot.style.height = '6px';
-            });
-        });
+/* ═══════════════ DURUM ═══════════════ */
+let lang  = localStorage.getItem('lang')  || 'tr';
+let filter = 'all';
 
-        (function animate() {
-            rx += (mx - rx) * 0.18;
-            ry += (my - ry) * 0.18;
-            ring.style.transform = `translate(calc(${rx}px - 50%), calc(${ry}px - 50%))`;
-            requestAnimationFrame(animate);
-        })();
-    })();
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const L = o => (o && (o[lang] ?? o.tr)) || '';
 
-    // ── TILT + CURSOR LIGHT ──
-    const cards = document.querySelectorAll('.card');
+/* ─── Vitrin ─── */
+function renderProjects() {
+  const list = PROJECTS.filter(p => filter === 'all' || p.cats.includes(filter));
+  document.getElementById('proj-count').textContent =
+    lang === 'tr' ? list.length + ' proje' : list.length + ' projects';
 
-    cards.forEach(card => {
-        let tiltRaf = null;
-        let lx = 0, ly = 0, lRect = null;
+  document.getElementById('vitrin').innerHTML = list.map((p, i) => {
+    const links = [];
+    if (p.links.live) links.push('<a href="' + p.links.live + '" target="_blank" rel="noopener">' +
+      (lang === 'tr' ? 'Siteyi aç' : 'Visit site') + ' ↗</a>');
+    if (p.links.repo) links.push('<a href="' + p.links.repo + '" target="_blank" rel="noopener">GitHub ↗</a>');
+    if (!links.length) links.push('<span class="none">' +
+      (lang === 'tr' ? 'depo özel' : 'private repo') + '</span>');
 
-        card.addEventListener('mouseenter', () => {
-            card.classList.remove('tilt-leaving');
-        });
+    return '<article class="proj">' +
+      '<div class="proj-top">' +
+        '<span class="proj-idx">' + String(i + 1).padStart(2, '0') + '</span>' +
+        '<span class="proj-state' + (p.state === 'live' ? ' on' : '') + '">' + L(STATE[p.state]) + '</span>' +
+      '</div>' +
+      '<h3>' + esc(p.name) + '</h3>' +
+      '<div class="proj-sub">' + esc(L(p.sub)) + '</div>' +
+      '<p class="proj-desc">' + esc(L(p.desc)) + '</p>' +
+      '<div class="stack">' + p.stack.map(s => '<span>' + esc(s) + '</span>').join('') + '</div>' +
+      '<div class="proj-foot"><span class="yr">' + p.year + '</span>' +
+        '<span class="proj-links">' + links.join('') + '</span></div>' +
+    '</article>';
+  }).join('');
+}
 
-        card.addEventListener('mousemove', e => {
-            lRect = card.getBoundingClientRect();
-            lx = e.clientX - lRect.left;
-            ly = e.clientY - lRect.top;
-            if (tiltRaf) return;
-            tiltRaf = requestAnimationFrame(() => {
-                tiltRaf = null;
-                const cx = lRect.width / 2, cy = lRect.height / 2;
-                const rotY = ((lx - cx) / cx) * 8;
-                const rotX = -((ly - cy) / cy) * 6;
-                card.style.transform = `perspective(900px) rotateX(${rotX}deg) rotateY(${rotY}deg) scale3d(1.015,1.015,1.015)`;
-                card.style.setProperty('--mx', `${(lx / lRect.width) * 100}%`);
-                card.style.setProperty('--my', `${(ly / lRect.height) * 100}%`);
-            });
-        });
+function renderFilters() {
+  const used = new Set(['all']);
+  PROJECTS.forEach(p => p.cats.forEach(c => used.add(c)));
+  document.getElementById('filters').innerHTML = Object.keys(CATS)
+    .filter(k => used.has(k))
+    .map(k => '<button class="filter" data-cat="' + k + '" aria-pressed="' + (k === filter) + '">' +
+      esc(L(CATS[k])) + '</button>').join('');
 
-        card.addEventListener('mouseleave', () => {
-            if (tiltRaf) { cancelAnimationFrame(tiltRaf); tiltRaf = null; }
-            card.classList.add('tilt-leaving');
-            card.style.transform = '';
-            setTimeout(() => card.classList.remove('tilt-leaving'), 350);
-        });
-    });
+  document.querySelectorAll('.filter').forEach(b => b.addEventListener('click', () => {
+    filter = b.dataset.cat;
+    document.querySelectorAll('.filter').forEach(x =>
+      x.setAttribute('aria-pressed', String(x.dataset.cat === filter)));
+    renderProjects();
+  }));
+}
+
+/* ─── Arşiv ─── */
+function renderArchive() {
+  document.getElementById('archive').innerHTML = ARCHIVE.map(a => {
+    const link = a.url  ? '<a href="' + a.url + '" target="_blank" rel="noopener">' + (lang === 'tr' ? 'aç ↗' : 'open ↗') + '</a>'
+               : a.repo ? '<a href="' + a.repo + '" target="_blank" rel="noopener">github ↗</a>'
+               : '—';
+    return '<div class="arc-row">' +
+      '<span class="arc-name">' + esc(a.name) + '</span>' +
+      '<span class="arc-desc">' + esc(L(a.desc)) + '</span>' +
+      '<span class="arc-tech">' + esc(a.tech) + ' · ' + a.year + '</span>' +
+      '<span class="arc-link">' + link + '</span>' +
+    '</div>';
+  }).join('');
+}
+
+/* ─── Deneyim ─── */
+function renderExperience() {
+  document.getElementById('exp').innerHTML = EXPERIENCE.map(e =>
+    '<div class="exp-item">' +
+      '<div class="exp-when' + (e.now ? ' now' : '') + '">' + esc(L(e.when)) + '</div>' +
+      '<div>' +
+        '<div class="exp-role">' + esc(L(e.role)) + '</div>' +
+        '<div class="exp-org">' + esc(e.org) + '</div>' +
+        '<ul class="exp-body">' + L(e.bullets).map(b => '<li>' + esc(b) + '</li>').join('') + '</ul>' +
+      '</div>' +
+    '</div>').join('');
+}
+
+/* ─── Yetenekler & ilgi alanları ─── */
+function renderSkills() {
+  document.getElementById('skills').innerHTML = SKILLS.map(s => {
+    const vals = (lang === 'en' && s.vEn) ? s.vEn : s.v;
+    return '<div class="skill-row">' +
+      '<div class="skill-k">' + esc(L(s.k)) + '</div>' +
+      '<div class="skill-v">' + vals.map(v => '<span>' + esc(v) + '</span>').join('') + '</div>' +
+    '</div>';
+  }).join('');
+
+  document.getElementById('interests').innerHTML =
+    INTERESTS[lang].map(i => '<span>' + esc(i) + '</span>').join('');
+}
+
+/* ─── Dil ─── */
+function applyLang() {
+  document.documentElement.lang = lang;
+  document.getElementById('lang-label').textContent = lang === 'tr' ? 'EN' : 'TR';
+
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const k = el.dataset.i18n;
+    if (!el.dataset.tr) el.dataset.tr = el.innerHTML;          // Türkçe orijinali sakla
+    el.innerHTML = (lang === 'en' && T.en[k]) ? T.en[k] : el.dataset.tr;
+  });
+
+  renderFilters(); renderProjects(); renderArchive(); renderExperience(); renderSkills();
+}
+
+function toggleLang() {
+  lang = lang === 'tr' ? 'en' : 'tr';
+  localStorage.setItem('lang', lang);
+  applyLang();
+}
+
+/* ─── Tema ─── */
+function currentTheme() {
+  const saved = localStorage.getItem('theme');
+  if (saved) return saved;
+  return matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+}
+function applyTheme(t) {
+  document.documentElement.dataset.theme = t;
+  document.getElementById('ic-moon').style.display = t === 'dark' ? 'none' : '';
+  document.getElementById('ic-sun').style.display  = t === 'dark' ? '' : 'none';
+}
+function toggleTheme() {
+  const t = currentTheme() === 'dark' ? 'light' : 'dark';
+  localStorage.setItem('theme', t);
+  applyTheme(t);
+}
+
+/* ─── Görünürlük animasyonu ─── */
+function initReveal() {
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    document.querySelectorAll('.reveal').forEach(el => el.classList.add('in'));
+    return;
+  }
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.06, rootMargin: '0px 0px -40px' });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+}
+
+/* ─── Başlat ─── */
+document.getElementById('yr').textContent = new Date().getFullYear();
+applyTheme(currentTheme());
+applyLang();
+initReveal();
 </script>
 </body>
 </html>
