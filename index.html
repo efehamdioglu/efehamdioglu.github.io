@@ -656,7 +656,7 @@ footer { margin-top:clamp(46px,8vw,78px); padding:26px 0 44px; border-top:1px so
   <div class="cv-sec">
     <div class="cv-sec-t">Seçilmiş Projeler</div>
     <ul class="cv-ul">
-      <li><b>Kireido</b> — Estetik ve dermatoloji klinikleri için klinik yönetim SaaS'ı. Spring Boot + React, PostgreSQL, Docker. Hasta, randevu, tedavi teklifi, stok/lot ve KVKK uyumlu kayıt yönetimi.</li>
+      <li><b>Dermapi</b> — Estetik ve dermatoloji klinikleri için klinik yönetim SaaS'ı. Spring Boot + React, PostgreSQL, Docker. Hasta, randevu, tedavi teklifi, stok/lot ve KVKK uyumlu kayıt yönetimi.</li>
       <li><b>WavLock</b> — Türk prodüktörler ve sanatçılar için beat pazarı: keşif, lisanslama, yarışma ve iş birliği. Next.js 16, React 19, Prisma, PostgreSQL, Redis.</li>
       <li><b>AI Sales Orchestrator</b> — Üretici firmalarda serbest metin talebi ürüne, fiyata, PDF teklife ve takip görevine dönüştüren otonom satış ajanı. Next.js, PostgreSQL, arka plan worker.</li>
       <li><b>MinBid</b> — Gerçek zamanlı online açık artırma platformu; açık artırma motoru doğrudan PostgreSQL üzerinde (pg_cron + RLS). Next.js, Supabase.</li>
@@ -720,14 +720,14 @@ const STATE = {
 
 const PROJECTS = [
   {
-    name:'Kireido', cats:['product'], year:'2026', state:'wip',
+    name:'Dermapi', cats:['product'], year:'2026', state:'live',
     sub:{ tr:'Klinik yönetim SaaS', en:'Clinic management SaaS' },
     desc:{
       tr:'Estetik ve dermatoloji klinikleri için uçtan uca yönetim paneli. Hasta → randevu → tedavi teklifi → onay → ödeme → uygulama akışı, anatomi haritası, lot bazlı stok, RBAC ve KVKK uyumlu saklama.',
       en:'End-to-end management panel for aesthetic and dermatology clinics. Patient → appointment → treatment quote → approval → payment → application flow, anatomy map, lot-based stock, RBAC and GDPR-equivalent retention.'
     },
     stack:['Spring Boot','React','PostgreSQL','Docker','Caddy'],
-    links:{}
+    links:{ live:'https://dermapi.net' }
   },
   {
     name:'WavLock', cats:['product','audio','web'], year:'2026', state:'wip',
