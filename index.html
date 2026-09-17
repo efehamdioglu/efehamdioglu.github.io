@@ -468,8 +468,8 @@ footer { margin-top:clamp(46px,8vw,78px); padding:26px 0 44px; border-top:1px so
         Şimdi bunları kendi ürünlerimde birleştiriyorum.
       </p>
       <p data-i18n="about-3">
-        Boş vaktimde müzik üretiyorum — bu yüzden portföyümde bir beat pazarı ve
-        C++ ile yazılmış VST3 eklentileri var. Yüzüyorum, doğa yürüyüşü yapıyorum.
+        Boş vaktimde müzik üretiyorum — bir beat pazarı kurmamın ve C++ ile VST3
+        eklentileri yazmamın sebebi bu. Yüzüyorum, doğa yürüyüşü yapıyorum.
       </p>
     </div>
     <div class="about-side">
@@ -646,12 +646,12 @@ footer { margin-top:clamp(46px,8vw,78px); padding:26px 0 44px; border-top:1px so
   <div class="cv-sec">
     <div class="cv-sec-t">Seçilmiş Projeler</div>
     <ul class="cv-ul">
-      <li><b>Dermapi</b> — Estetik ve dermatoloji klinikleri için klinik yönetim SaaS'ı. Spring Boot + React, PostgreSQL, Docker. Hasta, randevu, tedavi teklifi, stok/lot ve KVKK uyumlu kayıt yönetimi.</li>
-      <li><b>WavLock</b> — Türk prodüktörler ve sanatçılar için beat pazarı: keşif, lisanslama, yarışma ve iş birliği. Next.js 16, React 19, Prisma, PostgreSQL, Redis.</li>
+      <li><b>Dermapi</b> (dermapi.net) — Estetik ve dermatoloji klinikleri için klinik yönetim SaaS'ı. Spring Boot + React, PostgreSQL, Docker. Hasta, randevu, tedavi teklifi, stok/lot ve KVKK uyumlu kayıt yönetimi.</li>
+      <li><b>WavLock</b> (wavlock.com) — Türk prodüktörler ve sanatçılar için beat pazarı: keşif, lisanslama, yarışma ve iş birliği. Next.js 16, React 19, Prisma, PostgreSQL, Redis.</li>
       <li><b>AI Sales Orchestrator</b> — Üretici firmalarda serbest metin talebi ürüne, fiyata, PDF teklife ve takip görevine dönüştüren otonom satış ajanı. Next.js, PostgreSQL, arka plan worker.</li>
-      <li><b>MinBid</b> — Gerçek zamanlı online açık artırma platformu; açık artırma motoru doğrudan PostgreSQL üzerinde (pg_cron + RLS). Next.js, Supabase.</li>
+      <li><b>STUDIOBASE</b> — Çoklu ajanlı müzik konsepti ve söz motoru; Kreatif Direktör, Söz Yazarı, Eleştirmen ve Görsel Stil ajanları birbirine veri aktararak albüm konsepti üretir. Python, Streamlit. Açık kaynak.</li>
+      <li><b>İlacım Cepte</b> — İlaç ve doz takibi için çevrimdışı çalışan mobil uygulama; barkod/reçeteden ilaç ekleme, hatırlatma bildirimleri, bakmakla yükümlü olunan kişiler için ayrı profiller. React Native, Expo.</li>
       <li><b>Robb-IT Security</b> — Windows için terminal tabanlı güvenlik aracı: sistem taraması, canlı trafik izleme, IP bloklama, DPI bypass. C#. Açık kaynak.</li>
-      <li><b>theWriter</b> — Tamamen çevrimdışı çalışan otonom kodlama ajanı; yerel LLM (Ollama), Docker sandbox, ChromaDB tabanlı kalıcı hafıza.</li>
     </ul>
   </div>
 
@@ -718,17 +718,17 @@ const PROJECTS = [
     },
     stack:['Spring Boot','React','PostgreSQL','Docker','Caddy'],
     links:{ live:'https://dermapi.net' }
-  },
+  },,
   {
-    name:'WavLock', cats:['product','audio','web'], year:'2026', state:'wip',
+    name:'WavLock', cats:['product','audio','web'], year:'2026', state:'live',
     sub:{ tr:'Beat pazarı', en:'Beat marketplace' },
     desc:{
       tr:'Türk prodüktörler ve sanatçılar için beat pazarı: type beat keşfi, lisanslama, "Trap Or Trash" kapışmaları ve iş birliği ilanları. Dalga formu oynatıcı, sepet, ödeme ve otomatik tanıtım videosu üretimi.',
       en:'A beat marketplace for Turkish producers and artists: type beat discovery, licensing, "Trap Or Trash" battles and collaboration calls. Waveform player, cart, payments and automated promo video rendering.'
     },
     stack:['Next.js 16','React 19','Prisma','PostgreSQL','Redis','Remotion'],
-    links:{}
-  },
+    links:{ live:'https://wavlock.com' }
+  },,
   {
     name:'AI Sales Orchestrator', cats:['ai','product'], year:'2026', state:'private',
     sub:{ tr:'Otonom satış ajanı', en:'Autonomous sales agent' },
@@ -738,27 +738,7 @@ const PROJECTS = [
     },
     stack:['Next.js','PostgreSQL 17','Claude','IMAP/SMTP','Worker'],
     links:{}
-  },
-  {
-    name:'MinBid', cats:['product','web'], year:'2026', state:'private',
-    sub:{ tr:'Gerçek zamanlı açık artırma', en:'Realtime auction platform' },
-    desc:{
-      tr:'Online açık artırma platformu. Ayrı bir realtime sunucusu ya da Redis yok: açık artırma motorunun kendisi PostgreSQL. Her geçerli teklif bitiş anını 45 saniye ileri iter, pg_cron her saniye lotları kapatıp sıradakini açar.',
-      en:'An online auction platform. No separate realtime server and no Redis: Postgres itself is the auction engine. Every valid bid pushes the deadline 45s forward, and pg_cron closes lots and opens the next one every second.'
-    },
-    stack:['Next.js 16','Supabase','pg_cron','RLS','Tailwind 4'],
-    links:{}
-  },
-  {
-    name:'TASKUDO Remastered', cats:['product'], year:'2026', state:'private',
-    sub:{ tr:'ERP modernizasyonu', en:'ERP modernisation' },
-    desc:{
-      tr:'Çalışan bir ASP.NET Web Forms ERP\'sini ve görev yönetimi modülünü yeni nesle taşıma projesi: Access → MSSQL şema göçü, ASP.NET Core 8 katmanlı Web API ve React SPA. Eski sistem ayakta kalırken kademeli geçiş.',
-      en:'Migrating a live ASP.NET Web Forms ERP and its task module to a new generation: Access → MSSQL schema migration, a layered ASP.NET Core 8 Web API and a React SPA — phased, with the legacy system still running.'
-    },
-    stack:['ASP.NET Core 8','EF Core','React','Vite','SQL Server'],
-    links:{}
-  },
+  },,
   {
     name:'STUDIOBASE', cats:['ai','audio'], year:'2026', state:'oss',
     sub:{ tr:'Çoklu ajan müzik motoru', en:'Multi-agent music engine' },
@@ -768,17 +748,7 @@ const PROJECTS = [
     },
     stack:['Python','Streamlit','Gemini','Ollama','Claude'],
     links:{ repo:'https://github.com/efehamdioglu/STUDIOBASE' }
-  },
-  {
-    name:'theWriter', cats:['ai'], year:'2026', state:'wip',
-    sub:{ tr:'Çevrimdışı kodlama ajanı', en:'Offline coding agent' },
-    desc:{
-      tr:'%100 çevrimdışı, token maliyeti olmayan otonom kodlama ajanı. Kodu yazar, Docker sandbox\'ta test eder, hatayı okur ve düzeltir. ChromaDB ile kalıcı hafıza tutar; hiçbir istek makinenin dışına çıkmaz.',
-      en:'A fully offline autonomous coding agent with no token cost. It writes code, tests it in a Docker sandbox, reads the failure and fixes it. Persistent memory via ChromaDB; no request ever leaves the machine.'
-    },
-    stack:['Python','Ollama','Docker','ChromaDB','RAG'],
-    links:{}
-  },
+  },,
   {
     name:'İlacım Cepte', cats:['mobile','product'], year:'2026', state:'private',
     sub:{ tr:'İlaç takip uygulaması', en:'Medication tracker' },
@@ -788,7 +758,7 @@ const PROJECTS = [
     },
     stack:['React Native','Expo','SQLite','Notifications'],
     links:{}
-  },
+  },,
   {
     name:'Robb-IT Security', cats:['security'], year:'2026', state:'oss',
     sub:{ tr:'Terminal güvenlik aracı', en:'Terminal security tool' },
@@ -798,36 +768,6 @@ const PROJECTS = [
     },
     stack:['C#','.NET','Windows API','DoH'],
     links:{ repo:'https://github.com/efehamdioglu/robb-it' }
-  },
-  {
-    name:'BZB ERP', cats:['product'], year:'2026', state:'private',
-    sub:{ tr:'Kurumsal ERP', en:'Enterprise ERP' },
-    desc:{
-      tr:'Müşteri şirketler için geliştirdiğim ERP sisteminin backend ve frontend tarafı. İthalat takibi, görev yönetimi, stok ve raporlama modülleri; iş yerinde üretimde kullanılıyor.',
-      en:'The backend and frontend of the ERP I build for client companies — import tracking, task management, stock and reporting modules. In production use at work.'
-    },
-    stack:['C#','ASP.NET Core','TypeScript','React','SQL Server'],
-    links:{}
-  },
-  {
-    name:'Lucii Opto', cats:['audio'], year:'2026', state:'private',
-    sub:{ tr:'VST3 optik kompresör', en:'VST3 optical compressor' },
-    desc:{
-      tr:'JUCE ve C++ ile sıfırdan yazılmış optik kompresör eklentisi. DSP zinciri ve arayüzü tamamen elle çizildi — tipografiden metre animasyonuna kadar.',
-      en:'An optical compressor plugin written from scratch in C++ with JUCE. Both the DSP chain and the interface are hand-built — from the typography down to the meter animation.'
-    },
-    stack:['C++','JUCE','DSP','CMake'],
-    links:{}
-  },
-  {
-    name:'Flanger VST3', cats:['audio'], year:'2026', state:'private',
-    sub:{ tr:'VST3 modülasyon efekti', en:'VST3 modulation effect' },
-    desc:{
-      tr:'Gecikme hattı modülasyonuna dayalı flanger eklentisi; JUCE üzerinde C++ ile yazıldı, özel çizilmiş bir arayüzü var. Ses üretimi tarafındaki merakımın kod tarafındaki karşılığı.',
-      en:'A flanger built on delay-line modulation, written in C++ on JUCE with a custom-drawn interface. The code-side counterpart to my interest in music production.'
-    },
-    stack:['C++','JUCE','DSP','CMake'],
-    links:{}
   }
 ];
 
@@ -941,7 +881,7 @@ const T = {
     's-exp':'Experience','s-exp-note':'2023 — today','s-skills':'Technical Skills','s-edu':'Education & More',
     'about-1':'I\'m a final-year Computer Engineering student at Ostim Technical University. I see software as much as a <b>craft</b> as an engineering discipline: clean architecture, user experience and design quality carry equal weight for me.',
     'about-2':'Across six internships I worked in <b>cybersecurity</b>, <b>network engineering</b> and <b>enterprise software</b> — I have written pentest reports, configured VLANs and shipped ASP.NET ERP modules. Now I combine all of it in my own products.',
-    'about-3':'I produce music in my spare time — which is why my portfolio holds a beat marketplace and VST3 plugins written in C++. I swim and hike.',
+    'about-3':'I produce music in my spare time — that is why I built a beat marketplace and why I write VST3 plugins in C++. I swim and hike.',
     'f-loc':'Location','f-loc-v':'Ankara, Türkiye',
     'f-role':'Currently','f-role-v':'Software Developer · BZB İletişim',
     'f-edu':'Education','f-edu-v':'Ostim Technical Univ. · CE',
