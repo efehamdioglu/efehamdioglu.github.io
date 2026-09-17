@@ -262,6 +262,7 @@ section { padding:clamp(46px,8vw,86px) 0 0; }
 .arc-link { font-family:var(--font-mono); font-size:.61rem; letter-spacing:.08em;
   text-align:right; opacity:.7; }
 .arc-link a:hover { text-decoration:underline; text-underline-offset:3px; }
+.arc-link .none { opacity:.5; }
 
 /* ─── DENEYİM ──────────────────────────────────────────────── */
 .exp-item {
@@ -497,8 +498,8 @@ footer { margin-top:clamp(46px,8vw,78px); padding:26px 0 44px; border-top:1px so
 <section id="arsiv" class="wrap reveal">
   <div class="sec-head">
     <span class="sec-num">03</span>
-    <h2 class="sec-title" data-i18n="s-archive">Arşiv</h2>
-    <span class="sec-note" data-i18n="s-archive-note">daha küçük işler ve denemeler</span>
+    <h2 class="sec-title" data-i18n="s-archive">Proje Arşivi</h2>
+    <span class="sec-note" data-i18n="s-archive-note">vitrin dışındaki işler</span>
   </div>
   <div class="archive" id="archive"></div>
 </section>
@@ -772,30 +773,24 @@ const PROJECTS = [
 ];
 
 const ARCHIVE = [
-  { name:'BZB Kurumsal Site', tech:'Next.js', year:'2026',
-    desc:{ tr:'BZB İletişim için kurumsal web sitesi; grup şirketlerinin tanıtımı.', en:'Corporate website for BZB İletişim and its group companies.' },
-    url:'https://bzb-bilisim.vercel.app' },
-  { name:'CV Warrior', tech:'React · Vite', year:'2026',
-    desc:{ tr:'Piksel sanat oyunu olarak gezilen interaktif portföy denemesi.', en:'An interactive portfolio you walk through as a pixel-art game.' },
-    url:'https://efe-portfolio-fawn.vercel.app' },
-  { name:'Swave Cult', tech:'ASP.NET Core', year:'2026',
-    desc:{ tr:'Nadir ithal ürünler için Razor Pages tabanlı vitrin ve drop sayfası.', en:'A Razor Pages storefront and drop page for rare imports.' },
-    repo:'https://github.com/efehamdioglu/swaveculture' },
-  { name:'TTT World Guide', tech:'HTML · CSS', year:'2026',
-    desc:{ tr:'İşyeri sağlık ve hijyen rehberi; tek sayfa, çok dilli içerik.', en:'A workplace health and hygiene guide — single page, multilingual content.' },
-    url:'https://tttworld-guide.vercel.app', repo:'https://github.com/efehamdioglu/tttworld_guide' },
-  { name:'Art Gallery', tech:'Vanilla JS', year:'2026',
-    desc:{ tr:'Rick Owens esintili minimal brutalist sanat galerisi arayüzü.', en:'A minimal brutalist art gallery interface, Rick Owens inspired.' } },
-  { name:'AnkaraWalk', tech:'Three.js', year:'2026',
-    desc:{ tr:'Three.js ile gerçek zamanlı yürüyüş sahnesi denemesi.', en:'A realtime walkable scene experiment built with Three.js.' } },
-  { name:'not-a-calculator', tech:'Capacitor', year:'2026',
-    desc:{ tr:'Hesap makinesi gibi görünen, öyle olmayan web + mobil deneme.', en:'A web + mobile experiment that looks like a calculator and is not one.' },
-    repo:'https://github.com/efehamdioglu/not-a-calculator' },
-  { name:'MySweetHome', tech:'C++', year:'2025',
-    desc:{ tr:'C++ ile yazılmış ev otomasyonu / envanter konsol uygulaması.', en:'A home automation / inventory console application written in C++.' } },
-  { name:'CRUD Project', tech:'ASP.NET MVC', year:'2024',
-    desc:{ tr:'ASP.NET MVC ile temel CRUD işlemleri — okul dönemi çalışması.', en:'Basic CRUD operations with ASP.NET MVC — coursework era.' },
-    repo:'https://github.com/efehamdioglu/Crud-Project' }
+  { name:'MinBid', tech:'Next.js · Supabase', year:'2026',
+    desc:{ tr:'Gerçek zamanlı online açık artırma platformu; açık artırma motorunun kendisi PostgreSQL (pg_cron + RLS), ayrı realtime sunucusu yok.',
+           en:'A realtime online auction platform where Postgres itself is the auction engine (pg_cron + RLS) — no separate realtime server.' } },
+  { name:'TASKUDO Remastered', tech:'ASP.NET Core 8 · React', year:'2026',
+    desc:{ tr:'Çalışan bir ASP.NET Web Forms ERP sisteminin yeni nesle taşınması: Access → MSSQL şema göçü, katmanlı Web API ve React SPA.',
+           en:'Migrating a live ASP.NET Web Forms ERP to a new generation: Access → MSSQL schema migration, a layered Web API and a React SPA.' } },
+  { name:'theWriter', tech:'Python · Ollama', year:'2026',
+    desc:{ tr:'%100 çevrimdışı otonom kodlama ajanı; kodu yazar, Docker sandbox içinde test eder, hatayı okuyup düzeltir. ChromaDB ile kalıcı hafıza.',
+           en:'A fully offline autonomous coding agent: writes code, tests it in a Docker sandbox, reads the failure and fixes it. Persistent memory via ChromaDB.' } },
+  { name:'BZB ERP', tech:'C# · React', year:'2026',
+    desc:{ tr:'Müşteri şirketler için geliştirdiğim ERP sisteminin backend ve frontend tarafı; ithalat takibi, stok ve raporlama modülleri.',
+           en:'The backend and frontend of the ERP I build for client companies — import tracking, stock and reporting modules.' } },
+  { name:'Lucii Opto', tech:'C++ · JUCE', year:'2026',
+    desc:{ tr:'JUCE ve C++ ile sıfırdan yazılmış VST3 optik kompresör; DSP zinciri ve arayüzü tamamen elle kuruldu.',
+           en:'A VST3 optical compressor written from scratch in C++ with JUCE — both the DSP chain and the interface hand-built.' } },
+  { name:'Flanger VST3', tech:'C++ · JUCE', year:'2026',
+    desc:{ tr:'Gecikme hattı modülasyonuna dayalı VST3 flanger eklentisi; özel çizilmiş arayüzüyle birlikte C++ ile yazıldı.',
+           en:'A VST3 flanger built on delay-line modulation, written in C++ with a custom-drawn interface.' } }
 ];
 
 const EXPERIENCE = [
@@ -877,7 +872,7 @@ const T = {
     'role-1':'Computer Engineer','role-2':'Software Developer','role-3':'Ankara, Türkiye',
     'lede':'I build <b>real products</b> — the ones that run a clinic\'s patients, a producer\'s beats, a sales team\'s quotes. Six internships took me from cybersecurity to enterprise software; today I mostly work on <b>SaaS</b> and <b>autonomous AI agents</b>.',
     'm-intern':'Internships','m-repo':'Repositories','m-years':'Years writing code','m-grad':'Graduating',
-    's-about':'About','s-work':'Selected Work','s-archive':'Archive','s-archive-note':'smaller work and experiments',
+    's-about':'About','s-work':'Selected Work','s-archive':'Project Archive','s-archive-note':'work outside the showcase',
     's-exp':'Experience','s-exp-note':'2023 — today','s-skills':'Technical Skills','s-edu':'Education & More',
     'about-1':'I\'m a final-year Computer Engineering student at Ostim Technical University. I see software as much as a <b>craft</b> as an engineering discipline: clean architecture, user experience and design quality carry equal weight for me.',
     'about-2':'Across six internships I worked in <b>cybersecurity</b>, <b>network engineering</b> and <b>enterprise software</b> — I have written pentest reports, configured VLANs and shipped ASP.NET ERP modules. Now I combine all of it in my own products.',
@@ -953,7 +948,7 @@ function renderArchive() {
   document.getElementById('archive').innerHTML = ARCHIVE.map(a => {
     const link = a.url  ? '<a href="' + a.url + '" target="_blank" rel="noopener">' + (lang === 'tr' ? 'aç ↗' : 'open ↗') + '</a>'
                : a.repo ? '<a href="' + a.repo + '" target="_blank" rel="noopener">github ↗</a>'
-               : '—';
+               : '<span class="none">' + (lang === 'tr' ? 'depo özel' : 'private repo') + '</span>';
     return '<div class="arc-row">' +
       '<span class="arc-name">' + esc(a.name) + '</span>' +
       '<span class="arc-desc">' + esc(L(a.desc)) + '</span>' +
