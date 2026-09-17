@@ -139,14 +139,6 @@ button { font:inherit; color:inherit; background:none; border:none; cursor:point
 
 /* ─── HERO ─────────────────────────────────────────────────── */
 .hero { padding:clamp(52px,10vw,112px) 0 clamp(36px,6vw,64px); }
-.status {
-  display:inline-flex; align-items:center; gap:8px;
-  font-family:var(--font-mono); font-size:.65rem; letter-spacing:.13em;
-  text-transform:uppercase; color:var(--muted-fg); margin-bottom:26px;
-}
-.dot { width:6px; height:6px; border-radius:50%; background:var(--fg);
-  animation:pulse 2.4s ease-in-out infinite; }
-@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.3;transform:scale(.78)} }
 .hero h1 {
   font-size:clamp(2.8rem, 10.5vw, 8rem); font-weight:800;
   letter-spacing:-.055em; line-height:.87; margin-bottom:24px;
@@ -422,7 +414,6 @@ footer { margin-top:clamp(46px,8vw,78px); padding:26px 0 44px; border-top:1px so
 
 <!-- ══ HERO ══ -->
 <header class="hero wrap" id="top">
-  <div class="status"><span class="dot"></span><span data-i18n="status">Yeni fırsatlara açık</span></div>
   <h1>Osman Efe<br><em>Hamdioğlu</em></h1>
   <div class="hero-role">
     <b data-i18n="role-1">Bilgisayar Mühendisi</b> &nbsp;/&nbsp;
@@ -487,7 +478,6 @@ footer { margin-top:clamp(46px,8vw,78px); padding:26px 0 44px; border-top:1px so
       <div class="fact"><span class="fact-k" data-i18n="f-edu">Eğitim</span><span class="fact-v" data-i18n="f-edu-v">Ostim Teknik Üni. · Bil. Müh.</span></div>
       <div class="fact"><span class="fact-k" data-i18n="f-focus">Odak</span><span class="fact-v" data-i18n="f-focus-v">SaaS · Yapay zekâ ajanları · Güvenlik</span></div>
       <div class="fact"><span class="fact-k" data-i18n="f-lang">Diller</span><span class="fact-v" data-i18n="f-lang-v">Türkçe (anadil) · İngilizce C1</span></div>
-      <div class="fact"><span class="fact-k" data-i18n="f-status">Durum</span><span class="fact-v" data-i18n="f-status-v">Yeni fırsatlara açık</span></div>
     </div>
   </div>
 </section>
@@ -944,7 +934,6 @@ const T = {
   en: {
     'brand-role':'computer engineer',
     'nav-about':'About','nav-work':'Work','nav-exp':'Experience','nav-skills':'Skills','nav-contact':'Contact',
-    'status':'Open to new opportunities',
     'role-1':'Computer Engineer','role-2':'Software Developer','role-3':'Ankara, Türkiye',
     'lede':'I build <b>real products</b> — the ones that run a clinic\'s patients, a producer\'s beats, a sales team\'s quotes. Six internships took me from cybersecurity to enterprise software; today I mostly work on <b>SaaS</b> and <b>autonomous AI agents</b>.',
     'm-intern':'Internships','m-repo':'Repositories','m-years':'Years writing code','m-grad':'Graduating',
@@ -958,7 +947,6 @@ const T = {
     'f-edu':'Education','f-edu-v':'Ostim Technical Univ. · CE',
     'f-focus':'Focus','f-focus-v':'SaaS · AI agents · Security',
     'f-lang':'Languages','f-lang-v':'Turkish (native) · English C1',
-    'f-status':'Status','f-status-v':'Open to opportunities',
     't-edu':'Education','t-lang':'Languages','t-int':'Interests',
     'edu-degree':'BSc Computer Engineering · Ankara','edu-date':'Sep 2022 — Jun 2026 (expected)',
     'lang-tr':'Turkish','lang-tr-v':'Native','lang-en':'English',
