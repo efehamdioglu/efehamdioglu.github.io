@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sayfa bulunamıyor</title>
+  <meta name="robots" content="noindex">
+  <link rel="icon" href="/xp/assets/icons/ie.png" type="image/png">
+  <link rel="stylesheet" href="/xp/css/xp.css">
+  <style>
+    body { background: #3b72d6 url("/xp/assets/bliss.jpg") center / cover no-repeat; }
+    .window { position: fixed; inset: 0; border-radius: 0; }
+    .title-bar { border-radius: 0; }
+    .tb-close { display: block; }
+    .err { max-width: 620px; padding: 22px 26px 30px; font: 12px/1.5 Tahoma, Verdana, sans-serif; color: #000; }
+    .err h1 { display: flex; align-items: center; gap: 12px; margin: 0 0 14px; font: bold 17px Tahoma, sans-serif; }
+    .err h1 img { width: 32px; height: 32px; }
+    .err hr { border: 0; border-top: 1px solid #c0c0c0; margin: 14px 0; }
+    .err ul { padding-left: 20px; margin: 6px 0 0; }
+    .err li { margin: 4px 0; }
+    .err .code { margin-top: 18px; font-weight: bold; }
+    .err .muted { color: #555; }
+    .ie-page { user-select: text; -webkit-user-select: text; }
+  </style>
+</head>
+<body>
+  <div class="window active maximized">
+    <div class="title-bar">
+      <img class="title-icon" src="/xp/assets/icons/ie.png" alt="">
+      <span class="title-text">Sayfa bulunamıyor - Microsoft Internet Explorer</span>
+      <div class="title-controls">
+        <button class="tb-btn tb-min" type="button" aria-label="Simge durumuna küçült"></button>
+        <button class="tb-btn tb-max" type="button" aria-label="Önceki boyut"></button>
+        <a class="tb-btn tb-close" href="/xp/?desktop" aria-label="Kapat ve masaüstüne dön"></a>
+      </div>
+    </div>
+    <div class="window-body">
+      <div class="menubar">
+        <div class="mb-item">Dosya</div><div class="mb-item">Düzen</div><div class="mb-item">Görünüm</div><div class="mb-item">Sık Kullanılanlar</div><div class="mb-item">Araçlar</div><div class="mb-item">Yardım</div>
+        <div class="mb-logo"><img src="/xp/assets/icons/flag-tile.png" alt=""></div>
+      </div>
+      <div class="ex-toolbar">
+        <button class="ex-tbtn" type="button" onclick="history.back()"><img src="/xp/assets/icons/back.png" alt=""><span>Geri</span></button>
+        <button class="ex-tbtn" type="button" disabled><img src="/xp/assets/icons/forward.png" alt=""></button>
+        <button class="ex-tbtn" type="button" disabled><img src="/xp/assets/icons/stop.png" alt=""></button>
+        <button class="ex-tbtn" type="button" onclick="location.reload()"><img src="/xp/assets/icons/refresh.png" alt=""></button>
+        <a class="ex-tbtn" href="/" title="Giriş"><img src="/xp/assets/icons/home.png" alt=""></a>
+      </div>
+      <div class="ex-address">
+        <label>Adres</label>
+        <div class="ex-path"><img src="/xp/assets/icons/ie.png" alt=""><input type="text" id="addr" spellcheck="false" aria-label="Adres" readonly></div>
+        <a class="ex-go" href="/"><img src="/xp/assets/icons/arrowGreen.png" alt="">Git</a>
+      </div>
+      <div class="ie-page xp-scroll">
+        <div class="err">
+          <h1><img src="/xp/assets/icons/info.png" alt="">Sayfa bulunamıyor</h1>
+          <p>Aradığınız sayfa kaldırılmış, adı değiştirilmiş veya geçici olarak kullanılamıyor olabilir.</p>
+          <hr>
+          <p>Lütfen aşağıdakileri deneyin:</p>
+          <ul>
+            <li>Adres çubuğuna sayfa adresini yazdıysanız, doğru yazıldığından emin olun.</li>
+            <li><a href="/">Ana sayfayı</a> açın ve istediğiniz bilginin bağlantılarını arayın.</li>
+            <li>Başka bir bağlantı denemek için <a href="javascript:history.back()">Geri</a> düğmesini tıklatın.</li>
+            <li>Belki de aradığınız şey bir yazılım geliştiricidir: <a href="/xp/?desktop">masaüstüne dönün</a>.</li>
+          </ul>
+          <p class="code">HTTP 404 - Dosya bulunamadı<br><span class="muted">Internet Information Services</span></p>
+          <hr>
+          <p class="muted">Teknik Bilgiler (destek personeli için)</p>
+          <ul class="muted">
+            <li>Ayrıntılar: Bu sayfayı bulan ziyaretçiye bir başarım verildi. 🏆 Masaüstüne döndüğünüzde görünecek.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="statusbar"><span>Bitti</span><span><img src="/xp/assets/icons/ie.png" alt="">Internet</span></div>
+    </div>
+  </div>
+  <script>
+    try { localStorage.setItem('xpcv-lost', 'true'); } catch (e) { /* yok say */ }
+    document.getElementById('addr').value = location.href;
+  </script>
+</body>
+</html>

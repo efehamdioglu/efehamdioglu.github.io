@@ -137,6 +137,29 @@ button { font:inherit; color:inherit; background:none; border:none; cursor:point
 }
 .icon-btn:hover { color:var(--fg); border-color:var(--fg); }
 
+/* ─── XP BAŞLAT (easter egg → windowscv) ───────────────────── */
+/* Sağ kenarda saklı durur, yalnızca ince yeşil çizgisi görünür; üzerine gelince kayıp çıkar. */
+.xp-start {
+  position:fixed; right:0; top:84px; z-index:80;
+  width:50px; height:46px; display:grid; place-items:center;
+  border-radius:12px 0 0 12px;
+  background:linear-gradient(180deg,#5eb95e 0%,#3c9b3c 12%,#2f8a2f 55%,#287c28 88%,#3a9a3a 100%);
+  box-shadow:inset 0 1px 1px rgb(255 255 255 / .45), 0 2px 10px rgb(0 0 0 / .3);
+  transform:translateX(calc(100% - 4px));
+  transition:transform .3s cubic-bezier(.2,.8,.2,1), filter .2s;
+}
+/* Görünmez geniş tutma alanı: 4px'lik çizgiyi yakalamak kolay olsun */
+.xp-start::before { content:""; position:absolute; top:0; bottom:0; left:-14px; width:14px; }
+.xp-start svg { opacity:0; transition:opacity .2s; filter:drop-shadow(1px 1px 0 rgb(0 0 0 / .35)); }
+.xp-start:hover, .xp-start:focus-visible, .xp-start.open { transform:none; }
+.xp-start:hover svg, .xp-start:focus-visible svg, .xp-start.open svg { opacity:1; }
+.xp-start:hover { filter:brightness(1.1); }
+.xp-start:active { filter:brightness(.92); }
+.xp-start:focus-visible { outline:2px dotted var(--fg); outline-offset:2px; }
+#xp-fade { position:fixed; inset:0; z-index:999; background:#000; opacity:0;
+  pointer-events:none; transition:opacity .5s; }
+#xp-fade.on { opacity:1; pointer-events:auto; }
+
 /* ─── HERO ─────────────────────────────────────────────────── */
 .hero { padding:clamp(52px,10vw,112px) 0 clamp(36px,6vw,64px); }
 .hero h1 {
@@ -350,7 +373,7 @@ footer { margin-top:clamp(46px,8vw,78px); padding:26px 0 44px; border-top:1px so
 @media print {
   @page { size:A4; margin:13mm 14mm; }
   body { background:#fff !important; color:#000 !important; }
-  .nav, .hero, section, .contact, footer, .float { display:none !important; }
+  .nav, .hero, section, .contact, footer, .float, .xp-start, #xp-fade { display:none !important; }
   #print-cv { display:block !important; color:#000; }
   .cv-h1 { font-size:19pt; font-weight:800; letter-spacing:-.02em; }
   .cv-contact { font-size:8.5pt; color:#333; margin-top:4pt; line-height:1.5; }
@@ -667,6 +690,17 @@ footer { margin-top:clamp(46px,8vw,78px); padding:26px 0 44px; border-top:1px so
     <p class="cv-p">Yapay zekâ ve dil modelleri, SaaS geliştirme, UI/UX tasarımı, ofansif güvenlik, CTF yarışmaları, bulut güvenliği, blokzincir, müzik prodüksiyonu.</p>
   </div>
 </div>
+
+<!-- Easter egg: sağ kenarda saklı Windows XP bayrağı → XP sürümü -->
+<a class="xp-start" id="xp-start" href="xp/" title="Windows XP" aria-label="Windows XP sürümünü başlat">
+  <svg width="26" height="25" viewBox="0 0 18 17" aria-hidden="true">
+    <path d="M1 2.6Q4.5.6 8.2 2.2L7.4 7.6Q3.8 6 .2 8Z" fill="#f65314"/>
+    <path d="M9.4 2.7Q13 4.3 17.6 2.2L16.8 7.6Q12.4 9.6 8.6 8.1Z" fill="#7cbb00"/>
+    <path d="M.9 9.2Q4.5 7.2 8.1 8.8L7.3 14.2Q3.7 12.6.1 14.6Z" fill="#00a1f1"/>
+    <path d="M8.4 9.3Q12.2 10.8 16.6 8.8L15.8 14.2Q11.4 16.2 7.6 14.7Z" fill="#ffbb00"/>
+  </svg>
+</a>
+<div id="xp-fade"></div>
 
 <script>
 /* ═══════════════ VERİ ═══════════════
@@ -1001,6 +1035,26 @@ function initReveal() {
   }, { threshold: 0.06, rootMargin: '0px 0px -40px' });
   document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 }
+
+/* ─── XP Başlat: ekranı karart, sonra XP sürümünü aç ─── */
+const xpStart = document.getElementById('xp-start');
+const xpFade = document.getElementById('xp-fade');
+let xpTimer;
+xpStart.addEventListener('click', e => {
+  if (e.ctrlKey || e.metaKey || e.shiftKey || e.button !== 0) return;
+  e.preventDefault();
+  // Dokunmatikte hover yok: ilk dokunuş bayrağı çıkarır, ikincisi başlatır
+  if (matchMedia('(hover: none)').matches && !xpStart.classList.contains('open')) {
+    xpStart.classList.add('open');
+    clearTimeout(xpTimer);
+    xpTimer = setTimeout(() => xpStart.classList.remove('open'), 3000);
+    return;
+  }
+  xpFade.classList.add('on');
+  setTimeout(() => { location.href = xpStart.href; }, 550);
+});
+// Geri tuşuyla dönülünce siyah ekranda kalmasın
+addEventListener('pageshow', () => xpFade.classList.remove('on'));
 
 /* ─── Başlat ─── */
 document.getElementById('yr').textContent = new Date().getFullYear();

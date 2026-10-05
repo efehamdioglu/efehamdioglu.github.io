@@ -1,0 +1,318 @@
+/* ==========================================================================
+   Sürprizler (js/extras.js): başarımlar, Görev Yöneticisi, mavi ekran, Blaster,
+   MSN Messenger, IE indirme penceresi, gece Bliss, Windows Klasik tema, yazdırma
+   ========================================================================== */
+
+/* ---------- Genel ---------- */
+.window.topmost { z-index: 99990 !important; }
+.shake { animation: shake .75s linear; }
+@keyframes shake {
+  0%, 100% { transform: translate(0, 0); }
+  10% { transform: translate(-9px, 3px); } 20% { transform: translate(8px, -4px); }
+  30% { transform: translate(-7px, -3px); } 40% { transform: translate(9px, 4px); }
+  50% { transform: translate(-8px, 2px); } 60% { transform: translate(6px, -3px); }
+  70% { transform: translate(-5px, 3px); } 80% { transform: translate(4px, -2px); }
+  90% { transform: translate(-2px, 1px); }
+}
+.xyzzy-pixel { position: fixed; left: 0; top: 0; width: 1px; height: 1px; z-index: 2147483001; pointer-events: none; }
+
+/* Ağ kablosu çıkarıldı: tepsi simgesinde kırmızı X */
+.tray-net { position: relative; display: flex; }
+.tray-net.off::after {
+  content: ""; position: absolute; right: -3px; bottom: -3px; width: 11px; height: 11px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 11 11'%3E%3Ccircle cx='5.5' cy='5.5' r='5' fill='%23e02020' stroke='%23fff'/%3E%3Cpath d='M3.3 3.3l4.4 4.4M7.7 3.3L3.3 7.7' stroke='%23fff' stroke-width='1.6'/%3E%3C/svg%3E") center / contain no-repeat;
+  pointer-events: none;
+}
+
+/* explorer.exe sonlandırıldı */
+.no-explorer #taskbar, .no-explorer #icons, .no-explorer #start-menu, .no-explorer .balloon, .no-explorer .msn-toast { display: none !important; }
+.explorer-hint {
+  position: absolute; left: 50%; bottom: 18px; transform: translateX(-50%);
+  max-width: calc(100vw - 32px); padding: 6px 12px;
+  border: 1px solid rgba(255, 255, 255, .4); border-radius: 4px;
+  background: rgba(0, 0, 0, .45); color: #fff; font-size: 12px; text-align: center;
+  cursor: var(--cur-link); z-index: 5; animation: fadein .6s ease;
+}
+
+/* ---------- Mavi ekran ---------- */
+#bsod {
+  position: fixed; inset: 0; z-index: 2147483000;
+  background: #0000aa; color: #fff;
+  padding: 3vh 4vw; overflow: hidden;
+  cursor: none;
+}
+#bsod pre { margin: 0; font: 16px/1.3 "Lucida Console", Consolas, "Courier New", monospace; white-space: pre-wrap; }
+@media (max-width: 700px) { #bsod pre { font-size: 10.5px; } }
+
+/* ---------- Blaster / Sistem Kapatılıyor ---------- */
+.rpc { padding: 12px 14px 14px; display: flex; flex-direction: column; gap: 10px; line-height: 1.45; }
+.rpc p { margin: 0; }
+.rpc-row { display: flex; gap: 12px; align-items: flex-start; }
+.rpc-row img { width: 32px; height: 32px; flex: none; }
+.rpc fieldset { margin: 0; padding: 6px 10px 8px; border: 1px solid #d0d0bf; border-radius: 3px; }
+.rpc legend { color: #0046d5; padding: 0 3px; }
+
+/* ---------- Başarımlar ---------- */
+.ach-head { flex: none; display: flex; align-items: center; gap: 12px; padding: 10px 12px; background: linear-gradient(180deg, #fff, #ece9d8); border-bottom: 1px solid #c9c6b6; }
+.ach-head > img { width: 40px; height: 40px; }
+.ach-sum { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px; }
+.ach-sum b { font: bold 15px var(--font-title); color: #1e3a8a; }
+.ach-bar { height: 12px; border: 1px solid #7a8a99; border-radius: 3px; background: #fff; overflow: hidden; }
+.ach-bar i { display: block; height: 100%; background: repeating-linear-gradient(90deg, #37c63b 0 7px, transparent 7px 9px); transition: width .4s; }
+.ach-list { flex: 1; min-height: 0; overflow: auto; padding: 8px; background: #fff; display: grid; gap: 6px; align-content: start; }
+.ach-item { display: flex; gap: 10px; align-items: center; padding: 6px 8px; border: 1px solid #e0ddd0; border-radius: 4px; background: #f7f6f1; }
+.ach-item img { width: 32px; height: 32px; flex: none; filter: grayscale(1) opacity(.35); }
+.ach-item.done { background: #fffbe6; border-color: #e8cf6a; }
+.ach-item.done img { filter: none; }
+.ach-item div { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+.ach-item b { font-size: 12px; }
+.ach-item span { color: #555; }
+.ach-item small { color: #8a7a3a; font-size: 10px; }
+
+/* ---------- Görev Yöneticisi ---------- */
+.tm { flex: 1; min-height: 0; display: flex; flex-direction: column; padding-top: 6px; }
+.tm .tabs { margin: 0 6px; }
+.tm-panel { margin: 0 6px 6px !important; padding: 8px !important; display: flex; flex-direction: column; gap: 8px; overflow: hidden !important; }
+.tm-table { flex: 1; min-height: 60px; overflow: auto; background: #fff; border: 1px solid #7f9db9; }
+.tm-table table { width: 100%; border-collapse: collapse; font-size: 11px; }
+.tm-table th {
+  position: sticky; top: 0; z-index: 1;
+  padding: 3px 6px; text-align: left; font-weight: normal; white-space: nowrap;
+  background: linear-gradient(180deg, #fff, #f1efe2 80%, #e2dfcf); border-right: 1px solid #d6d2c2; border-bottom: 1px solid #d6d2c2;
+}
+.tm-table td { padding: 1px 6px; white-space: nowrap; }
+.tm-table td img { width: 16px; height: 16px; vertical-align: -4px; margin-right: 5px; }
+.tm-table .num { text-align: right; }
+.tm-table tr.sel td { background: var(--xp-select); color: #fff; }
+.tm-actions { flex: none; display: flex; align-items: center; justify-content: flex-end; gap: 6px; flex-wrap: wrap; }
+.tm-actions label { margin-right: auto; display: flex; align-items: center; gap: 4px; color: #777; }
+.tm-perf { flex: 1; min-height: 0; display: grid; grid-template-columns: 90px 1fr; grid-template-rows: 1fr 1fr; gap: 6px 8px; }
+.tm-perf fieldset, .tm-totals fieldset, .tm-net fieldset { margin: 0; padding: 4px 6px 6px; border: 1px solid #d0d0bf; border-radius: 3px; min-height: 0; display: flex; flex-direction: column; }
+.tm-perf legend, .tm-totals legend, .tm-net legend { padding: 0 3px; }
+.tm-perf canvas, .tm-net canvas { flex: 1; width: 100%; min-height: 50px; display: block; background: #000; }
+.tm-gauge { flex: 1; background: #000; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; padding: 4px; color: #2cff4c; font: 11px var(--font-mono); }
+.tm-meter { display: flex; flex-direction: column; gap: 1px; width: 34px; }
+.tm-meter i { height: 2px; background: #005a20; }
+.tm-meter i.on { background: #2cff4c; }
+.tm-totals { flex: none; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.tm-totals dl { margin: 0; display: grid; grid-template-columns: 1fr auto; gap: 1px 8px; }
+.tm-totals dt, .tm-totals dd { margin: 0; }
+.tm-totals dd { text-align: right; }
+.tm-net { flex: 1; min-height: 0; display: flex; }
+.tm-net fieldset { flex: 1; }
+
+/* ---------- IE indirme penceresi ---------- */
+.dl { padding: 10px 12px 12px; display: flex; flex-direction: column; gap: 6px; }
+.dl-anim { position: relative; display: flex; justify-content: space-between; align-items: center; height: 40px; padding: 0 20px; }
+.dl-anim img { width: 32px; height: 32px; }
+.dl-fly { position: absolute; left: 60px; right: 60px; top: 0; bottom: 0; }
+.dl-fly i {
+  position: absolute; left: 0; top: 16px; width: 12px; height: 15px;
+  background: #fff; border: 1px solid #7d8ba0; box-shadow: inset 0 3px #dfe6f1;
+  animation: dlfly 1.5s linear infinite;
+}
+.dl-fly i:nth-child(2) { animation-delay: .5s; }
+.dl-fly i:nth-child(3) { animation-delay: 1s; }
+@keyframes dlfly {
+  0% { left: 0; top: 18px; opacity: 0; transform: rotate(-20deg); }
+  15% { opacity: 1; }
+  50% { top: 0; transform: rotate(10deg); }
+  85% { opacity: 1; }
+  100% { left: calc(100% - 12px); top: 18px; opacity: 0; transform: rotate(30deg); }
+}
+.dl-done .dl-fly { display: none; }
+.dl-title { font-weight: bold; }
+.dl-bar { height: 16px; margin: 4px 0; border: 1px solid #7a8a99; border-radius: 3px; background: #fff; padding: 1px; }
+.dl-bar i { display: block; height: 100%; width: 0; background: repeating-linear-gradient(90deg, #2fb432 0 8px, transparent 8px 10px); transition: width .45s; }
+.dl dl { margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 3px 10px; }
+.dl dt, .dl dd { margin: 0; }
+.dl dd { overflow-wrap: anywhere; }
+.dl-check { display: flex; align-items: center; gap: 5px; margin-top: 4px; }
+
+/* ---------- MSN Messenger ---------- */
+.msn { flex: 1; min-height: 0; display: flex; flex-direction: column; background: #fff; }
+.msn-me { display: flex; gap: 8px; align-items: center; padding: 8px; background: linear-gradient(180deg, #d9e8fb, #b4cdef); border-bottom: 1px solid #8fb0dd; }
+.msn-me img { width: 36px; height: 36px; border: 1px solid #7a9cc8; border-radius: 3px; }
+.msn-me small { display: block; color: #555; }
+.msn-list { flex: 1; min-height: 0; overflow: auto; padding: 6px 4px; }
+.msn-group { padding: 4px 4px 2px; color: #1f3f8a; font-weight: bold; }
+.msn-contact { display: flex; align-items: center; gap: 6px; width: 100%; padding: 3px 4px 3px 14px; border: 0; background: none; text-align: left; border-radius: 2px; }
+.msn-contact:hover { background: #e3edfb; }
+.msn-contact small { color: #777; }
+.msn-contact span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.dot { flex: none; width: 10px; height: 10px; border-radius: 50%; background: #b8b8b8; box-shadow: inset 0 -2px 2px rgba(0, 0, 0, .2); }
+.dot.on { background: #38c247; }
+.msn-ad { padding: 6px 8px; border-top: 1px solid #c9d8ee; background: #f2f7fe; color: #333; font-size: 11px; }
+.msn-ad b { color: #0a58ca; font-style: italic; margin-right: 4px; }
+
+.msn-chat { flex: 1; min-height: 0; display: flex; flex-direction: column; background: linear-gradient(180deg, #e9f1fc, #d3e2f7); }
+.msn-tools { flex: none; display: flex; gap: 2px; padding: 3px 4px; border-bottom: 1px solid #a8c1e6; overflow: hidden; }
+.msn-tools button { display: flex; flex-direction: column; align-items: center; gap: 1px; min-width: 54px; padding: 2px 3px; border: 1px solid transparent; border-radius: 3px; background: none; font-size: 10px; }
+.msn-tools button:hover { border-color: #8fb0dd; background: rgba(255, 255, 255, .6); }
+.msn-tools span { font-size: 18px; line-height: 20px; }
+.msn-tools em { font-style: normal; }
+.msn-to { flex: none; padding: 4px 8px; color: #333; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.msn-main { flex: 1; min-height: 0; display: flex; gap: 6px; padding: 0 6px; }
+.msn-left { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
+.msn-log { flex: 1; min-height: 60px; overflow: auto; padding: 6px 8px; background: #fff; border: 1px solid #8fb0dd; font: 12px Tahoma, sans-serif; user-select: text; -webkit-user-select: text; }
+.msn-msg { margin-bottom: 6px; }
+.msn-from { color: #808080; }
+.msn-text { padding-left: 12px; color: #000; overflow-wrap: anywhere; }
+.msn-msg.me .msn-text { color: #002a8c; }
+.msn-sys { margin: 4px 0 8px; color: #555; font-size: 11px; }
+.msn-sys b { color: #c0392b; }
+.msn-log a, .msn-sys a { color: #0033cc; cursor: var(--cur-link); }
+.msn-ft { padding: 5px 8px; border: 1px dashed #8fb0dd; background: #f4f8fe; color: #000; }
+.msn-ftbar { height: 8px; margin-top: 4px; border: 1px solid #8fb0dd; background: #fff; }
+.msn-ftbar i { display: block; height: 100%; width: 0; background: #38c247; transition: width 1.5s linear; }
+.msn-quick { flex: none; display: flex; gap: 4px; flex-wrap: wrap; }
+.msn-quick button { padding: 2px 8px; border: 1px solid #8fb0dd; border-radius: 10px; background: #fff; color: #0a3d91; font-size: 11px; }
+.msn-quick button:hover { background: #e3edfb; }
+.msn-fmt { flex: none; display: flex; gap: 4px; }
+.msn-fmt button { height: 22px; padding: 0 6px; border: 1px solid transparent; border-radius: 3px; background: none; font-size: 12px; }
+.msn-fmt button:hover { border-color: #8fb0dd; background: rgba(255, 255, 255, .6); }
+.msn-font { font: bold 13px "Times New Roman", serif !important; }
+.msn-input { flex: none; display: flex; gap: 4px; margin-bottom: 4px; }
+.msn-input textarea { flex: 1; min-width: 0; resize: none; padding: 4px; border: 1px solid #8fb0dd; font: 12px Tahoma, sans-serif; user-select: text; -webkit-user-select: text; }
+.msn-input .xp-btn { height: auto; min-width: 64px; }
+.msn-pics { flex: none; width: 96px; display: flex; flex-direction: column; justify-content: space-between; padding-bottom: 4px; }
+.msn-pics img { width: 96px; height: 96px; border: 1px solid #7a9cc8; border-radius: 4px; background: #fff; object-fit: cover; }
+.msn-status { flex: none; height: 20px; padding: 2px 8px; color: #555; font-size: 11px; border-top: 1px solid #b7cbe9; }
+
+.msn-toast {
+  position: absolute; right: 8px; bottom: calc(var(--taskbar-h) + 4px); z-index: 100001;
+  width: 200px; border: 1px solid #5a7fb8; border-radius: 3px;
+  background: linear-gradient(180deg, #fff, #dbe8f8); box-shadow: 1px 2px 6px rgba(0, 0, 0, .35);
+  transform: translateY(140%); transition: transform .45s ease; cursor: var(--cur-link);
+}
+.msn-toast.show { transform: translateY(0); }
+.msn-toast-h { display: flex; align-items: center; gap: 4px; padding: 2px 4px; background: linear-gradient(180deg, #6b9be0, #3d72c7); color: #fff; font-size: 11px; }
+.msn-toast-h img { width: 14px; height: 14px; }
+.msn-toast-h span { flex: 1; }
+.msn-toast-x { width: 14px; height: 14px; padding: 0; border: 0; background: none; color: #fff; font: bold 12px Arial; line-height: 12px; cursor: var(--cur-default); }
+.msn-toast-b { display: flex; gap: 8px; align-items: center; padding: 10px 8px 14px; font-size: 12px; color: #1f3f8a; }
+.msn-toast-b img { width: 36px; height: 36px; border: 1px solid #7a9cc8; border-radius: 3px; }
+
+@media (max-width: 700px) {
+  .msn-pics, .msn-tools em { display: none; }
+  .msn-tools button { min-width: 36px; }
+  .tm-perf { grid-template-columns: 70px 1fr; }
+  .tm-totals { grid-template-columns: 1fr; }
+}
+
+/* ---------- Gece / gün batımı Bliss ---------- */
+#sky { position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity 2s, background 2s; }
+#sky .stars { position: absolute; left: 0; top: 0; width: 1px; height: 1px; border-radius: 50%; opacity: 0; }
+#sky .moon {
+  position: absolute; right: 12%; top: 9%; width: 54px; height: 54px; border-radius: 50%; opacity: 0;
+  background: radial-gradient(circle at 38% 36%, #fffef2, #f1ecc9 60%, #d8d1a6);
+  box-shadow: 0 0 30px 8px rgba(255, 250, 210, .35);
+}
+[data-sky="night"] #sky { opacity: 1; background: linear-gradient(180deg, rgba(3, 8, 36, .86) 0%, rgba(8, 18, 58, .74) 48%, rgba(2, 10, 26, .78) 100%); }
+[data-sky="night"] #sky .stars, [data-sky="night"] #sky .moon { opacity: 1; }
+[data-sky="dusk"] #sky { opacity: 1; background: linear-gradient(180deg, rgba(90, 30, 110, .35) 0%, rgba(255, 110, 50, .32) 40%, rgba(255, 150, 60, .22) 58%, rgba(40, 10, 40, .4) 100%); }
+[data-sky="dawn"] #sky { opacity: 1; background: linear-gradient(180deg, rgba(255, 170, 190, .3) 0%, rgba(255, 210, 160, .22) 50%, rgba(80, 60, 90, .15) 100%); }
+body.classic #sky { display: none; }
+
+/* ---------- Windows Klasik tema (Konami kodu) ---------- */
+body.classic #desktop { background: #3a6ea5; }
+body.classic .window {
+  border-radius: 0; padding: 3px; background: #d4d0c8;
+  box-shadow: inset -1px -1px #404040, inset 1px 1px #d4d0c8, inset -2px -2px #808080, inset 2px 2px #fff, 2px 2px 0 rgba(0, 0, 0, .25);
+}
+body.classic .window-body, body.classic .menubar { background: #d4d0c8; margin: 0; }
+body.classic .menubar { border-bottom: 0; box-shadow: none; }
+body.classic .menubar .mb-item:hover, body.classic .menubar .mb-item.open { background: #0a246a; }
+body.classic .menubar .mb-logo { display: none; }
+body.classic .title-bar {
+  height: 18px; border-radius: 0; padding: 0 2px 0 3px; gap: 3px;
+  font: bold 11px Tahoma, sans-serif; text-shadow: none;
+  background: linear-gradient(90deg, #0a246a, #a6caf0);
+}
+body.classic .window:not(.active) .title-bar { background: linear-gradient(90deg, #808080, #c0c0c0); color: #d4d0c8; }
+body.classic .title-controls { gap: 0; }
+body.classic .tb-btn {
+  width: 16px; height: 14px; border: 0; border-radius: 0; background: #d4d0c8; opacity: 1 !important; filter: none !important;
+  box-shadow: inset -1px -1px #404040, inset 1px 1px #fff, inset -2px -2px #808080;
+}
+body.classic .tb-btn:active { box-shadow: inset 1px 1px #404040, inset -1px -1px #fff; }
+body.classic .tb-close { margin-left: 2px; }
+body.classic .tb-min::before { left: 4px; top: 9px; width: 6px; height: 2px; background: #000; }
+body.classic .tb-max::before { left: 3px; top: 2px; width: 9px; height: 9px; border: 1px solid #000; border-top-width: 2px; }
+body.classic .maximized .tb-max::before { left: 5px; top: 1px; width: 6px; height: 6px; }
+body.classic .maximized .tb-max::after { left: 2px; top: 5px; width: 6px; height: 6px; border-color: #000; background: #d4d0c8; }
+body.classic .tb-close::before, body.classic .tb-close::after { left: 7px; top: 3px; width: 2px; height: 8px; background: #000; }
+body.classic .tb-help::before { color: #000; font-size: 11px; line-height: 14px; }
+body.classic .xp-btn {
+  border: 0; border-radius: 0; background: #d4d0c8;
+  box-shadow: inset -1px -1px #404040, inset 1px 1px #fff, inset -2px -2px #808080, inset 2px 2px #d4d0c8;
+}
+body.classic .xp-btn:active { box-shadow: inset 1px 1px #404040, inset -1px -1px #fff; }
+body.classic .dropdown, body.classic .ctx, body.classic .flyout {
+  background: #d4d0c8; border: 0;
+  box-shadow: inset -1px -1px #404040, inset 1px 1px #d4d0c8, inset -2px -2px #808080, inset 2px 2px #fff, 2px 2px 3px rgba(0, 0, 0, .3);
+}
+body.classic #taskbar { background: #d4d0c8; box-shadow: inset 0 1px #d4d0c8, inset 0 2px #fff; }
+body.classic #start-btn {
+  margin: 4px 4px 2px 2px; height: auto; padding: 0 6px 0 4px; border-radius: 0; gap: 3px;
+  font: bold 11px Tahoma, sans-serif; color: #000; text-shadow: none; background: #d4d0c8; filter: none;
+  box-shadow: inset -1px -1px #404040, inset 1px 1px #fff, inset -2px -2px #808080, inset 2px 2px #d4d0c8;
+}
+body.classic #start-btn img { width: 16px; height: 16px; filter: none; }
+body.classic #start-btn.open, body.classic #start-btn:active { background: #d4d0c8; box-shadow: inset 1px 1px #404040, inset -1px -1px #fff, inset 2px 2px #808080; }
+body.classic #quick-launch { border-right: 1px solid #808080; box-shadow: 1px 0 #fff; }
+body.classic #quick-launch button:hover { border-color: transparent; background: none; box-shadow: inset -1px -1px #808080, inset 1px 1px #fff; border-radius: 0; }
+body.classic .task-btn {
+  height: 22px; border-radius: 0; color: #000; background: #d4d0c8;
+  box-shadow: inset -1px -1px #404040, inset 1px 1px #fff, inset -2px -2px #808080;
+}
+body.classic .task-btn:hover { background: #d4d0c8; }
+body.classic .task-btn.active {
+  font-weight: bold;
+  background: repeating-conic-gradient(#fff 0 25%, #d4d0c8 0 50%) 0 0 / 2px 2px;
+  box-shadow: inset 1px 1px #404040, inset -1px -1px #fff, inset 2px 2px #808080;
+}
+body.classic #tray { margin: 4px 2px 2px; padding: 0 8px; color: #000; background: #d4d0c8; border-left: 0; box-shadow: inset 1px 1px #808080, inset -1px -1px #fff; }
+body.classic #start-menu {
+  width: 250px; border-radius: 0; padding: 3px 3px 3px 26px; background: #d4d0c8;
+  box-shadow: inset -1px -1px #404040, inset 1px 1px #d4d0c8, inset -2px -2px #808080, inset 2px 2px #fff, 2px 2px 4px rgba(0, 0, 0, .4);
+}
+body.classic #start-menu::before {
+  content: "Windows XP Professional"; position: absolute; left: 3px; top: 3px; bottom: 3px; width: 21px;
+  background: linear-gradient(0deg, #0a246a, #a6caf0); color: #fff;
+  font: bold 14px Tahoma, sans-serif; writing-mode: vertical-rl; transform: rotate(180deg);
+  display: flex; align-items: center; justify-content: flex-end; padding: 6px 0;
+}
+body.classic .sm-head { display: none; }
+body.classic .sm-body { flex-direction: column; margin: 0; min-height: 0; background: none; }
+body.classic .sm-left, body.classic .sm-right { padding: 0; background: none; border: 0; }
+body.classic .sm-item, body.classic .sm-right .sm-item { color: #000; min-height: 0; font-weight: normal; }
+body.classic .sm-item small { display: none; }
+body.classic .sm-item b { font-weight: normal; }
+body.classic .sm-left .sm-item img, body.classic .sm-right .sm-item img { width: 22px; height: 22px; }
+body.classic .sm-item:hover, body.classic .sm-item.hot { background: #0a246a; color: #fff; }
+body.classic .sm-sep, body.classic .sm-right .sm-sep { margin: 3px 2px; height: 2px; background: none; border-top: 1px solid #808080; border-bottom: 1px solid #fff; }
+body.classic .sm-all { margin-top: 0; justify-content: flex-start; font-weight: normal; }
+body.classic .sm-foot { flex-direction: column; align-items: stretch; height: auto; padding: 0; background: none; border-top: 1px solid #808080; box-shadow: inset 0 1px #fff; }
+body.classic .sm-foot button { color: #000; border-radius: 0; }
+body.classic .sm-foot button:hover { background: #0a246a; color: #fff; }
+
+/* ---------- Yazdırma: XP masaüstü yerine sade CV ---------- */
+#print-cv { display: none; }
+@media print {
+  @page { margin: 16mm 15mm; }
+  html, body { height: auto !important; overflow: visible !important; background: #fff !important; }
+  body > *:not(#print-cv) { display: none !important; }
+  #print-cv { display: block; color: #111; font: 10.5pt/1.45 "Segoe UI", Tahoma, Arial, sans-serif; user-select: text; }
+  #print-cv header { border-bottom: 2px solid #245edb; padding-bottom: 8px; margin-bottom: 10px; }
+  #print-cv h1 { margin: 0; font: bold 22pt "Trebuchet MS", sans-serif; color: #1a3f8f; }
+  #print-cv .pc-title { font-size: 12pt; color: #333; margin-top: 2px; }
+  #print-cv .pc-contact { font-size: 9.5pt; color: #444; margin-top: 4px; }
+  #print-cv section { margin-top: 12px; break-inside: auto; }
+  #print-cv h2 { margin: 0 0 4px; font: bold 12pt "Trebuchet MS", sans-serif; color: #1a3f8f; text-transform: uppercase; letter-spacing: .5px; border-bottom: 1px solid #c8d3ea; padding-bottom: 2px; break-after: avoid; }
+  #print-cv h3 { margin: 8px 0 2px; font-size: 10.5pt; break-after: avoid; }
+  #print-cv h4 { margin: 7px 0 1px; font-size: 10pt; color: #245edb; break-after: avoid; }
+  #print-cv p { margin: 0 0 5px; }
+  #print-cv ul { margin: 0 0 5px; padding-left: 18px; }
+  #print-cv footer { margin-top: 16px; padding-top: 6px; border-top: 1px solid #ddd; font-size: 8.5pt; color: #888; }
+}

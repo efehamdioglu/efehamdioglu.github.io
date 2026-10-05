@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Osman Efe Hamdioğlu — CV</title>
+  <meta name="description" content="Osman Efe Hamdioğlu — Yazılım Mühendisi. Windows XP masaüstü şeklinde interaktif CV.">
+  <meta property="og:title" content="Osman Efe Hamdioğlu — CV">
+  <meta property="og:description" content="Yazılım Mühendisi · Full-Stack Geliştirme & Kurumsal Yazılım Çözümleri. Windows XP masaüstü şeklinde interaktif CV.">
+  <meta property="og:type" content="website">
+  <meta name="theme-color" content="#245edb">
+  <link rel="icon" href="assets/icons/flag.png" type="image/png">
+  <link rel="preload" as="image" href="assets/bliss.jpg">
+  <link rel="stylesheet" href="css/xp.css">
+  <link rel="stylesheet" href="css/extras.css">
+</head>
+<body>
+  <!-- Açılış ekranı -->
+  <div id="boot" class="screen" hidden>
+    <div class="boot-center">
+      <div class="xp-logo">
+        <img class="xp-logo-flag" alt="">
+        <div class="xp-logo-text">
+          <span class="xp-logo-small">Osman Efe Hamdioğlu</span>
+          <span class="xp-logo-big">Windows<sup>xp</sup></span>
+          <span class="xp-logo-edition">CV Edition</span>
+        </div>
+      </div>
+      <div class="boot-bar"><div class="boot-blocks"><i></i><i></i><i></i></div></div>
+    </div>
+    <div class="boot-foot">
+      <span>Copyright © 2026 Osman Efe Hamdioğlu</span>
+      <span class="boot-skip">Atlamak için tıklayın</span>
+    </div>
+  </div>
+
+  <!-- Hoş geldiniz / giriş ekranı -->
+  <div id="welcome" class="screen" hidden>
+    <div class="wl-top"></div>
+    <div class="wl-mid">
+      <div class="wl-left">
+        <div class="xp-logo xp-logo-welcome">
+          <img class="xp-logo-flag" alt="">
+          <div class="xp-logo-text">
+            <span class="xp-logo-small">Osman Efe Hamdioğlu</span>
+            <span class="xp-logo-big">Windows<sup>xp</sup></span>
+          </div>
+        </div>
+        <p class="wl-hint">Başlamak için kullanıcı adınızı tıklatın</p>
+      </div>
+      <div class="wl-divider"></div>
+      <div class="wl-right">
+        <button class="wl-user" id="login-user" type="button">
+          <img class="user-pic" alt="">
+          <span>
+            <span class="wl-name">Efe Hamdioğlu</span>
+            <span class="wl-sub">Bilgisayar Mühendisi / Yazılım Geliştirici</span>
+          </span>
+        </button>
+      </div>
+      <div class="wl-message" hidden></div>
+    </div>
+    <div class="wl-bottom">
+      <button class="wl-power" id="welcome-power" type="button">
+        <img alt=""><span>Bilgisayarı kapat</span>
+      </button>
+      <span class="wl-bottom-text">Oturum açtıktan sonra CV'mi .txt dosyalarından okuyabilirsiniz.</span>
+    </div>
+  </div>
+
+  <!-- Masaüstü -->
+  <div id="desktop" class="screen" hidden>
+    <div id="icons"></div>
+    <div id="windows"></div>
+    <div id="taskbar">
+      <button id="start-btn" type="button" aria-label="Başlat"><img alt=""><span>başlat</span></button>
+      <div id="quick-launch"></div>
+      <div id="task-buttons"></div>
+      <div id="tray">
+        <img id="tray-msn" alt="MSN" title="MSN Messenger">
+        <img id="tray-shield" alt="Güvenlik Merkezi" title="Güvenlik Merkezi">
+        <span class="tray-net"><img id="tray-network" alt="Ağ" title="Yerel Ağ Bağlantısı: Bağlandı — 100 Mb/sn"></span>
+        <img id="tray-speaker" alt="Ses" title="Ses Düzeyi">
+        <span id="clock"></span>
+      </div>
+    </div>
+    <div id="start-menu" hidden></div>
+  </div>
+
+  <!-- Kapanış ekranı -->
+  <div id="off" class="screen" hidden>
+    <button type="button" class="off-btn"><img alt=""><span>Bilgisayarı açmak için tıklayın</span></button>
+  </div>
+
+  <noscript>
+    <div style="padding:20px;color:#fff;font-family:Tahoma">Bu CV sitesi JavaScript gerektirir. PDF: <a style="color:#9cf" href="assets/Osman_Efe_Hamdioglu_CV.pdf">Osman_Efe_Hamdioglu_CV.pdf</a></div>
+  </noscript>
+
+  <script src="js/content.js"></script>
+  <script src="js/icons.js"></script>
+  <script src="js/wm.js"></script>
+  <script src="js/apps.js"></script>
+  <script src="js/extras.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
